@@ -1,0 +1,132 @@
+.form{
+    background-Color: #5882b3;
+    width: 60%;
+    margin: 1rem auto;
+    padding: 2rem;
+    border-radius: 1rem;
+    color: white;
+}
+.flex-col{
+    display: flex;
+    justify-content: space-between;
+}
+.buttonSubmit{
+    background-color: #3C6DA6;
+    color: white;
+}
+.buttonClick{
+    background-color: #5882b3;
+    color: white;
+}
+.container-Card{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.card{
+    width: 350px;
+    background-color: #5882b3;
+    margin: 1rem auto;
+    color: white;
+    border-radius: 10px;
+}
+.profil-container{
+    display: flex;
+    justify-content: space-around;
+    background-color: #5882b3;
+    width: 70%;
+    margin: 2rem auto;
+    padding: 1rem;
+    color: white;
+}
+.borderBar{
+    padding: 1rem 1rem 1rem 2rem;
+    border-left: 2px solid #3C6DA6;
+}
+.admin-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.admin-card-container{
+    background-color: #5882b3;
+    color: white;
+    width: 500px;
+    .header-card{
+        background-color: #3C6DA6;
+    }
+}
+.flex-container{
+    display: flex;
+}
+.span{
+    font-size: 10px;
+}
+.p{
+    margin: 0;
+}
+.admin-card-button-container{
+    display: flex;
+    justify-content: center;
+}
+.search-form-container{
+    display: flex;
+    border: 2px solid #3C6DA6;
+    margin: 1rem;
+    padding: 1rem;
+}
+.search-options-container{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+.search-options{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .form{
+        background-Color: #5882b3;
+        width: 80%;
+        margin: 1rem auto;
+        padding: 1rem;
+        color: white;
+        border-radius: 5px;
+    }
+    .flex-col{
+        display: block;
+    }
+    .container-Card{
+        display: block;
+    }
+    .card{
+    max-width: 300px;
+    }
+    .profil-container{
+        display: block;
+        background-color: #5882b3;
+        width: 80%;
+        margin: 2rem auto;
+        padding: 1rem;
+        color: white;
+    }
+    .borderBar{
+        padding: 1rem 1rem 1rem 2rem;
+        border-top: 2px solid #3C6DA6;
+        border-left: none;
+    }
+    .admin-container{
+        display: block;
+        flex-wrap: nowrap;
+    }
+    .flex-container{
+        display: block;
+    }
+    .search-options-container{
+        display: block;
+        // justify-content: space-around;
+        // margin-top: 1rem;
+    }
+}

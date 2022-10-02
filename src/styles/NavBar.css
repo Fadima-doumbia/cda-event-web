@@ -1,0 +1,115 @@
+.navigation {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0.5rem 0rem;
+    background-Color: #3C6DA6; 
+    box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .brand-name {
+    text-decoration: none;
+    color: white;
+    font-size: 1.3rem;
+    margin-left: 1rem;
+  }
+  .navigation-menu {
+    /* margin-left: auto; */
+    padding-top: inherit;
+    margin-left: 2rem;
+  }
+
+  .navigation-menu ul {
+    display: flex;
+    padding: 0;
+    z-index: 2;
+  }
+  .navigation-menu li {
+    list-style-type: none;
+    margin: 0 1rem;
+    padding: 8px 16px;
+    margin: 0;
+}
+
+.navigation-menu li:hover {
+    background-color: #5882b3;
+  }
+.navigation-menu li a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    color: white;
+    font-size: 16px;
+  }
+  .hamburger {
+    border: 0;
+    height: 40px;
+    width: 40px;
+    padding: 0.5rem;
+    border-radius: 50%;
+    background-color: #2642af;
+    /* background-color: #5882b3; */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
+    display: none;
+  }
+  .hamburger:hover {
+    background-color: #2642af;
+  }
+
+
+@media screen and (max-width: 768px) {
+    .hamburger {
+      display: block;
+    }
+    .navigation-menu ul {
+        display: none;
+        background-Color: #3C6DA6; 
+        color: white;
+        z-index: 2;
+    }
+    .navigation-menu ul {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      flex-direction: column;
+      width: 100%;
+      /* height: calc(100vh - 77px); */
+      /* background-color: white; */
+      border-top: 1px solid black;
+      display: none;
+      background-Color: #3C6DA6; 
+      color: white;
+    }
+
+    .navigation-menu li {
+      /* // centers link text and strips off margin */
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .navigation-menu li a {
+      color: white;
+      /* // increases the surface area of the anchor tag to span the full width of the menu */
+      width: 100%;
+      padding: 1.5rem 0;
+    }
+    .navigation-menu li:hover {
+      background-color: #5882b3;
+    }
+    .navigation-menu.expanded ul {
+        display: block;
+      }
+      /* .navigation-menu.expanded li a:active {
+        color: red;
+      } */
+  }
