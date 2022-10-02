@@ -14,7 +14,6 @@ import {
 } from "react-bootstrap-icons";
 import { AddCircle } from "@mui/icons-material";
 
-
 const Users = () => {
   const [datas, setDatas] = useState([]);
   const [arrayUsers, setArrayUsers] = useState([]);
@@ -43,37 +42,38 @@ const Users = () => {
     phone: "",
     reservations: [],
   });
-  let userToken = '';
+  let userToken = "";
 
   useEffect(() => {
     getAllUseer();
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem("user"));
     // console.log(user)
-    userToken=user.accessToken;
+    userToken = user.accessToken;
     setToken(user.accessToken);
   }, []);
 
   const header = {
     headers: {
-      'Authorization': `Bearer ${userToken}`
-    }};//NE fonctionne pas dans la requette
+      Authorization: `Bearer ${userToken}`,
+    },
+  }; //NE fonctionne pas dans la requette
 
-    const getToken = () =>{
-      const user = JSON.parse(localStorage.getItem('user'));
-      userToken=user.accessToken;
-      setToken(user.accessToken);
-    }
-
+  const getToken = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    userToken = user.accessToken;
+    setToken(user.accessToken);
+  };
 
   const getAllUseer = async () => {
     getToken();
     await axios
-      .get("http://localhost:8080/api/events/users/all", {
+      .get("http://localhost:8080/api/admin/all", {
         headers: {
-          'Authorization': `Bearer ${userToken}`
-        }})
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setDatas(res.data);
         setArrayUsers(res.data);
       });
@@ -92,16 +92,40 @@ const Users = () => {
     console.log(user);
   };
   const handleCreate = () => {
-    // console.log(user.phone.toString())
-    axios.post(`http://localhost:8080/api/events/users`, {
-      headers: {
-        'Authorization': `Bearer ${userToken}`
-      }}, 
-      user).then((res) => {
-      console.log(res.data);
-      setIsCreate(false);
-      getAllUseer();
-    });
+    getToken();
+    let usert = {
+      lastName: user.lastName,
+      username: user.username,
+      email: user.email,
+      password: `${user.username}${user.role}`,
+    };
+    if (user.role === "admin") {
+      console.log("first")
+      axios
+        .post(`http://localhost:8080/api/admin/new`, usert, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setIsCreate(false);
+          getAllUseer();
+        });
+    } else {
+      console.log(" two ")
+      axios
+        .post(`http://localhost:8080/api/auth/register`, usert, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setIsCreate(false);
+          getAllUseer();
+        });
+    }
   };
   const handleEdit = (event) => {
     setUserEdit((prev) => ({
@@ -114,34 +138,25 @@ const Users = () => {
     getToken();
     console.log(userEdit);
     axios
-      .put(`http://localhost:8080/api/events/users`, userEdit, {
+      .put(`http://localhost:8080/api/admin/users`, userEdit, {
         headers: {
-          'Authorization': `Bearer ${userToken}`
-        }}
-        )
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
       .then((res) => {
         console.log(res.data);
         setIsEdit(false);
         getAllUseer();
       });
-      // getToken();
-      // await axios
-      //   .get("http://localhost:8080/api/events/users/all", {
-      //     headers: {
-      //       'Authorization': `Bearer ${userToken}`
-      //     }})
-      //   .then((res) => {
-      //     console.log(res.data)
-      //     setDatas(res.data);
-      //     setArrayUsers(res.data);
-      //   });
   };
   const deleteUser = async (id) => {
+    getToken();
     await axios
-      .delete(`http://localhost:8080/api/events/users/${id}`, {
+      .delete(`http://localhost:8080/api/admin/users/${id}`, {
         headers: {
-          'Authorization': `Bearer ${userToken}`
-        }})
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
       .then((res) => {
         if (res.status === 200) {
           getAllUseer();
@@ -153,28 +168,28 @@ const Users = () => {
     if (event.target.value !== prevSearch) {
       switch (check) {
         case "email":
-          console.log("email")
+          console.log("email");
           let filteredemail = arrayUsers.filter((user) =>
             user.email.includes(event.target.value)
           );
           setDatas(filteredemail);
           break;
         case "role":
-          console.log("role")
+          console.log("role");
           let filteredrole = arrayUsers.filter((user) =>
             user.role.includes(event.target.value)
           );
           setDatas(filteredrole);
           break;
         case "username":
-          console.log("username")
+          console.log("username");
           let filteredusername = arrayUsers.filter((user) =>
             user.username.includes(event.target.value)
           );
           setDatas(filteredusername);
           break;
         default:
-          console.log("lastname")
+          console.log("lastname");
           let filtered = arrayUsers.filter((user) =>
             user.lastName.includes(event.target.value)
           );
@@ -255,7 +270,6 @@ const Users = () => {
                 name="formHorizontalRadios"
                 id="formHorizontalRadios2"
               />
-              
             </Col>
             {/* <Col className="search-options">
               <Form.Check
@@ -475,7 +489,12 @@ const Users = () => {
                   </Form.Group>
                 </td>
                 <td>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Select aria-label="Default select example" onChange={handleChange} name="role">
+                    <option>Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">Utilisateur</option>
+                  </Form.Select>
+                  {/* <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control
                       type="text"
                       placeholder="role"
@@ -483,7 +502,7 @@ const Users = () => {
                       name="role"
                       onChange={handleChange}
                     />
-                  </Form.Group>
+                  </Form.Group> */}
                 </td>
                 <td>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -527,8 +546,8 @@ const Users = () => {
                     <TrashFill />
                   </Button>
                   <Button variant="outline-secondary" onClick={handleCreate}>
-                    Create
-                    <AddCircle />
+                    Creer
+                    {/* <AddCircle /> */}
                   </Button>
                 </td>
               </tr>
@@ -540,4 +559,27 @@ const Users = () => {
   );
 };
 
+/**
+ *  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
+    "@mui/icons-material": "^5.8.0",
+    "@mui/material": "^5.8.1",
+    "mdbreact": "^5.2.0",
+    "material-ui-bootstrap": "^5.2.2",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
+    "react-bootstrap-icons": "^1.8.4",
+    "react-bootstrap-time-picker": "^2.0.1",
+    "react-dom": "^18.2.0",
+    "react-native-axios": "^0.17.1",
+    "react-router-dom": "^6.4.1",
+    "react-scripts": "5.0.1",
+    "rsuite": "^5.19.0",
+    "sass": "^1.52.1",
+    "web-vitals": "^2.1.4"
+  },
+ */
 export default Users;
