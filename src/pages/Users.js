@@ -26,7 +26,7 @@ const Users = () => {
   const [check, setCheck] = useState("");
   const [user, setUser] = useState({
     lastName: "",
-    firstName: "",
+    username: "",
     role: "",
     email: "",
     birthday: new Date(),
@@ -34,9 +34,9 @@ const Users = () => {
     reservations: [],
   });
   const [userEdit, setUserEdit] = useState({
-    lastName: 0,
+    id: 0,
     lastName: "",
-    firstName: "",
+    username: "",
     role: "",
     email: "",
     birthday: new Date(),
@@ -53,11 +53,10 @@ const Users = () => {
     setToken(user.accessToken);
   }, []);
 
-   // return { Authorization: 'Bearer ' + user.accessToken };
   const header = {
     headers: {
-      Authorization: `Bearer ${userToken}`
-    }};
+      'Authorization': `Bearer ${userToken}`
+    }};//NE fonctionne pas dans la requette
 
     const getToken = () =>{
       const user = JSON.parse(localStorage.getItem('user'));
@@ -68,16 +67,15 @@ const Users = () => {
 
   const getAllUseer = async () => {
     getToken();
-    // console.log("user token ==> ", userToken, header)
     await axios
-      .get("http://localhost:8080/api/events/users/list", {
+      .get("http://localhost:8080/api/events/users/all", {
         headers: {
           'Authorization': `Bearer ${userToken}`
         }})
       .then((res) => {
         console.log(res.data)
-        // setDatas(res.data);
-        // setArrayUsers(res.data);
+        setDatas(res.data);
+        setArrayUsers(res.data);
       });
   };
   const editCol = (indexCol, user) => {
@@ -95,7 +93,11 @@ const Users = () => {
   };
   const handleCreate = () => {
     // console.log(user.phone.toString())
-    axios.post(`http://localhost:8080/api/events/users`, user).then((res) => {
+    axios.post(`http://localhost:8080/api/events/users`, {
+      headers: {
+        'Authorization': `Bearer ${userToken}`
+      }}, 
+      user).then((res) => {
       console.log(res.data);
       setIsCreate(false);
       getAllUseer();
@@ -109,17 +111,37 @@ const Users = () => {
     console.log(userEdit);
   };
   const handleEditSubmit = () => {
+    getToken();
+    console.log(userEdit);
     axios
-      .put(`http://localhost:8080/api/events/users/${userEdit.id}`, userEdit)
+      .put(`http://localhost:8080/api/events/users`, userEdit, {
+        headers: {
+          'Authorization': `Bearer ${userToken}`
+        }}
+        )
       .then((res) => {
         console.log(res.data);
         setIsEdit(false);
         getAllUseer();
       });
+      // getToken();
+      // await axios
+      //   .get("http://localhost:8080/api/events/users/all", {
+      //     headers: {
+      //       'Authorization': `Bearer ${userToken}`
+      //     }})
+      //   .then((res) => {
+      //     console.log(res.data)
+      //     setDatas(res.data);
+      //     setArrayUsers(res.data);
+      //   });
   };
   const deleteUser = async (id) => {
     await axios
-      .delete(`http://localhost:8080/api/events/users/${id}`)
+      .delete(`http://localhost:8080/api/events/users/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${userToken}`
+        }})
       .then((res) => {
         if (res.status === 200) {
           getAllUseer();
@@ -144,12 +166,12 @@ const Users = () => {
           );
           setDatas(filteredrole);
           break;
-        case "firstName":
-          console.log("firstname")
-          let filteredfirstName = arrayUsers.filter((user) =>
-            user.firstName.includes(event.target.value)
+        case "username":
+          console.log("username")
+          let filteredusername = arrayUsers.filter((user) =>
+            user.username.includes(event.target.value)
           );
-          setDatas(filteredfirstName);
+          setDatas(filteredusername);
           break;
         default:
           console.log("lastname")
@@ -207,7 +229,7 @@ const Users = () => {
                 id="formHorizontalRadios1"
               />
               <Form.Check
-                value={"firstName"}
+                value={"username"}
                 isValid
                 onChange={handleCheck}
                 type="radio"
@@ -301,8 +323,8 @@ const Users = () => {
                             <Form.Control
                               type="text"
                               placeholder="prenom"
-                              value={userEdit.firstName}
-                              name="firstName"
+                              value={userEdit.username}
+                              name="username"
                               onChange={handleEdit}
                             />
                           </Form.Group>
@@ -383,7 +405,7 @@ const Users = () => {
                     ) : (
                       <tr key={i}>
                         <td>{user.lastName}</td>
-                        <td>{user.firstName}</td>
+                        <td>{user.username}</td>
                         <td>{user.role}</td>
                         <td>{user.email}</td>
                         <td>{user.birthday}</td>
@@ -404,7 +426,7 @@ const Users = () => {
                   ) : (
                     <tr key={i}>
                       <td>{user.lastName}</td>
-                      <td>{user.firstName}</td>
+                      <td>{user.username}</td>
                       <td>{user.role}</td>
                       <td>{user.email}</td>
                       <td>{user.birthday}</td>
@@ -446,8 +468,8 @@ const Users = () => {
                     <Form.Control
                       type="text"
                       placeholder="prenom"
-                      value={user.firstName}
-                      name="firstName"
+                      value={user.username}
+                      name="username"
                       onChange={handleChange}
                     />
                   </Form.Group>
