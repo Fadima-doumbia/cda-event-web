@@ -10,6 +10,7 @@ import Event from "./pages/Event";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import ProfilPage from "./pages/ProfilPage";
 import Register from "./pages/Register";
 import ReservationPage from "./pages/ReservationPage";
 import Users from "./pages/Users";
@@ -29,6 +30,7 @@ function App() {
             <Route path="mod" element={<BoardModerator />} />
             <Route path="admin" element={<AdminEventPage />} />
             <Route path="reservation" element={<ReservationPage/>} />
+            <Route path="profil" element={<ProfilPage />} />
             {/* <Route path="admin" element={<BoardAdmin />} /> */}
             <Route path="users" element={<Users />} />
             <Route path="event" element={<Event />} />

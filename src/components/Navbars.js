@@ -7,6 +7,7 @@ import OffRoundIcon from "@rsuite/icons/OffRound";
 import Button from "react-bootstrap/esm/Button";
 import AuthService from "../services/auth.service";
 import eventBus from "../common/EventBus";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbars() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
@@ -15,6 +16,7 @@ export default function Navbars() {
   const [refresh, setRefresh] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
+  let navigate = useNavigate();
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
@@ -43,6 +45,7 @@ export default function Navbars() {
     setShowAdminBoard(false);
     setCurrentUser(undefined);
     setIsAuth(false);
+    navigate("/login");
   };
   return (
     <nav className="navigation">
@@ -91,14 +94,14 @@ export default function Navbars() {
             </li>
           ) : null}
 
-          {showModeratorBoard ? (
+          {/* {showModeratorBoard ? (
             <li>
               <a href="/calendar">
                 <Calendar />
                 Mon calendrier
               </a>
             </li>
-          ) : null}
+          ) : null} */}
 
           {isAuth ? null : (
             <li>
@@ -112,13 +115,14 @@ export default function Navbars() {
             </li>
           )}
 
-          <div style={{ marginLeft: "12rem" }}>
-            <ul>
-            {isAuth ? (
+          {/* <div style={{ marginLeft: "12rem" }}> */}
+            {/* <ul> */}
+            {/* {isAuth ? (
                 <li>
                   <a href="/home">Accueil</a>
                 </li>
-              ) : null}
+              ) : null} */}
+
               {showAdminBoard ? (
                 <li>
                   <a href="/users">Utilisateurs</a>
@@ -156,8 +160,8 @@ export default function Navbars() {
                 </Button>
               </li>
               )}
-            </ul>
-          </div>
+            {/* </ul> */}
+          {/* </div> */}
         </ul>
       </div>
     </nav>

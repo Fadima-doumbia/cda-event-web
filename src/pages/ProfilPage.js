@@ -4,76 +4,147 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import ReservationTable from "../components/form - table/ReservationTable";
-import EditUser from "../../src/components/modal - card/EditUser.js";
+import ReservationTable from "../components/ReservationTable";
 
 const ProfilPage = () => {
   const [datas, setDatas] = useState([]);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState("");
   const [edit, setEdit] = useState(false);
   const [currentUser, setCurrentUser] = useState({
     id: 0,
-    lastName: "",
-    firstName: "",
-    role: "",
+    birthday: "",
     email: "",
-    birthday: new Date(),
+    lastName: "",
+    password: "",
     phone: "",
+    reservations: [],
+    role: { id: 0, name: "" },
+    username: "",
   });
+  let userToken = "";
 
   useEffect(() => {
+    getToken();
+    const userCurrent = JSON.parse(localStorage.getItem("user"));
+    userToken = userCurrent.accessToken;
+    let id = userCurrent.id;
     axios
-      .get("http://localhost:8080/api/events/allReservations")
+      .get("http://localhost:8080/api/events/allReservations", {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
       .then((res) => {
         setDatas(res.data);
         console.log(res.data);
       });
+    console.log(userCurrent);
 
     axios
-      .get("http://localhost:8080/api/events/users/email/user@emaill")
+      .get(
+        `http://localhost:8080/api/events/users/email/${userCurrent.email}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
       .then((res) => {
+        setCurrentUser(res.data);
         setUser(res.data);
+        console.log(res.data);
       });
   }, []);
-
+  const convertDateToString = (date) => {
+    let today = new Date(date);
+    const month = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const str =
+      today.getDate() +
+      " " +
+      month[today.getMonth()] +
+      " " +
+      today.getFullYear();
+    console.log(str);
+    return str;
+  };
   const handleChange = (event) => {
-    console.log(currentUser);   
+    console.log(currentUser);
     setCurrentUser((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
   };
-
-  const activEdit = (event) => {
-    let currentUser={
+  const getToken = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    userToken = user.accessToken;
+    setUser(user);
+  };
+  const activEdit = () => {
+    let currentUser = {
       id: user.id,
       lastName: user.lastName,
-      firstName: user.firstName,
+      username: user.username,
       role: user.role,
       email: user.email,
-      birthday: new Date(user.birthday),
+      birthday: user.birthday,
       phone: user.phone,
-    }
+    };
     setCurrentUser(currentUser);
     setEdit(true);
-    console.log("user", user)
+    // console.log("user", user, currentUser);
   };
 
-  const editSubmit=async()=>{
+  const editSubmit = async () => {
+    getToken();
+    console.log(currentUser);
+    let editUser = {
+      id: currentUser.id,
+      lastName: currentUser.lastName,
+      username: currentUser.username,
+      role: currentUser.role,
+      email: currentUser.email,
+      birthday: currentUser.birthday,
+      phone: currentUser.phone,
+    };
     await axios
-      .put(`http://localhost:8080/api/events/users/${currentUser.id}`, currentUser)
+      .put(
+        `http://localhost:8080/api/events/users`, editUser,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
       .then((res) => {
         console.log(res.data);
       });
-      await axios
-      .get("http://localhost:8080/api/events/users/email/user@emaill")
+    await axios
+      .get("http://localhost:8080/api/events/users/email/user@emaill", {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
       .then((res) => {
         setUser(res.data);
       });
 
-      setEdit(false);
-
-  }
+    setEdit(false);
+    window.location.reload(false);
+  };
+  // console.log(user, currentUser)
   return (
     <div>
       <div className="profil-container">
@@ -109,7 +180,7 @@ const ProfilPage = () => {
                 <Form.Control
                   type="text"
                   placeholder="Prenom"
-                  value={currentUser.firstName}
+                  value={currentUser.username}
                   name="firstName"
                   onChange={handleChange}
                 />
@@ -168,7 +239,7 @@ const ProfilPage = () => {
                   onChange={handleChange}
                 />
               </Col>
-            </Form.Group> 
+            </Form.Group>
 
             <Form.Group as={Row} className="mb-3">
               <Col sm={{ span: 10, offset: 2 }}>
@@ -180,8 +251,12 @@ const ProfilPage = () => {
                 >
                   Annuler
                 </Button>
-                <Button variant="primary" className="buttonSubmit" onClick={editSubmit}>
-                  Creer
+                <Button
+                  variant="primary"
+                  className="buttonSubmit"
+                  onClick={editSubmit}
+                >
+                  Modifier
                 </Button>
               </Col>
             </Form.Group>
@@ -190,9 +265,9 @@ const ProfilPage = () => {
           <div style={{ padding: "1rem 1rem 1rem 0" }}>
             <h3>Donnée Personnelles</h3>
             <h5>Nom : {user.lastName} </h5>
-            <h5>Prenom : {user.firstName} </h5>
+            <h5>Prenom : {user.username} </h5>
             <h5>Email : {user.email} </h5>
-            <h5>Date De Naissance : {user.birthday} </h5>
+            <h5>Date De Naissance : {convertDateToString(user.birthday)} </h5>
             <h5>Telephone : {user.phone} </h5>
             <Button onClick={activEdit}>Modifier</Button>
             {/* <EditUser user={user}/> */}
