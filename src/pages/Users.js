@@ -46,7 +46,7 @@ const Users = () => {
     reservations: [],
   });
   let userToken = "";
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
 
   useEffect(() => {
@@ -62,11 +62,6 @@ const Users = () => {
     }
   }, []);
 
-  const header = {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  }; //NE fonctionne pas dans la requette
 
   const getToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));

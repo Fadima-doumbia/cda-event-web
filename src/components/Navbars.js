@@ -114,6 +114,11 @@ export default function Navbars() {
 
           <div style={{ marginLeft: "12rem" }}>
             <ul>
+            {isAuth ? (
+                <li>
+                  <a href="/home">Accueil</a>
+                </li>
+              ) : null}
               {showAdminBoard ? (
                 <li>
                   <a href="/users">Utilisateurs</a>
@@ -122,23 +127,35 @@ export default function Navbars() {
 
               {showAdminBoard ? (
                 <li>
-                  <a href="/admin">Evenements</a>
+                  <a href="/event">Evenements</a>
                 </li>
               ) : null}
 
-              <li>
+              {isAuth ? (
+                <li>
                 <a href="/profil">
                   <AdminIcon />
                   Profil
                 </a>
               </li>
+              ):null}
+              
               {isAuth ? (
                 <li>
                   <Button variant="secondary" onClick={logOut}>
                     <OffRoundIcon /> logout
                   </Button>
                 </li>
-              ) : null}
+              ) : (
+                <li>
+                <Button variant="secondary" onClick={logOut}>
+                  <a href="/login"> 
+                  <OffRoundIcon />
+                  Login
+                </a>
+                </Button>
+              </li>
+              )}
             </ul>
           </div>
         </ul>

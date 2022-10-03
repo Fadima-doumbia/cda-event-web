@@ -12,23 +12,29 @@ const Login = () => {
     password: "",
   };
   const [formData, setFormData] = useState(initialState);
-  const [successful, setSuccessful] = useState(false);
-  const [message, setMessage] = useState("");
-  // let navigate = useNavigate();
+  // const [successful, setSuccessful] = useState(false);
+  // const [message, setMessage] = useState("");
+  let navigate = useNavigate();
 
   const handleChange = (event) => {
     setFormData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
-    console.log(formData);
   };
+  // const refreshPage = () => {
+  //   window.location.reload(false);
+  // }
 
   const handleSubmit = () => {
     AuthService.login(formData).then(
       (response) => {
-        setMessage(response.data.message);
-        setSuccessful(true);
+        // setMessage(response.data.message);
+        // setSuccessful(true);
+        navigate("/event");
+
+        // refreshPage();
+        // window.location.reload(true);
         // window.location.reload();
       },
       (error) => {
@@ -39,8 +45,8 @@ const Login = () => {
           error.message ||
           error.toString();
 
-        setMessage(resMessage);
-        setSuccessful(false);
+        // setMessage(resMessage);
+        // setSuccessful(false);
       }
     );
   };

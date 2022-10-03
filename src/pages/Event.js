@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import CardEvent from "../components/CardEvent";
+import InfoModal from "../components/InfoModal";
 // import CardEvent from "../components/modal - card/CardEvent";
 // import "../styles/styles.scss";
 
@@ -25,31 +27,30 @@ const Event = () => {
   const [datas, setDatas] = useState([]);
   const [dataSource, setDataSource] = useState([]); // <== here we use the useState to be able to show the data after we fetch it
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(false);
   let userToken = "";
 
   useEffect(() => {
-    getToken();
-    getAllEvent();
-    // axios.get("http://localhost:8080/api/events/all/reservations/event", {
-    //   headers: {
-    //     Authorization: `Bearer ${userToken}`,
-    //   },
-    // }).then((res) => {
-    //   setDatas(res.data);
-    // });
+    const user = JSON.parse(localStorage.getItem("user"));
+    userToken = user.accessToken;
+    setToken(user.accessToken);
+    if (user.roles[0]==="ROLE_USER") {
+      setLoading(true);
+    }
+    // getAllEvent();
   }, []);
 
-  const getAllEvent = async () => {
-    getToken();
-    await axios.get("http://localhost:8080/api/events/all", {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    }).then((res) => {
-      setDatas(res.data);
-      console.log(res.data);
-    });
-  };
+  // const getAllEvent = async () => {
+  //   getToken();
+  //   await axios.get("http://localhost:8080/api/events/all", {
+  //     headers: {
+  //       Authorization: `Bearer ${userToken}`,
+  //     },
+  //   }).then((res) => {
+  //     setDatas(res.data);
+  //     console.log(res.data);
+  //   });
+  // };
 
   const getToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -81,6 +82,7 @@ const Event = () => {
   };
 
   const handleSubmit = () => {
+    getToken();
     if (formData.child === "true") {
       formData.child = true;
     } else {
@@ -88,7 +90,10 @@ const Event = () => {
     }
     console.log(formData);
 
-    axios.post(`http://localhost:8080/api/events`, formData).then((res) => {
+    axios.post(`http://localhost:8080/api/admin/events`, formData, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      }}).then((res) => {
       console.log(res.data);
       setDatas((datas) => [...datas, res.data]);
     });
@@ -98,6 +103,13 @@ const Event = () => {
   // console.log(datas);
   return (
     <>
+    {loading?(
+        <InfoModal
+          showValue={loading}
+          modalTitle={"Page non autorisé"}
+          modalText={"Erreur, vous n'etes pas autorisé à acceder a cette page."}
+        />
+      ):null}
       <Form className="form">
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
           <Form.Label column sm={3}>
@@ -277,17 +289,20 @@ const Event = () => {
           </Col>
         </Form.Group>
       </Form>
-      <div className="container-Card">
+
+      <Button variant="secondary" href="/admin">Liste d'evenement</Button>
+
+      {/* <div className="container-Card">
         {datas.length > 0 ? (
           datas.map((data, index) => (
             <div key={index}>
-              {/* <CardEvent formData={data} /> */}
+              <CardEvent formData={data} />
             </div>
           ))
         ) : (
           <div>null</div>
         )}
-      </div>
+      </div> */}
     </>
   );
 };
