@@ -24,13 +24,38 @@ const Event = () => {
   const [formData, setFormData] = useState(initialState);
   const [datas, setDatas] = useState([]);
   const [dataSource, setDataSource] = useState([]); // <== here we use the useState to be able to show the data after we fetch it
+  const [token, setToken] = useState("");
+  let userToken = "";
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/events/all/reservations/event").then((res) => {
-      setDatas(res.data);
-    });
+    getToken();
+    getAllEvent();
+    // axios.get("http://localhost:8080/api/events/all/reservations/event", {
+    //   headers: {
+    //     Authorization: `Bearer ${userToken}`,
+    //   },
+    // }).then((res) => {
+    //   setDatas(res.data);
+    // });
   }, []);
 
+  const getAllEvent = async () => {
+    getToken();
+    await axios.get("http://localhost:8080/api/events/all", {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    }).then((res) => {
+      setDatas(res.data);
+      console.log(res.data);
+    });
+  };
+
+  const getToken = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    userToken = user.accessToken;
+    setToken(user.accessToken);
+  };
   const handleChange = (event) => {
     const prix = parseInt(event.target.value);
     const places = parseInt(event.target.value);

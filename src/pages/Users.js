@@ -13,6 +13,8 @@ import {
   TrashFill,
 } from "react-bootstrap-icons";
 import { AddCircle } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import InfoModal from "../components/InfoModal";
 
 const Users = () => {
   const [datas, setDatas] = useState([]);
@@ -20,6 +22,7 @@ const Users = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [indexCol, setIndexCol] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [prevSearch, setPrevSearch] = useState("");
   const [token, setToken] = useState("");
   const [check, setCheck] = useState("");
@@ -43,13 +46,20 @@ const Users = () => {
     reservations: [],
   });
   let userToken = "";
+  let navigate = useNavigate();
+
 
   useEffect(() => {
     getAllUseer();
     const user = JSON.parse(localStorage.getItem("user"));
-    // console.log(user)
     userToken = user.accessToken;
     setToken(user.accessToken);
+    console.log(user);
+
+    if (user.roles[0]==="ROLE_USER") {
+      setLoading(true);
+      // navigate("/login");
+    }
   }, []);
 
   const header = {
@@ -67,7 +77,7 @@ const Users = () => {
   const getAllUseer = async () => {
     getToken();
     await axios
-      .get("http://localhost:8080/api/admin/all", {
+      .get("http://localhost:8080/api/admin/users/all", {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -78,17 +88,31 @@ const Users = () => {
         setArrayUsers(res.data);
       });
   };
+
   const editCol = (indexCol, user) => {
     setIsEdit(true);
     setIndexCol(indexCol);
     setUserEdit(user);
     console.log(user, indexCol);
   };
+  const convertDateToString = (date) =>{
+    let today = new Date(date);
+    const month = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+    const str = today.getDate() + ' ' + month[today.getMonth()] + ' ' + today.getFullYear();
+    console.log(str);    
+    return str
+  }
   const handleChange = (event) => {
     setUser((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
+
+
+    if(event.target.name==="birthday"){
+      convertDateToString(event.target.value)
+    }
     console.log(user);
   };
   const handleCreate = () => {
@@ -163,7 +187,6 @@ const Users = () => {
         }
       });
   };
-
   const handleChangeSearch = (event) => {
     if (event.target.value !== prevSearch) {
       switch (check) {
@@ -203,7 +226,6 @@ const Users = () => {
 
     setPrevSearch(event.target.value);
   };
-
   const handleCheck = (event) => {
     setCheck(event.target.value);
     console.log(event.target.value);
@@ -211,6 +233,13 @@ const Users = () => {
 
   return (
     <Container fluid>
+      {loading?(
+        <InfoModal
+          showValue={loading}
+          modalTitle={"Page non autorisé"}
+          modalText={"Erreur, vous n'etes pas autorisé à acceder a cette page."}
+        />
+      ):null}
       <div>
         <Form className="d-block">
           <div className="search-form-container">
@@ -443,7 +472,7 @@ const Users = () => {
                       <td>{user.username}</td>
                       <td>{user.role}</td>
                       <td>{user.email}</td>
-                      <td>{user.birthday}</td>
+                      <td>{convertDateToString(user.birthday)} </td>
                       <td>{user.phone}</td>
                       <td>
                         <Button
