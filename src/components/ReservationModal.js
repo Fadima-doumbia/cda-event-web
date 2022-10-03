@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Col from "react-bootstrap/Col";
@@ -17,7 +17,16 @@ const ReservationModal = (props) => {
   };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  let userToken = "";
 
+  const getToken = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    userToken = user.accessToken;
+    setUser(user);
+  };
+  useEffect(() => {
+    getToken();
+  }, []);
   const handleChange = (event) => {
     setFormReserved((prev) => ({
       ...prev,
@@ -27,19 +36,33 @@ const ReservationModal = (props) => {
   };
 
   const reserver = async () => {
+    getToken();
     let userId = 0;
     let test;
-    await axios.get(`http://localhost:8080/api/events/users/email/${formReserved.email}`)
-      .then((res) => {
-        setUser(res.data);
-        userId = res.data.id;
-        test= res.data;
-      });
+    // await axios
+    //   .get(
+    //     `http://localhost:8080/api/events/users/email/${formReserved.email}`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${userToken}`,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     setUser(res.data);
+    //     userId = res.data.id;
+    //     test = res.data;
+    //   });
 
     reservation.event.id = props.id;
-    reservation.user.id = test.id;
+    reservation.user.id = user.id;
+    console.log(userToken)
     axios
-      .post(`http://localhost:8080/api/events/reservation`, reservation)
+      .post(`http://localhost:8080/api/events/reservation`, reservation, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
       .then((res) => {
         console.log("reservation", res.data);
       });
@@ -60,10 +83,10 @@ const ReservationModal = (props) => {
         className="buttonSubmit"
         onClick={handleShow}
         // style={{
-          //   heigth: "35px",
-          // width: "auto",
-          // backgroundColor: "#3C6DA6",
-          //   maxWidth: "40%",
+        //   heigth: "35px",
+        // width: "auto",
+        // backgroundColor: "#3C6DA6",
+        //   maxWidth: "40%",
         // }}
       >
         Reserver

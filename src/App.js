@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
+import ReservationPage from "./pages/ReservationPage";
 import Users from "./pages/Users";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="user" element={<BoardUser />} />
             <Route path="mod" element={<BoardModerator />} />
             <Route path="admin" element={<AdminEventPage />} />
+            <Route path="reservation" element={<ReservationPage/>} />
             {/* <Route path="admin" element={<BoardAdmin />} /> */}
             <Route path="users" element={<Users />} />
             <Route path="event" element={<Event />} />

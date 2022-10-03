@@ -13,7 +13,7 @@ const InfoModal = (props) => {
 
   const handleClose = () => {
     setShow(false);
-    navigate("/login");
+    navigate("/home");
   };
   const handleShow = () => setShow(true);
 

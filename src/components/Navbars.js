@@ -21,7 +21,7 @@ export default function Navbars() {
 
     if (user) {
       setCurrentUser(user);
-      setShowModeratorBoard(user.roles.includes("ROLE_ENTREPRENEUR"));
+      setShowModeratorBoard(user.roles.includes("ROLE_USER"));
       setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
 
@@ -78,7 +78,7 @@ export default function Navbars() {
         <ul>
           {showModeratorBoard ? (
             <li>
-              <a href="/event">
+              <a href="/home">
                 <Magic />
                 Evenements
               </a>
