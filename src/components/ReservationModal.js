@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import axios from "axios";
+import CardDetailsEvent from "./CardDetailsEvent";
 
 const ReservationModal = (props) => {
   const [show, setShow] = useState(false);
@@ -56,7 +57,7 @@ const ReservationModal = (props) => {
 
     reservation.event.id = props.id;
     reservation.user.id = user.id;
-    console.log(userToken)
+    console.log(userToken);
     axios
       .post(`http://localhost:8080/api/events/reservation`, reservation, {
         headers: {
@@ -75,20 +76,10 @@ const ReservationModal = (props) => {
 
     handleClose();
   };
-
+  console.log(props.id, props.event);
   return (
     <>
-      <Button
-        // variant="primary"
-        className="buttonSubmit"
-        onClick={handleShow}
-        // style={{
-        //   heigth: "35px",
-        // width: "auto",
-        // backgroundColor: "#3C6DA6",
-        //   maxWidth: "40%",
-        // }}
-      >
+      <Button id={"open-modal" + props.id} className="buttonSubmit" onClick={handleShow}>
         Reserver
       </Button>
 
@@ -99,26 +90,30 @@ const ReservationModal = (props) => {
         style={{ color: "#5882b3" }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Reserver</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <h3>Êtes-vous sûre de vouloir réserver pour cet événement  ?</h3>
+
           <p style={{ margin: "0" }}>
-            Evenemment : <span style={{ fontSize: "12px" }}>Vente privé</span>
+            Evenemment : <span style={{ fontSize: "12px" }}>Vente privé {props.event.name}</span>
           </p>
           <p style={{ margin: "0" }}>
             Adresse :{" "}
-            <span style={{ fontSize: "12px" }}>20 rue de louvre BKO</span>
+            <span style={{ fontSize: "12px" }}>{props.event.address}</span>
           </p>
           <p style={{ margin: "0" }}>
             Date et heure :{" "}
             <span style={{ fontSize: "12px" }}>
-              Le 20 janvier 2022 de 14h à 18h
+            Le {props.event.date} de {props.event.heureDebut} à {props.event.heureFin}
             </span>
           </p>
           <p style={{ margin: "0" }}>
-            Prix : <span style={{ fontSize: "12px" }}>20 000 fcfa</span>
+            Prix : <span style={{ fontSize: "12px" }}>{props.event.prix} FCFA</span>
           </p>
-          <Form>
+          {/* <CardDetailsEvent id={props.formData.id} formData={props.formData} /> */}
+
+          {/* <Form>
             <Form.Group
               as={Row}
               className="mb-3"
@@ -130,8 +125,6 @@ const ReservationModal = (props) => {
               <Col sm="6">
                 <Form.Control
                   style={{ color: "#3C6DA6" }}
-                  //   plaintext
-                  // readOnly
                   defaultValue="email@example.com"
                   value={formReserved.email}
                   name="email"
@@ -139,7 +132,7 @@ const ReservationModal = (props) => {
                 />
               </Col>
             </Form.Group>
-          </Form>
+          </Form> */}
           {/* <hr style={{ backgroundColor: "blue", height: "2px" }} /> */}
         </Modal.Body>
         <Modal.Footer style={{ borderTop: "2px solid #3C6DA6" }}>

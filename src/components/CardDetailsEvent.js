@@ -8,8 +8,9 @@ const CardDetailsEvent = (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   let formData = props.formData;
+  console.log(props.id, props.formData);
   return (
-    <div>
+    <div id={"modal" + props.id}>
       <Button
         onClick={handleShow}
         className="buttonSubmit"
@@ -24,7 +25,7 @@ const CardDetailsEvent = (props) => {
         style={{ color: "#5882b3" }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Details Evenemment </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p style={{ margin: "0" }}>
@@ -61,7 +62,7 @@ const CardDetailsEvent = (props) => {
           </p>
         </Modal.Body>
         <Modal.Footer style={{ borderTop: "2px solid #3C6DA6" }}>
-          <ReservationModal />
+          <ReservationModal id={props.formData.id} event={props.formData} />
           <Button variant="secondary" onClick={handleClose}>
             Fermer
           </Button>

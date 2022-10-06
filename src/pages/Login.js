@@ -32,9 +32,8 @@ const Login = () => {
         // setMessage(response.data.message);
         // setSuccessful(true);
         navigate("/event");
-
         // refreshPage();
-        // window.location.reload(true);
+        window.location.reload(false); 
         // window.location.reload();
       },
       (error) => {

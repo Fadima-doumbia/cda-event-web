@@ -2,11 +2,13 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import "../styles/styles.scss";
 import CardDetailsEvent from "./CardDetailsEvent";
+import ModalDetailEvent from "./ModalDetailEvent";
 import ReservationModal from "./ReservationModal";
 
 
 const CardEvent = (props) => {
   const formData = props.formData;
+  
   return (
     <div >
       <Card
@@ -39,8 +41,9 @@ const CardEvent = (props) => {
             </p>
           </Card.Text>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <CardDetailsEvent formData={formData} />
-            <ReservationModal id={formData.id} />
+            <CardDetailsEvent id={formData.id} formData={formData} />
+            <ReservationModal id={formData.id} event={formData} />
+            <ModalDetailEvent id={formData.id} event={formData}/>
           </div>
         </Card.Body>
       </Card>

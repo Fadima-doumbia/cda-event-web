@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import ReservationTable from "../components/ReservationTable";
+import AuthService from "../services/auth.service";
 
 const ProfilPage = () => {
   const [datas, setDatas] = useState([]);
@@ -25,11 +26,10 @@ const ProfilPage = () => {
 
   useEffect(() => {
     getToken();
-    const userCurrent = JSON.parse(localStorage.getItem("user"));
+    const userCurrent = AuthService.getCurrentUser();
     userToken = userCurrent.accessToken;
-    let id = userCurrent.id;
     axios
-      .get("http://localhost:8080/api/events/allReservations", {
+      .get(`http://localhost:8080/api/events/${userCurrent.id}/users`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -306,10 +306,9 @@ const ProfilPage = () => {
           </Form>
         </div>
       </div>
-      <div style={{ width: "90%", margin: "auto", color: "#3C6DA6" }}>
+      {/* <div style={{ width: "90%", margin: "auto", color: "#3C6DA6" }}>
         <ReservationTable datas={datas} setDatas={setDatas} />
-        {/* <TableEvent /> */}
-      </div>
+      </div> */}
     </div>
   );
 };

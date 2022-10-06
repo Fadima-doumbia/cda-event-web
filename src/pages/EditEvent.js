@@ -248,7 +248,7 @@ const EditEvent = (props) => {
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide} className="buttonClick">
-          Close
+          Fermer
         </Button>
       </Modal.Footer>
     </Modal>

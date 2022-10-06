@@ -63,7 +63,7 @@ const HomePage = () => {
           </div>
         ))
       ) : (
-        <div>null</div>
+        <div>Pas d'événement Pour le moment</div>
       )}
     </div>
   );
