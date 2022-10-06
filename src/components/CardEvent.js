@@ -1,8 +1,6 @@
-import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import "../styles/styles.scss";
 import CardDetailsEvent from "./CardDetailsEvent";
-import ModalDetailEvent from "./ModalDetailEvent";
 import ReservationModal from "./ReservationModal";
 
 
@@ -43,7 +41,6 @@ const CardEvent = (props) => {
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <CardDetailsEvent id={formData.id} formData={formData} />
             <ReservationModal id={formData.id} event={formData} />
-            <ModalDetailEvent id={formData.id} event={formData}/>
           </div>
         </Card.Body>
       </Card>
