@@ -465,10 +465,10 @@ const Users = () => {
                     <tr key={i}>
                       <td>{user.lastName}</td>
                       <td>{user.username}</td>
-                      <td>{user.role}</td>
+                      <td>{user.role === 1 ? "U" : null} {user.role === 2 ? "A" : null}</td>
                       <td>{user.email}</td>
-                      <td>{convertDateToString(user.birthday)} </td>
-                      <td>{user.phone}</td>
+                      <td>{user.birthday===null?("Non renseigné") : convertDateToString(user.birthday)} </td>
+                      <td> {user.phone=== null?"Non renseigné": user.phone}</td>
                       <td>
                         <Button
                           variant="outline-danger"
