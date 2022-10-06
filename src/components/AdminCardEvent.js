@@ -49,6 +49,7 @@ const AdminCardEvent = (props) => {
       },
     });
     getAllEvent();
+    window.location.reload(false);
     // axios.get("http://localhost:8080/api/events/all/reservations/event").then((res) => {
     //   props.setDatas(res.data);
     //   console.log(res.data);
