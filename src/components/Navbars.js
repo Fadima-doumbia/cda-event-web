@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "../styles/NavBar.css";
-import { Calendar } from "@rsuite/icons";
 import { Magic } from "react-bootstrap-icons";
 import AdminIcon from "@rsuite/icons/Admin";
 import OffRoundIcon from "@rsuite/icons/OffRound";

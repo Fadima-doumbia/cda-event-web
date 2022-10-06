@@ -33,7 +33,7 @@ const Login = () => {
         // setSuccessful(true);
         navigate("/event");
         // refreshPage();
-        window.location.reload(false); 
+        window.location.reload(false);
         // window.location.reload();
       },
       (error) => {
@@ -51,19 +51,22 @@ const Login = () => {
   };
 
   return (
-    <div className="col-md-10">
+    <div className="">
+      <h2 style={{ textAlign: "center" }}>Connectez-vous à votre compte</h2>
       <div className="card card-container">
         {/* <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           alt="profile-img"
           className="profile-img-card"
         /> */}
-
-        <Form>
-          <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-            <Form.Label column sm="2">
-              Firstname
-            </Form.Label>
+        <Form style={{ padding: "1rem" }}>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="formPlaintextEmail"
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Form.Label column>Pseudo</Form.Label>
             <Col sm="7">
               <Form.Control
                 type="text"
@@ -78,10 +81,9 @@ const Login = () => {
             as={Row}
             className="mb-3"
             controlId="formPlaintextPassword"
+            style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Form.Label column sm="2">
-              Password
-            </Form.Label>
+            <Form.Label column>Password</Form.Label>
             <Col sm="7">
               <Form.Control
                 type="password"

@@ -156,7 +156,7 @@ const ProfilPage = () => {
               controlId="formHorizontalName"
             >
               <Form.Label column sm={3}>
-                Nom
+                Nom 
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
@@ -174,14 +174,14 @@ const ProfilPage = () => {
               controlId="formHorizontalDescription"
             >
               <Form.Label column sm={3}>
-                Prenom
+                Pseudo
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
                   type="text"
                   placeholder="Prenom"
                   value={currentUser.username}
-                  name="firstName"
+                  name="username"
                   onChange={handleChange}
                 />
               </Col>
@@ -265,7 +265,7 @@ const ProfilPage = () => {
           <div style={{ padding: "1rem 1rem 1rem 0" }}>
             <h3>Donnée Personnelles</h3>
             <h5>Nom : {user.lastName} </h5>
-            <h5>Prenom : {user.username} </h5>
+            <h5>Pseudo : {user.username} </h5>
             <h5>Email : {user.email} </h5>
             <h5>Date De Naissance : {convertDateToString(user.birthday)} </h5>
             <h5>Telephone : {user.phone} </h5>

@@ -3,13 +3,11 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import "rsuite/dist/rsuite.min.css";
 import Layout from "./layout/Layout";
 import AdminEventPage from "./pages/AdminEventPage";
-import BoardAdmin from "./pages/BoardAdmin";
-import BoardModerator from "./pages/BoardModerator";
-import BoardUser from "./pages/BoardUser";
+// import BoardModerator from "./pages/BoardModerator";
+// import BoardUser from "./pages/BoardUser";
 import Event from "./pages/Event";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
-import Profile from "./pages/Profile";
 import ProfilPage from "./pages/ProfilPage";
 import Register from "./pages/Register";
 import ReservationPage from "./pages/ReservationPage";
@@ -25,13 +23,12 @@ function App() {
             <Route path="login" element={<Login/>} />
             <Route path="home" element={<HomePage/>} />
             <Route path="register" element={<Register />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="user" element={<BoardUser />} />
-            <Route path="mod" element={<BoardModerator />} />
             <Route path="admin" element={<AdminEventPage />} />
             <Route path="reservation" element={<ReservationPage/>} />
             <Route path="profil" element={<ProfilPage />} />
-            {/* <Route path="admin" element={<BoardAdmin />} /> */}
+            {/* <Route path="user" element={<BoardUser />} />
+            <Route path="mod" element={<BoardModerator />} /> 
+            <Route path="admin" element={<BoardAdmin />} /> */}
             <Route path="users" element={<Users />} />
             <Route path="event" element={<Event />} />
           </Route>

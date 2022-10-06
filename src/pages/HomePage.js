@@ -26,6 +26,7 @@ const HomePage = () => {
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   let userToken = "";
+  
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;
@@ -35,6 +36,7 @@ const HomePage = () => {
     }
     getAllEvent();
   }, []);
+
   const getAllEvent = async () => {
     getToken();
     await axios
@@ -54,6 +56,8 @@ const HomePage = () => {
     userToken = user.accessToken;
     setToken(user.accessToken);
   };
+
+
   return (
     <div className="container-Card">
       {datas.length > 0 ? (

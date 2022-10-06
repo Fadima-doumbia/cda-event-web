@@ -88,8 +88,8 @@ const AdminCardEvent = (props) => {
             <div>
               <h5>Liste de personnes</h5>
               {formData.reservations.length > 0 ? (
-                formData.reservations.map((reservation) => (
-                  <ul
+                formData.reservations.map((reservation, i) => (
+                  <ul key={i}
                     style={{
                       height: "100px",
                       overflowY: "scroll",
@@ -98,7 +98,8 @@ const AdminCardEvent = (props) => {
                     }}
                   >
                     <li>
-                      {reservation.user.firstName} - {reservation.user.lastName}
+                    {reservation.user.username === null ? ("Non renseigné" ): reservation.user.username} - {reservation.user.lastName=== null ? "Non renseigné":reservation.user.lastName} 
+                      {/* {reservation.user.firstName === "" ? "non" : null} re - {reservation.user.lastName} */}
                     </li>
                   </ul>
                 ))

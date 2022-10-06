@@ -230,9 +230,9 @@ const EditEvent = (props) => {
           <Row>
             <ListGroup>
               {formData.reservations.length > 0 ? (
-                formData.reservations.map((reservation) => (
-                    <ListGroup.Item>
-                      {reservation.user.firstName} - {reservation.user.lastName} 
+                formData.reservations.map((reservation, i) => (
+                    <ListGroup.Item key={i}>
+                      {reservation.user.username} - {reservation.user.lastName} 
                       <Button onClick={()=>annuler(reservation.id)}> Supprimer </Button>
                     </ListGroup.Item>
                 ))
