@@ -10,20 +10,26 @@ export const compareEmail = (email) => {
 };
 
 export const verifyType = (variableToVerify, type) => {
-    let response = false;
-    let typeParam = typeof variableToVerify;
+  let response = false;
+  let typeParam = typeof variableToVerify;
 
-    if (typeParam === type) {
-      response = true;
-    }
-    return response;
-  };
+  if (typeParam === type) {
+    response = true;
+  }
+  return response;
+};
 
-  export const verifyIfStringIsEmpty = (str) => {
-    let response = false;
-    if (str != "" || str>0) {
-        response=true;
-    }
-   
-    return response;
-  };
+export const verifyIfStringIsEmpty = (str) => {
+  let response = false;
+  if (str !== "" && typeof str === "string") {
+    response = true;
+  }
+  if (str === 0 && typeof str === "number") {
+    response = false;
+  }
+  if (str > 0 ) {
+    response = true;
+  }
+  return response;
+};
+

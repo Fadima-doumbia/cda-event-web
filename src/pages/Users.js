@@ -7,13 +7,9 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import SearchIcon from "@rsuite/icons/Search";
 import {
-  Circle,
-  CircleFill,
   PencilFill,
   TrashFill,
 } from "react-bootstrap-icons";
-import { AddCircle } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 import InfoModal from "../components/InfoModal";
 
 const Users = () => {
@@ -90,6 +86,7 @@ const Users = () => {
     setUserEdit(user);
     console.log(user, indexCol);
   };
+
   const convertDateToString = (date) =>{
     let today = new Date(date);
     const month = ["January", "February", "March", "April", "May", "June",
@@ -98,18 +95,19 @@ const Users = () => {
     console.log(str);    
     return str
   }
+
   const handleChange = (event) => {
     setUser((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
 
-
     if(event.target.name==="birthday"){
       convertDateToString(event.target.value)
     }
     console.log(user);
   };
+
   const handleCreate = () => {
     getToken();
     let usert = {
@@ -146,6 +144,7 @@ const Users = () => {
         });
     }
   };
+
   const handleEdit = (event) => {
     setUserEdit((prev) => ({
       ...prev,
@@ -153,6 +152,7 @@ const Users = () => {
     }));
     console.log(userEdit);
   };
+
   const handleEditSubmit = () => {
     getToken();
     console.log(userEdit);
@@ -168,6 +168,7 @@ const Users = () => {
         getAllUseer();
       });
   };
+
   const deleteUser = async (id) => {
     getToken();
     await axios
@@ -182,6 +183,7 @@ const Users = () => {
         }
       });
   };
+
   const handleChangeSearch = (event) => {
     if (event.target.value !== prevSearch) {
       switch (check) {
@@ -221,6 +223,7 @@ const Users = () => {
 
     setPrevSearch(event.target.value);
   };
+  
   const handleCheck = (event) => {
     setCheck(event.target.value);
     console.log(event.target.value);

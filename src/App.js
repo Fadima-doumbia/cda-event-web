@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, BrowserRouter, Routes } from "react-router-dom";
+import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
 import "rsuite/dist/rsuite.min.css";
 import Layout from "./layout/Layout";
 import AdminEventPage from "./pages/AdminEventPage";
@@ -20,17 +20,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path="login" element={<Login/>} />
-            <Route path="home" element={<HomePage/>} />
+            <Route path="login" element={<Login />} />
+            <Route path="home" element={<HomePage />} />
             <Route path="register" element={<Register />} />
             <Route path="admin" element={<AdminEventPage />} />
-            <Route path="reservation" element={<ReservationPage/>} />
+            <Route path="reservation" element={<ReservationPage />} />
             <Route path="profil" element={<ProfilPage />} />
-            {/* <Route path="user" element={<BoardUser />} />
-            <Route path="mod" element={<BoardModerator />} /> 
-            <Route path="admin" element={<BoardAdmin />} /> */}
             <Route path="users" element={<Users />} />
             <Route path="event" element={<Event />} />
+            <Route path="*" element={<Navigate to="/home" />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

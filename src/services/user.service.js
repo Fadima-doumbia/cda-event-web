@@ -1,29 +1,53 @@
 import axios from "axios";
 import authHeader from "./Auth-header";
 
+let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+userToken = user.accessToken;
+
 const API_URL = "http://localhost:8080/api/test/";
 
-const getPublicContent = () => {
-  return axios.get(API_URL + "all");
+const createUser = (user) => {
+  return axios
+  .post(`http://localhost:8080/api/admin/new`, user, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
 };
 
-const getUserBoard = () => {
-  return axios.get(API_URL + "user", { headers: authHeader() });
+const editUser = (user) => {
+  return axios
+  .put(`http://localhost:8080/api/admin/users`, user, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  })
 };
 
-const getModeratorBoard = () => {
-  return axios.get(API_URL + "mod", { headers: authHeader() });
+const deleteUser = (id) => {
+  return axios
+  .delete(`http://localhost:8080/api/admin/users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
 };
 
-const getAdminBoard = () => {
-  return axios.get(API_URL + "admin", { headers: authHeader() });
+const getAllEvent = () => {
+  return axios
+  .get("http://localhost:8080/api/admin/users/all", {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
 };
 
 const UserService = {
-  getPublicContent,
-  getUserBoard,
-  getModeratorBoard,
-  getAdminBoard,
+  getAllEvent,
+  createUser,
+  editUser,
+  deleteUser,
 };
 
 export default UserService;

@@ -25,9 +25,11 @@ const ReservationModal = (props) => {
     userToken = user.accessToken;
     setUser(user);
   };
+
   useEffect(() => {
     getToken();
   }, []);
+  
   const handleChange = (event) => {
     setFormReserved((prev) => ({
       ...prev,

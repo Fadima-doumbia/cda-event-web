@@ -20,6 +20,7 @@ const ReservationPage = () => {
         console.log(res.data);
       });
   }, []);
+  
   const getToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;

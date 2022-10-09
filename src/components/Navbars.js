@@ -3,7 +3,7 @@ import "../styles/NavBar.css";
 import { Magic } from "react-bootstrap-icons";
 import AdminIcon from "@rsuite/icons/Admin";
 import OffRoundIcon from "@rsuite/icons/OffRound";
-import Button from "react-bootstrap/esm/Button";
+import Button from "react-bootstrap/Button";
 import AuthService from "../services/auth.service";
 import eventBus from "../common/EventBus";
 import { useNavigate } from "react-router-dom";
