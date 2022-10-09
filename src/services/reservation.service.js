@@ -31,7 +31,7 @@ const annulerReservation = (id) => {
   };
 
 const ReservationService = {
-    annulerReservation,
+    postReservation,
     getAllReservation,
     annulerReservation,
 };
