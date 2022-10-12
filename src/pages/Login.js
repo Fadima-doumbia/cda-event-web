@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import AuthService from "../services/auth.service";
+import AlertInfo from "../components/AlertInfo";
 
 const Login = () => {
   const initialState = {
@@ -12,6 +13,8 @@ const Login = () => {
     password: "",
   };
   const [formData, setFormData] = useState(initialState);
+  const [msg, setMsg] = useState("");
+  const [isError, setIsError] = useState(false);
   let navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -24,10 +27,12 @@ const Login = () => {
   const handleSubmit = () => {
     AuthService.login(formData).then(
       (response) => {
-        navigate("/event");
+        navigate("/profil");
         window.location.reload(false);
       },
       (error) => {
+        setMsg("Pseudo ou mots de passe ");
+        setIsError(true);
         const resMessage =
           (error.response &&
             error.response.data &&
@@ -77,10 +82,12 @@ const Login = () => {
               />
             </Col>
           </Form.Group>
-          <Button variant="submit" onClick={handleSubmit}>
-            Primary
+          <Button className="buttonSubmitMargin" variant="submit" onClick={handleSubmit}>
+            Connexion
           </Button>
         </Form>
+        {msg===""?null:
+        <AlertInfo text={msg} typeVariant="danger" show={isError} setisShow={setIsError}/> }
       </div>
     </div>
   );

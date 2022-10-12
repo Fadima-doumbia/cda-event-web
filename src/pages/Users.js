@@ -10,6 +10,15 @@ import { PencilFill, TrashFill } from "react-bootstrap-icons";
 import InfoModal from "../components/InfoModal";
 
 const Users = () => {
+  const initialState = {
+    lastName: "",
+    username: "",
+    role: "",
+    email: "",
+    birthday: new Date(),
+    phone: "",
+    reservations: [],
+  }
   const [datas, setDatas] = useState([]);
   const [arrayUsers, setArrayUsers] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
@@ -152,6 +161,7 @@ const Users = () => {
           console.log(res.data);
           setIsCreate(false);
           getAllUseer();
+          setUser(initialState);
         });
     }
   };
@@ -178,6 +188,7 @@ const Users = () => {
         console.log(res.data);
         setIsEdit(false);
         getAllUseer();
+        setUserEdit(initialState);
       });
   };
 
@@ -542,7 +553,7 @@ const Users = () => {
                   </Form.Group>
                 </td>
                 <td>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                  {/* <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control
                       type="date"
                       placeholder="Birthday"
@@ -551,10 +562,10 @@ const Users = () => {
                       onChange={handleChange}
                       plaintext
                     />
-                  </Form.Group>
+                  </Form.Group> */}
                 </td>
                 <td>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                  {/* <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control
                       type="number"
                       placeholder="Phone"
@@ -563,7 +574,7 @@ const Users = () => {
                       onChange={handleChange}
                       plaintext
                     />
-                  </Form.Group>
+                  </Form.Group> */}
                 </td>
                 <td>
                   <Button

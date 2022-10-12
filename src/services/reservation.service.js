@@ -1,11 +1,12 @@
 import axios from "axios";
 
-let userToken = "";
-const user = JSON.parse(localStorage.getItem("user"));
-userToken = user.accessToken;
 
 
 const postReservation = (reservation) => {
+  let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+console.log(user)
+userToken = user.accessToken;
     return axios.post(`http://localhost:8080/api/events/reservation`, reservation, {
       headers: {
         Authorization: `Bearer ${userToken}`,
@@ -14,6 +15,10 @@ const postReservation = (reservation) => {
   };
 
   const getAllReservation = () => {
+    let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+console.log(user)
+userToken = user.accessToken;
     return axios
     .get("http://localhost:8080/api/events/allReservations", {
       headers: {
@@ -23,6 +28,10 @@ const postReservation = (reservation) => {
   };
 
 const annulerReservation = (id) => {
+  let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+console.log(user)
+userToken = user.accessToken;
     return axios.delete(`http://localhost:8080/api/events/annuler/${id}`, {
       headers: {
         Authorization: `Bearer ${userToken}`,

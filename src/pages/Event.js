@@ -59,7 +59,7 @@ const Event = () => {
     setToken(user.accessToken);
   };
   const handleChange = (event) => {
-    const prix = parseInt(event.target.value);
+    const prix = parseFloat(event.target.value);
     const places = parseInt(event.target.value);
     console.log("first");
     setFormData((value) => ({
@@ -163,7 +163,8 @@ const Event = () => {
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} className="mb-3" controlId="formHorizontalCity">
+        
+        {/* <Form.Group as={Row} className="mb-3" controlId="formHorizontalCity">
           <Form.Label column sm={3}>
             City
           </Form.Label>
@@ -176,7 +177,7 @@ const Event = () => {
               onChange={handleChange}
             />
           </Col>
-        </Form.Group>
+        </Form.Group> */}
 
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalDate">
           <Form.Label column sm={3}>
@@ -296,7 +297,7 @@ const Event = () => {
         </Form.Group>
       </Form>
 
-      {isShow ? <AlertInfo text="Evenement ajouté avec succès" show={isShow} setisShow={setisShow}/> : null }
+      {isShow ? <AlertInfo text="Evenement ajouté avec succès" typeVariant="success" show={isShow} setisShow={setisShow}/> : null }
       <Button variant="secondary" href="/admin">
         Liste d'evenement
       </Button>

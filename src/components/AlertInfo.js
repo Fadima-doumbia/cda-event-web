@@ -8,18 +8,15 @@ const AlertInfo = (props) => {
     setShow(false);
     props.setisShow(false)
   };
+  console.log(props.typeVariant)
   return (
     <>
-      <Alert show={show} variant="success">
-        {/* <Alert.Heading>How's it going?!</Alert.Heading> */}
-        <p>
-          {props.text}
-        </p>
-          <Button onClick={submit} variant="outline-success">
+      <Alert className='alert-display' show={show} variant={props.typeVariant} >
+          <p>{props.text}</p>
+          
+          <Button onClick={submit} variant={"outline-"+props.typeVariant} >
             Ok
           </Button>
-        {/* <div className="d-flex justify-content-end">
-        </div> */}
       </Alert>
 
     </>

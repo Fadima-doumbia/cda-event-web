@@ -14,6 +14,11 @@
     background-color: #3C6DA6;
     color: white;
 }
+.buttonSubmitMargin{
+    background-color: #3C6DA6;
+    color: white;
+    margin: 0 1rem;
+}
 .buttonClick{
     background-color: #5882b3;
     color: white;
@@ -85,7 +90,11 @@
     justify-content: space-around;
     margin-top: 1rem;
 }
-
+.alert-display{
+    display:flex; 
+    justify-content: space-around;
+    margin: 1rem;
+}
 @media screen and (max-width: 768px) {
     .form{
         background-Color: #5882b3;
