@@ -130,20 +130,22 @@ const ProfilPage = () => {
       )
       .then((res) => {
         console.log(res.data);
+        setUser(res.data)
       });
-    await axios
-      .get("http://localhost:8080/api/events/users/email/user@emaill", {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
-      .then((res) => {
-        setUser(res.data);
-      });
+    // await axios
+    //   .get("http://localhost:8080/api/events/users/email/user@emaill", {
+    //     headers: {
+    //       Authorization: `Bearer ${userToken}`,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     setUser(res.data);
+    //   });
 
     setEdit(false);
-    window.location.reload(false);
   };
+
+
   // console.log(user, currentUser)
   return (
     <div>
@@ -274,7 +276,7 @@ const ProfilPage = () => {
           </div>
         )}
 
-        <div className="borderBar">
+        {/* <div className="borderBar">
           <h3>Modifier le mot de passe</h3>
           <Form>
             <Row>
@@ -304,7 +306,7 @@ const ProfilPage = () => {
             </Row>
             <Button>Modifier</Button>
           </Form>
-        </div>
+        </div> */}
       </div>
       {/* <div style={{ width: "90%", margin: "auto", color: "#3C6DA6" }}>
         <ReservationTable datas={datas} setDatas={setDatas} />

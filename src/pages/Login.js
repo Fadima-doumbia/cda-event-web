@@ -12,8 +12,6 @@ const Login = () => {
     password: "",
   };
   const [formData, setFormData] = useState(initialState);
-  // const [successful, setSuccessful] = useState(false);
-  // const [message, setMessage] = useState("");
   let navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -22,19 +20,12 @@ const Login = () => {
       [event.target.name]: event.target.value,
     }));
   };
-  // const refreshPage = () => {
-  //   window.location.reload(false);
-  // }
 
   const handleSubmit = () => {
     AuthService.login(formData).then(
       (response) => {
-        // setMessage(response.data.message);
-        // setSuccessful(true);
         navigate("/event");
-        // refreshPage();
         window.location.reload(false);
-        // window.location.reload();
       },
       (error) => {
         const resMessage =
@@ -43,9 +34,6 @@ const Login = () => {
             error.response.data.message) ||
           error.message ||
           error.toString();
-
-        // setMessage(resMessage);
-        // setSuccessful(false);
       }
     );
   };
@@ -54,11 +42,6 @@ const Login = () => {
     <div className="">
       <h2 style={{ textAlign: "center" }}>Connectez-vous à votre compte</h2>
       <div className="card card-container">
-        {/* <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        /> */}
         <Form style={{ padding: "1rem" }}>
           <Form.Group
             as={Row}

@@ -8,10 +8,10 @@ import "../styles/styles.scss";
 
 const AdminCardEvent = (props) => {
   const [formData, setFormData] = useState(props.data);
-  const [isEdit, setIsEdit] = useState(false);
+  const [data, setData] = useState();
+  const [eventData, setEventData] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [token, setToken] = useState("");
-  const [loading, setLoading] = useState(false);
   let userToken = "";
 
   useEffect(() => {
@@ -26,6 +26,7 @@ const AdminCardEvent = (props) => {
   };
 
   const getAllEvent = () => {
+    getToken();
     axios
       .get("http://localhost:8080/api/events/all", {
         headers: {
@@ -33,7 +34,7 @@ const AdminCardEvent = (props) => {
         },
       })
       .then((res) => {
-        props.setDatas(res.data);
+        setEventData(res.data);
         console.log(res.data);
       });
   };
@@ -43,19 +44,23 @@ const AdminCardEvent = (props) => {
 
   const deleteEvent = (id) => {
     getToken();
-    axios.delete(`http://localhost:8080/api/admin/events/${id}`,{
+    axios.delete(`http://localhost:8080/api/admin/events/${id}`, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
     });
-    getAllEvent();
-    window.location.reload(false);
-    // axios.get("http://localhost:8080/api/events/all/reservations/event").then((res) => {
-    //   props.setDatas(res.data);
-    //   console.log(res.data);
-    // });
+    let filter = eventData.filter(function (e) {
+      return e.id !== id;
+    });
+    props.setDatas(filter);
+    console.log(filter);
   };
-  // console.log(formData);
+
+  const afterEdit = () => {
+getAllEvent();
+props.setDatas(eventData)
+console.log("first");
+  };
 
   return (
     <div>
@@ -89,7 +94,8 @@ const AdminCardEvent = (props) => {
               <h5>Liste de personnes</h5>
               {formData.reservations.length > 0 ? (
                 formData.reservations.map((reservation, i) => (
-                  <ul key={i}
+                  <ul
+                    key={i}
                     style={{
                       height: "100px",
                       overflowY: "scroll",
@@ -98,7 +104,13 @@ const AdminCardEvent = (props) => {
                     }}
                   >
                     <li>
-                    {reservation.user.username === null ? ("Non renseigné" ): reservation.user.username} - {reservation.user.lastName=== null ? "Non renseigné":reservation.user.lastName} 
+                      {reservation.user.username === null
+                        ? "Non renseigné"
+                        : reservation.user.username}{" "}
+                      -{" "}
+                      {reservation.user.lastName === null
+                        ? "Non renseigné"
+                        : reservation.user.lastName}
                       {/* {reservation.user.firstName === "" ? "non" : null} re - {reservation.user.lastName} */}
                     </li>
                   </ul>
@@ -126,8 +138,8 @@ const AdminCardEvent = (props) => {
             <EditEvent
               formData={formData}
               show={modalShow}
-              // setDatas={props.setDatas}
               onHide={() => setModalShow(false)}
+
             />
           </div>
         </Card.Body>

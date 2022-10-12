@@ -69,16 +69,10 @@ const ReservationModal = (props) => {
       .then((res) => {
         console.log("reservation", res.data);
       });
-
-    // axios
-    //   .get(`http://localhost:8080/api/events/allReservations`)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   });
-
-    handleClose();
+      handleClose();
   };
-  console.log(props.id, props.event);
+
+  
   return (
     <>
       <Button id={"open-modal" + props.id} className="buttonSubmit" onClick={handleShow}>

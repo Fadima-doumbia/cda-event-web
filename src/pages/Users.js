@@ -6,10 +6,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import SearchIcon from "@rsuite/icons/Search";
-import {
-  PencilFill,
-  TrashFill,
-} from "react-bootstrap-icons";
+import { PencilFill, TrashFill } from "react-bootstrap-icons";
 import InfoModal from "../components/InfoModal";
 
 const Users = () => {
@@ -44,20 +41,18 @@ const Users = () => {
   let userToken = "";
   // let navigate = useNavigate();
 
-
   useEffect(() => {
     getAllUseer();
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;
     setToken(user.accessToken);
-    console.log(user);
+    // console.log(user);
 
-    if (user.roles[0]==="ROLE_USER") {
+    if (user.roles[0] === "ROLE_USER") {
       setLoading(true);
       // navigate("/login");
     }
   }, []);
-
 
   const getToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -87,14 +82,30 @@ const Users = () => {
     console.log(user, indexCol);
   };
 
-  const convertDateToString = (date) =>{
+  const convertDateToString = (date) => {
     let today = new Date(date);
-    const month = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
-    const str = today.getDate() + ' ' + month[today.getMonth()] + ' ' + today.getFullYear();
-    console.log(str);    
-    return str
-  }
+    const month = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const str =
+      today.getDate() +
+      " " +
+      month[today.getMonth()] +
+      " " +
+      today.getFullYear();
+    return str;
+  };
 
   const handleChange = (event) => {
     setUser((prev) => ({
@@ -102,8 +113,8 @@ const Users = () => {
       [event.target.name]: event.target.value,
     }));
 
-    if(event.target.name==="birthday"){
-      convertDateToString(event.target.value)
+    if (event.target.name === "birthday") {
+      convertDateToString(event.target.value);
     }
     console.log(user);
   };
@@ -117,9 +128,9 @@ const Users = () => {
       password: `${user.username}${user.role}`,
     };
     if (user.role === "admin") {
-      console.log("first")
+      // console.log("first")
       axios
-        .post(`http://localhost:8080/api/admin/new`, usert, {
+        .post(`http://localhost:8080/api/admin/users/new`, usert, {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
@@ -130,7 +141,7 @@ const Users = () => {
           getAllUseer();
         });
     } else {
-      console.log(" two ")
+      console.log(" two ");
       axios
         .post(`http://localhost:8080/api/auth/register`, usert, {
           headers: {
@@ -146,6 +157,7 @@ const Users = () => {
   };
 
   const handleEdit = (event) => {
+    
     setUserEdit((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -223,21 +235,22 @@ const Users = () => {
 
     setPrevSearch(event.target.value);
   };
-  
+
   const handleCheck = (event) => {
     setCheck(event.target.value);
     console.log(event.target.value);
   };
 
+
   return (
     <Container fluid>
-      {loading?(
+      {loading ? (
         <InfoModal
           showValue={loading}
           modalTitle={"Page non autorisé"}
           modalText={"Erreur, vous n'etes pas autorisé à acceder a cette page."}
         />
-      ):null}
+      ) : null}
       <div>
         <Form className="d-block">
           <div className="search-form-container">
@@ -340,7 +353,7 @@ const Users = () => {
             {datas.length > 0
               ? datas.map((user, i) =>
                   isEdit ? (
-                    indexCol === i ? (
+                    indexCol===i?(
                       <tr key={i}>
                         <td>
                           <Form.Group
@@ -378,9 +391,10 @@ const Users = () => {
                             <Form.Control
                               type="text"
                               placeholder="role"
-                              value={userEdit.role}
+                              value={userEdit.role.id === 1? "U" : "A"}
                               name="role"
                               onChange={handleEdit}
+                              plaintext
                             />
                           </Form.Group>
                         </td>
@@ -443,35 +457,25 @@ const Users = () => {
                           </Button>
                         </td>
                       </tr>
-                    ) : (
-                      <tr key={i}>
-                        <td>{user.lastName}</td>
-                        <td>{user.username}</td>
-                        <td>{user.role}</td>
-                        <td>{user.email}</td>
-                        <td>{user.birthday}</td>
-                        <td>{user.phone}</td>
-                        <td>
-                          <Button variant="outline-danger">
-                            <TrashFill />
-                          </Button>
-                          <Button
-                            variant="outline-secondary"
-                            onClick={() => editCol(i, user)}
-                          >
-                            <PencilFill />
-                          </Button>
-                        </td>
-                      </tr>
-                    )
+                    ):null
                   ) : (
                     <tr key={i}>
-                      <td>{user.lastName}</td>
+                      <td>{user.lastName === null ? "Non renseigné" : user.lastName}</td>
                       <td>{user.username}</td>
-                      <td>{user.role === 1 ? "U" : null} {user.role === 2 ? "A" : null}</td>
+                      <td>
+                        {user.role.id === 1 ? "U" : null}{" "}
+                        {user.role.id === 2 ? "A" : null}
+                      </td>
                       <td>{user.email}</td>
-                      <td>{user.birthday===null?("Non renseigné") : convertDateToString(user.birthday)} </td>
-                      <td> {user.phone=== null?"Non renseigné": user.phone}</td>
+                      <td>
+                        {user.birthday === null
+                          ? "Non renseigné"
+                          : convertDateToString(user.birthday)}{" "}
+                      </td>
+                      <td>
+                        {" "}
+                        {user.phone === null ? "Non renseigné" : user.phone}
+                      </td>
                       <td>
                         <Button
                           variant="outline-danger"
@@ -516,20 +520,15 @@ const Users = () => {
                   </Form.Group>
                 </td>
                 <td>
-                  <Form.Select aria-label="Default select example" onChange={handleChange} name="role">
+                  <Form.Select
+                    aria-label="Default select example"
+                    onChange={handleChange}
+                    name="role"
+                  >
                     <option>Role</option>
                     <option value="admin">Admin</option>
                     <option value="user">Utilisateur</option>
                   </Form.Select>
-                  {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Control
-                      type="text"
-                      placeholder="role"
-                      value={user.role}
-                      name="role"
-                      onChange={handleChange}
-                    />
-                  </Form.Group> */}
                 </td>
                 <td>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -550,6 +549,7 @@ const Users = () => {
                       value={user.birthday}
                       name="birthday"
                       onChange={handleChange}
+                      plaintext
                     />
                   </Form.Group>
                 </td>
@@ -561,6 +561,7 @@ const Users = () => {
                       value={user.phone}
                       name="phone"
                       onChange={handleChange}
+                      plaintext
                     />
                   </Form.Group>
                 </td>
@@ -586,27 +587,128 @@ const Users = () => {
   );
 };
 
-/**
- *  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.27.2",
-    "@mui/icons-material": "^5.8.0",
-    "@mui/material": "^5.8.1",
-    "mdbreact": "^5.2.0",
-    "material-ui-bootstrap": "^5.2.2",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.5.0",
-    "react-bootstrap-icons": "^1.8.4",
-    "react-bootstrap-time-picker": "^2.0.1",
-    "react-dom": "^18.2.0",
-    "react-native-axios": "^0.17.1",
-    "react-router-dom": "^6.4.1",
-    "react-scripts": "5.0.1",
-    "rsuite": "^5.19.0",
-    "sass": "^1.52.1",
-    "web-vitals": "^2.1.4"
-  },
- */
 export default Users;
+/**                    indexCol === i ? (
+                      <tr key={i}>
+                        <td>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formBasicPassword"
+                          >
+                            <Form.Control
+                              type="text"
+                              placeholder="Nom"
+                              value={user.lastName}
+                              name="lastName"
+                              onChange={handleEdit}
+                            />
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formBasicPassword"
+                          >
+                            <Form.Control
+                              type="text"
+                              placeholder="prenom"
+                              value={user.username}
+                              name="username"
+                              onChange={handleEdit}
+                            />
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formBasicPassword"
+                          >
+                            <Form.Control
+                              type="text"
+                              placeholder="role"
+                              value={user.role}
+                              name="role"
+                              onChange={handleEdit}
+                            />
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formBasicPassword"
+                          >
+                            <Form.Control
+                              type="text"
+                              placeholder="Email"
+                              value={user.email}
+                              name="email"
+                              onChange={handleEdit}
+                            />
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formBasicPassword"
+                          >
+                            <Form.Control
+                              type="date"
+                              placeholder="Birthday"
+                              value={user.birthday}
+                              name="birthday"
+                              onChange={handleEdit}
+                            />
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formBasicPassword"
+                          >
+                            <Form.Control
+                              type="text"
+                              placeholder="Phone"
+                              value={user.phone}
+                              name="phone"
+                              onChange={handleEdit}
+                            />
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <Button
+                            variant="outline-danger"
+                            onClick={() => setIsEdit(false)}
+                          >
+                            annuler
+                            <TrashFill />
+                          </Button>
+                          <Button
+                            variant="outline-secondary"
+                            onClick={handleEditSubmit}
+                          >
+                            edit
+                            <PencilFill />
+                          </Button>
+                        </td>
+                      </tr>
+                    ) : (
+                      <tr key={i}>
+                        <td>{user.lastName}</td>
+                        <td>{user.username}</td>
+                        <td>{user.role}</td>
+                        <td>{user.email}</td>
+                        <td>{user.birthday}</td>
+                        <td>{user.phone}</td>
+                        <td>
+                          <Button variant="outline-danger">
+                            <TrashFill />
+                          </Button>
+                          <Button
+                            variant="outline-secondary"
+                            onClick={() => editCol(i, user)}
+                          >
+                            <PencilFill />
+                          </Button>
+                        </td>
+                      </tr>
+                    ) */

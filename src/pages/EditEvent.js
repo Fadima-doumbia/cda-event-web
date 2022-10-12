@@ -81,12 +81,11 @@ const EditEvent = (props) => {
         datas.push(res.data);
       });
       props.onHide();
-      window.location.reload(false)
+      // window.location.reload(false)
       // axios.get("http://localhost:8080/api/events/all/reservations/event").then((res) => {
       //   props.setDatas(res.data);
       //   console.log(res.data)
       // });
-      // window.location.reload(false);
   };
 
   const annuler = (id)=>{

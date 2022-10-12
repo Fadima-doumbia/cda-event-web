@@ -4,11 +4,11 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import AlertInfo from "../components/AlertInfo";
 import CardEvent from "../components/CardEvent";
 import InfoModal from "../components/InfoModal";
 // import CardEvent from "../components/modal - card/CardEvent";
 // import "../styles/styles.scss";
-
 
 const Event = () => {
   const initialState = {
@@ -28,13 +28,14 @@ const Event = () => {
   const [dataSource, setDataSource] = useState([]); // <== here we use the useState to be able to show the data after we fetch it
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isShow, setisShow] = useState(false);
   let userToken = "";
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;
     setToken(user.accessToken);
-    if (user.roles[0]==="ROLE_USER") {
+    if (user.roles[0] === "ROLE_USER") {
       setLoading(true);
     }
     // getAllEvent();
@@ -90,26 +91,31 @@ const Event = () => {
     }
     console.log(formData);
 
-    axios.post(`http://localhost:8080/api/admin/events`, formData, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      }}).then((res) => {
-      console.log(res.data);
-      setDatas((datas) => [...datas, res.data]);
-    });
+    axios
+      .post(`http://localhost:8080/api/admin/events`, formData, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setDatas((datas) => [...datas, res.data]);
+        setFormData(initialState);
+        setisShow(true);
+      });
   };
 
   // console.log(formData);
   // console.log(datas);
   return (
     <>
-    {loading?(
+      {loading ? (
         <InfoModal
           showValue={loading}
           modalTitle={"Page non autorisé"}
           modalText={"Erreur, vous n'etes pas autorisé à acceder a cette page."}
         />
-      ):null}
+      ) : null}
       <Form className="form">
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
           <Form.Label column sm={3}>
@@ -290,7 +296,10 @@ const Event = () => {
         </Form.Group>
       </Form>
 
-      <Button variant="secondary" href="/admin">Liste d'evenement</Button>
+      {isShow ? <AlertInfo text="Evenement ajouté avec succès" show={isShow} setisShow={setisShow}/> : null }
+      <Button variant="secondary" href="/admin">
+        Liste d'evenement
+      </Button>
 
       {/* <div className="container-Card">
         {datas.length > 0 ? (

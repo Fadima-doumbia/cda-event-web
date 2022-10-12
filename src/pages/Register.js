@@ -12,7 +12,6 @@ const Register = () => {
     username: "",
     lastName: "",
     email: "",
-    role: "admin",
     password: "",
   };
   const [formData, setFormData] = useState(initialState);
@@ -27,7 +26,6 @@ const Register = () => {
   const handleChange = (event) => {
     if (verifyIfStringIsEmpty(event.target.value) === false) {
       setDisabledValue(true);
-      console.log("first");
     }
     setFormData((prev) => ({
       ...prev,
@@ -62,7 +60,6 @@ const Register = () => {
     } else {
       setDisabledValue(true);
     }
-    // console.log(formData);
   };
 
   const handleSubmit = () => {
@@ -87,17 +84,12 @@ const Register = () => {
       }
     );
   };
-  console.log(disabledValue);
+
+
   return (
     <div className="">
       <h2 style={{ textAlign: "center" }}>Créer votre compte</h2>
       <div className="card card-container">
-        {/* <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        /> */}
-
         <Form style={{ padding: "1rem" }}>
           <Form.Group
             as={Row}
