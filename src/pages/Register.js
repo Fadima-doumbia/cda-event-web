@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
-import { verifyIfStringIsEmpty } from "../utils/UserFonction";
+import { formDataVerifyPassword, verifyIfStringIsEmpty } from "../utils/UserFonction";
 
 const Register = () => {
   const initialState = {
@@ -16,6 +16,7 @@ const Register = () => {
   };
   const [formData, setFormData] = useState(initialState);
   const [successful, setSuccessful] = useState(false);
+  const [isOk, setIsOk] = useState(false);
   const [isActiv, setIsActiv] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState("");
@@ -24,42 +25,74 @@ const Register = () => {
   let navigate = useNavigate();
 
   const handleChange = (event) => {
-    if (verifyIfStringIsEmpty(event.target.value) === false) {
-      setDisabledValue(true);
-    }
     setFormData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
+
     if (event.target.name === "password") {
       setIsActiv(true);
-      if (
-        event.target.value.match(/[0-9]/g) &&
-        event.target.value.match(/[A-Z]/g) &&
-        event.target.value.match(/[a-z]/g) &&
-        event.target.value.match(/[^a-zA-Z\d]/g) &&
-        event.target.value.length >= 8
-      ) {
+      if (formDataVerifyPassword(event.target.value)) {
         setMessages("Mot de passe fort");
         setColor("#9cd06b");
         setDisabledValue(false);
+        setIsOk(true);
       } else {
         setMessages("Mot de passe faible");
         setColor("#f76217");
         setDisabledValue(true);
       }
     }
-
-    if (
-      verifyIfStringIsEmpty(formData.email) === true &&
-      verifyIfStringIsEmpty(formData.lastName) === true &&
-      verifyIfStringIsEmpty(formData.username) === true &&
-      verifyIfStringIsEmpty(formData.password) === true
-    ) {
-      setDisabledValue(false);
+    formDataVerifyPassword(event.target.value);
+    if (formDataVerifyLength(formData) && formDataVerify(formData)) {
+      if (formDataVerifyPassword(event.target.value)) {
+        setDisabledValue(false);
+      }
     } else {
       setDisabledValue(true);
     }
+  };
+
+  // const formDataVerifyPassword = (str) => {
+  //   let response = false;
+  //   if (
+  //     str.match(/[0-9]/g) &&
+  //     str.match(/[A-Z]/g) &&
+  //     str.match(/[a-z]/g) &&
+  //     str.match(/[^a-zA-Z\d]/g) &&
+  //     str.length >= 8
+  //   ) {
+  //     response = true;
+  //   }
+
+  //   return response;
+  // };
+
+  const formDataVerify = (form) => {
+    let response = false;
+    if (
+      verifyIfStringIsEmpty(form.username) &&
+      verifyIfStringIsEmpty(form.lastName) &&
+      verifyIfStringIsEmpty(form.password) &&
+      verifyIfStringIsEmpty(form.email)
+    ) {
+      response = true;
+    }
+    return response;
+  };
+
+  const formDataVerifyLength = (form) => {
+    let response = false;
+    if (
+      form.username.length > 3 &&
+      form.lastName.length > 3 &&
+      form.password.length > 7 &&
+      form.email.length > 4 &&
+      form.email.includes("@")
+    ) {
+      response = true;
+    }
+    return response;
   };
 
   const handleSubmit = () => {
@@ -85,10 +118,9 @@ const Register = () => {
     );
   };
 
-
   return (
     <div className="">
-      <h2 style={{ textAlign: "center" }}>Créer votre compte</h2>
+      <h2 style={{ textAlign: "center" }}>Créez votre compte</h2>
       <div className="card card-container">
         <Form style={{ padding: "1rem" }}>
           <Form.Group
@@ -97,7 +129,9 @@ const Register = () => {
             controlId="formPlaintextEmail"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Form.Label column>Pseudo</Form.Label>
+            <Form.Label column>Pseudo
+            <span className="text-danger fw-bold" >(*)</span>
+            </Form.Label>
             <Col sm="7">
               <Form.Control
                 type="text"
@@ -113,7 +147,7 @@ const Register = () => {
             controlId="formPlaintextEmail"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Form.Label column>LastName</Form.Label>
+            <Form.Label column>LastName<span className="text-danger fw-bold" >(*)</span></Form.Label>
             <Col sm="7">
               <Form.Control
                 type="text"
@@ -129,7 +163,7 @@ const Register = () => {
             controlId="formPlaintextEmail"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Form.Label column>Email</Form.Label>
+            <Form.Label column>Email<span className="text-danger fw-bold" >(*)</span></Form.Label>
             <Col sm="7">
               <Form.Control
                 type="email"
@@ -145,7 +179,8 @@ const Register = () => {
             controlId="formPlaintextPassword"
             style={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Form.Label column>Password</Form.Label>
+            
+            <Form.Label column>Password<span className="text-danger fw-bold" >(*)</span></Form.Label>
             <Col sm="7">
               <Form.Control
                 type="password"

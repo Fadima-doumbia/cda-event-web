@@ -2,6 +2,7 @@ import * as React from "react";
 import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
 import "rsuite/dist/rsuite.min.css";
 import Layout from "./layout/Layout";
+import AboutPage from "./pages/AboutPage";
 import AdminEventPage from "./pages/AdminEventPage";
 // import BoardModerator from "./pages/BoardModerator";
 // import BoardUser from "./pages/BoardUser";
@@ -26,6 +27,7 @@ function App() {
             <Route path="admin" element={<AdminEventPage />} />
             <Route path="reservation" element={<ReservationPage />} />
             <Route path="profil" element={<ProfilPage />} />
+            <Route path="about" element={<AboutPage />} />
             <Route path="users" element={<Users />} />
             <Route path="event" element={<Event />} />
             <Route path="*" element={<Navigate to="/home" />} />

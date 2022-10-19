@@ -13,6 +13,7 @@ test('compare email with input value email', () => {
   let response = verifyIfStringIsEmpty(mail);
   expect(response).toBeFalsy();
 });
+
 test('verify if variable content something', () => {
   let mail = "a";
   let response = verifyIfStringIsEmpty(mail);

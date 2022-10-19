@@ -4,13 +4,21 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import ReservationTable from "../components/ReservationTable";
+import AlertInfo from "../components/AlertInfo";
 import AuthService from "../services/auth.service";
+import UserService from "../services/user.service";
+import { formDataVerifyPassword } from "../utils/UserFonction";
 
 const ProfilPage = () => {
   const [datas, setDatas] = useState([]);
   const [user, setUser] = useState("");
+  const [str, setStr] = useState("");
+  const [strResponse, setStrResponse] = useState("");
+  const [color, setColor] = useState("");
+  const [isOk, setIsOk] = useState(false);
+  const [isActiv, setIsActiv] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [disabledValue, setDisabledValue] = useState(true);
   const [currentUser, setCurrentUser] = useState({
     id: 0,
     birthday: "",
@@ -22,6 +30,13 @@ const ProfilPage = () => {
     role: { id: 0, name: "" },
     username: "",
   });
+  const initialPassword = {
+    id: user.id,
+    lastPassword: "",
+    newPassword: "",
+    repeatPassword: "",
+  };
+  const [updatePassword, setUpdatePassword] = useState(initialPassword);
   let userToken = "";
 
   useEffect(() => {
@@ -38,7 +53,7 @@ const ProfilPage = () => {
         setDatas(res.data);
         console.log(res.data);
       });
-    console.log(userCurrent);
+    // console.log(userCurrent);
 
     axios
       .get(
@@ -52,7 +67,7 @@ const ProfilPage = () => {
       .then((res) => {
         setCurrentUser(res.data);
         setUser(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       });
   }, []);
   const convertDateToString = (date) => {
@@ -120,17 +135,14 @@ const ProfilPage = () => {
       phone: currentUser.phone,
     };
     await axios
-      .put(
-        `http://localhost:8080/api/events/users`, editUser,
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      )
+      .put(`http://localhost:8080/api/events/users`, editUser, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
       .then((res) => {
         console.log(res.data);
-        setUser(res.data)
+        setUser(res.data);
       });
     // await axios
     //   .get("http://localhost:8080/api/events/users/email/user@emaill", {
@@ -145,8 +157,53 @@ const ProfilPage = () => {
     setEdit(false);
   };
 
+  const handleditPassword = (event) => {
+    setUpdatePassword((value) => ({
+      ...value,
+      [event.target.name]: event.target.value,
+    }));
+      formDataVerifyPassword(event.target.value);
+      if (event.target.name === "newPassword") {
+        setIsActiv(true);
+        console.log("first")
+        if (formDataVerifyPassword(event.target.value)) {
+          setStr("Mot de passe fort");
+          setColor("#9cd06b");
+          setDisabledValue(false);
+          // setIsOk(true);
+        } else {
+          setStr("Mot de passe faible");
+          setColor("#f76217");
+          setDisabledValue(true);
+        }
+      }
+    // console.log(updatePassword);
+  };
 
-  // console.log(user, currentUser)
+  const handleSubmitPassword = () => {
+    getToken();
+    if (updatePassword.lastPassword === "") {
+      setStrResponse("Veuillez entrer votre mot de passe actuel");
+      setIsOk(true);
+    } else {
+      if (updatePassword.newPassword === updatePassword.repeatPassword) {
+        let finalObjet = {
+          id: user.id,
+          lastPassword: updatePassword.lastPassword,
+          newPassword: updatePassword.newPassword,
+        };
+        UserService.editpassword(finalObjet).then((res) => {
+          setStrResponse(res.data);
+          setIsOk(true);
+        });
+      } else {
+        setStrResponse("Les nouveau mot de passe et le mot de passe de confirmation ne correspondent pas");
+        setIsOk(true);
+      }
+      
+    }
+  };
+
   return (
     <div>
       <div className="profil-container">
@@ -158,7 +215,7 @@ const ProfilPage = () => {
               controlId="formHorizontalName"
             >
               <Form.Label column sm={3}>
-                Nom 
+                Nom
               </Form.Label>
               <Col sm={8}>
                 <Form.Control
@@ -269,14 +326,22 @@ const ProfilPage = () => {
             <h5>Nom : {user.lastName} </h5>
             <h5>Pseudo : {user.username} </h5>
             <h5>Email : {user.email} </h5>
-            <h5>Date De Naissance : {convertDateToString(user.birthday)} </h5>
-            <h5>Telephone : {user.phone} </h5>
+            <h5>
+              Date De Naissance :{" "}
+              {currentUser.birthday === null
+                ? "Non renseigné"
+                : convertDateToString(user.birthday)}{" "}
+            </h5>
+            <h5>
+              Telephone : {user.phone === null ? "Non renseigné" : user.phone}{" "}
+            </h5>
+            <br />
             <Button onClick={activEdit}>Modifier</Button>
             {/* <EditUser user={user}/> */}
           </div>
         )}
 
-        {/* <div className="borderBar">
+        <div className="borderBar">
           <h3>Modifier le mot de passe</h3>
           <Form>
             <Row>
@@ -285,6 +350,9 @@ const ProfilPage = () => {
                   <Form.Label>Mon Password</Form.Label>
                   <Form.Control
                     type="password"
+                    value={updatePassword.lastPassword}
+                    name="lastPassword"
+                    onChange={handleditPassword}
                     placeholder="Veuillez entrer votre mot de passe actuel"
                   />
                 </Form.Group>
@@ -292,6 +360,9 @@ const ProfilPage = () => {
                   <Form.Label>Nouveau Password</Form.Label>
                   <Form.Control
                     type="password"
+                    onChange={handleditPassword}
+                    value={updatePassword.newPassword}
+                    name="newPassword"
                     placeholder="Veuillez entrer votre nouveau mot de passe"
                   />
                 </Form.Group>
@@ -299,14 +370,32 @@ const ProfilPage = () => {
                   <Form.Label>Confirmation du Password</Form.Label>
                   <Form.Control
                     type="password"
+                    onChange={handleditPassword}
+                    value={updatePassword.repeatPassword}
+                    name="repeatPassword"
                     placeholder="Veuillez rentrer votre nouveau mot de passe"
                   />
                 </Form.Group>
               </Col>
+              {isActiv && <p style={{ color: color }}>{str}</p>}
             </Row>
-            <Button>Modifier</Button>
+            {disabledValue ? (
+              <Button onClick={handleSubmitPassword} disabled>
+                Modifier
+              </Button>
+            ) : (
+              <Button onClick={handleSubmitPassword}>Modifier</Button>
+            )}
           </Form>
-        </div> */}
+          {isOk && <p style={{ color: "blue" }}>
+          <AlertInfo
+              text={strResponse}
+              typeVariant={"info"}
+              show={isOk}
+              setisShow={setIsOk}
+            />
+          </p>}
+        </div>
       </div>
       {/* <div style={{ width: "90%", margin: "auto", color: "#3C6DA6" }}>
         <ReservationTable datas={datas} setDatas={setDatas} />

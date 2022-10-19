@@ -33,3 +33,17 @@ export const verifyIfStringIsEmpty = (str) => {
   return response;
 };
 
+export const formDataVerifyPassword = (str) => {
+  let response = false;
+  if (
+    str.match(/[0-9]/g) &&
+    str.match(/[A-Z]/g) &&
+    str.match(/[a-z]/g) &&
+    str.match(/[^a-zA-Z\d]/g) &&
+    str.length >= 8
+  ) {
+    response = true;
+  }
+
+  return response;
+};

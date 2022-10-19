@@ -114,52 +114,50 @@ export default function Navbars() {
             </li>
           )}
 
-          {/* <div style={{ marginLeft: "12rem" }}> */}
-            {/* <ul> */}
-            {/* {isAuth ? (
-                <li>
-                  <a href="/home">Accueil</a>
-                </li>
-              ) : null} */}
+          {showAdminBoard ? (
+            <li>
+              <a href="/users">Utilisateurs</a>
+            </li>
+          ) : null}
 
-              {showAdminBoard ? (
-                <li>
-                  <a href="/users">Utilisateurs</a>
-                </li>
-              ) : null}
+          {showAdminBoard ? (
+            <li>
+              <a href="/event">Evenements</a>
+            </li>
+          ) : null}
 
-              {showAdminBoard ? (
-                <li>
-                  <a href="/event">Evenements</a>
-                </li>
-              ) : null}
+          {isAuth ? (
+            <li>
+              <a href="/profil">
+                <AdminIcon />
+                Profil
+              </a>
+            </li>
+          ) : null}
 
-              {isAuth ? (
-                <li>
-                <a href="/profil">
-                  <AdminIcon />
-                  Profil
-                </a>
-              </li>
-              ):null}
-              
-              {isAuth ? (
-                <li>
-                  <Button variant="secondary" onClick={logOut}>
-                    <OffRoundIcon /> logout
-                  </Button>
-                </li>
-              ) : (
-                <li>
-                <Button variant="secondary" onClick={logOut}>
-                  <a href="/login"> 
+          {isAuth ? (
+            <li>
+              <Button variant="secondary" onClick={logOut}>
+                <OffRoundIcon /> logout
+              </Button>
+            </li>
+          ) : (
+            <li>
+              <Button variant="secondary" onClick={logOut}>
+                <a href="/login">
                   <OffRoundIcon />
                   Login
                 </a>
-                </Button>
-              </li>
-              )}
-            {/* </ul> */}
+              </Button>
+            </li>
+          )}
+
+          {isAuth ? null : (
+            <li>
+              <a href="/about">A propos</a>
+            </li>
+          )}
+          {/* </ul> */}
           {/* </div> */}
         </ul>
       </div>

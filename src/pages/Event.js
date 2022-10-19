@@ -163,22 +163,6 @@ const Event = () => {
             />
           </Col>
         </Form.Group>
-        
-        {/* <Form.Group as={Row} className="mb-3" controlId="formHorizontalCity">
-          <Form.Label column sm={3}>
-            City
-          </Form.Label>
-          <Col sm={8}>
-            <Form.Control
-              type="text"
-              placeholder="City"
-              value={formData.city}
-              name="city"
-              onChange={handleChange}
-            />
-          </Col>
-        </Form.Group> */}
-
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalDate">
           <Form.Label column sm={3}>
             Date

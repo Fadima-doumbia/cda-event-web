@@ -6,8 +6,9 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import SearchIcon from "@rsuite/icons/Search";
-import { PencilFill, TrashFill } from "react-bootstrap-icons";
+import { Clouds, PencilFill, TrashFill } from "react-bootstrap-icons";
 import InfoModal from "../components/InfoModal";
+import { AddCircle, Close } from "@mui/icons-material";
 
 const Users = () => {
   const initialState = {
@@ -344,7 +345,7 @@ const Users = () => {
         </Form>
       </div>
       <div>
-        <Button variant="outline-danger" onClick={() => setIsCreate(true)}>
+        <Button variant="outline-secondary" onClick={() => setIsCreate(true)}>
           Créer
         </Button>
 
@@ -456,14 +457,14 @@ const Users = () => {
                             variant="outline-danger"
                             onClick={() => setIsEdit(false)}
                           >
-                            annuler
-                            <TrashFill />
-                          </Button>
+                            {/* annuler */}
+                            <Close />                          
+                            </Button>
                           <Button
                             variant="outline-secondary"
                             onClick={handleEditSubmit}
                           >
-                            edit
+                            {/* edit */}
                             <PencilFill />
                           </Button>
                         </td>
@@ -553,40 +554,19 @@ const Users = () => {
                   </Form.Group>
                 </td>
                 <td>
-                  {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Control
-                      type="date"
-                      placeholder="Birthday"
-                      value={user.birthday}
-                      name="birthday"
-                      onChange={handleChange}
-                      plaintext
-                    />
-                  </Form.Group> */}
                 </td>
                 <td>
-                  {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Control
-                      type="number"
-                      placeholder="Phone"
-                      value={user.phone}
-                      name="phone"
-                      onChange={handleChange}
-                      plaintext
-                    />
-                  </Form.Group> */}
                 </td>
                 <td>
                   <Button
                     variant="outline-danger"
                     onClick={() => setIsCreate(false)}
                   >
-                    annuler
-                    <TrashFill />
+                    <Close />
                   </Button>
                   <Button variant="outline-secondary" onClick={handleCreate}>
-                    Creer
-                    {/* <AddCircle /> */}
+                    {/* Creer */}
+                    <AddCircle />
                   </Button>
                 </td>
               </tr>
@@ -599,127 +579,3 @@ const Users = () => {
 };
 
 export default Users;
-/**                    indexCol === i ? (
-                      <tr key={i}>
-                        <td>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicPassword"
-                          >
-                            <Form.Control
-                              type="text"
-                              placeholder="Nom"
-                              value={user.lastName}
-                              name="lastName"
-                              onChange={handleEdit}
-                            />
-                          </Form.Group>
-                        </td>
-                        <td>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicPassword"
-                          >
-                            <Form.Control
-                              type="text"
-                              placeholder="prenom"
-                              value={user.username}
-                              name="username"
-                              onChange={handleEdit}
-                            />
-                          </Form.Group>
-                        </td>
-                        <td>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicPassword"
-                          >
-                            <Form.Control
-                              type="text"
-                              placeholder="role"
-                              value={user.role}
-                              name="role"
-                              onChange={handleEdit}
-                            />
-                          </Form.Group>
-                        </td>
-                        <td>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicPassword"
-                          >
-                            <Form.Control
-                              type="text"
-                              placeholder="Email"
-                              value={user.email}
-                              name="email"
-                              onChange={handleEdit}
-                            />
-                          </Form.Group>
-                        </td>
-                        <td>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicPassword"
-                          >
-                            <Form.Control
-                              type="date"
-                              placeholder="Birthday"
-                              value={user.birthday}
-                              name="birthday"
-                              onChange={handleEdit}
-                            />
-                          </Form.Group>
-                        </td>
-                        <td>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="formBasicPassword"
-                          >
-                            <Form.Control
-                              type="text"
-                              placeholder="Phone"
-                              value={user.phone}
-                              name="phone"
-                              onChange={handleEdit}
-                            />
-                          </Form.Group>
-                        </td>
-                        <td>
-                          <Button
-                            variant="outline-danger"
-                            onClick={() => setIsEdit(false)}
-                          >
-                            annuler
-                            <TrashFill />
-                          </Button>
-                          <Button
-                            variant="outline-secondary"
-                            onClick={handleEditSubmit}
-                          >
-                            edit
-                            <PencilFill />
-                          </Button>
-                        </td>
-                      </tr>
-                    ) : (
-                      <tr key={i}>
-                        <td>{user.lastName}</td>
-                        <td>{user.username}</td>
-                        <td>{user.role}</td>
-                        <td>{user.email}</td>
-                        <td>{user.birthday}</td>
-                        <td>{user.phone}</td>
-                        <td>
-                          <Button variant="outline-danger">
-                            <TrashFill />
-                          </Button>
-                          <Button
-                            variant="outline-secondary"
-                            onClick={() => editCol(i, user)}
-                          >
-                            <PencilFill />
-                          </Button>
-                        </td>
-                      </tr>
-                    ) */

@@ -29,6 +29,18 @@ userToken = user.accessToken;
   })
 };
 
+const editpassword = (userParam) => {
+  let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+userToken = user.accessToken;
+  return axios
+  .put(`http://localhost:8080/api/events/users/password`, userParam, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  })
+};
+
 const deleteUser = (id) => {
   let userToken = "";
 const user = JSON.parse(localStorage.getItem("user"));
@@ -57,6 +69,7 @@ const UserService = {
   getAllEvent,
   createUser,
   editUser,
+  editpassword,
   deleteUser,
 };
 

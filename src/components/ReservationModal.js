@@ -49,7 +49,6 @@ const ReservationModal = (props) => {
 
   const reserver = async () => {
     getToken();
-
     if (user.email === formReserved.email) {
       reservation.event.id = props.id;
       reservation.user.id = user.id;
