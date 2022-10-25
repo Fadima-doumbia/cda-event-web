@@ -25,7 +25,7 @@ const Event = () => {
   };
   const [formData, setFormData] = useState(initialState);
   const [datas, setDatas] = useState([]);
-  const [dataSource, setDataSource] = useState([]); // <== here we use the useState to be able to show the data after we fetch it
+  const [dataSource, setDataSource] = useState([]);
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [isShow, setisShow] = useState(false);
@@ -81,7 +81,6 @@ const Event = () => {
       }));
     }
   };
-
   const handleSubmit = () => {
     getToken();
     if (formData.child === "true") {
@@ -281,22 +280,18 @@ const Event = () => {
         </Form.Group>
       </Form>
 
-      {isShow ? <AlertInfo text="Evenement ajouté avec succès" typeVariant="success" show={isShow} setisShow={setisShow}/> : null }
+      {isShow ? (
+        <AlertInfo
+          text="Evenement ajouté avec succès"
+          typeVariant="success"
+          show={isShow}
+          setisShow={setisShow}
+        />
+      ) : null}
+      
       <Button variant="secondary" href="/admin">
         Liste d'evenement
       </Button>
-
-      {/* <div className="container-Card">
-        {datas.length > 0 ? (
-          datas.map((data, index) => (
-            <div key={index}>
-              <CardEvent formData={data} />
-            </div>
-          ))
-        ) : (
-          <div>null</div>
-        )}
-      </div> */}
     </>
   );
 };

@@ -27,7 +27,7 @@ export const verifyIfStringIsEmpty = (str) => {
   if (str === 0 && typeof str === "number") {
     response = false;
   }
-  if (str > 0 ) {
+  if (str > 0) {
     response = true;
   }
   return response;
@@ -46,4 +46,42 @@ export const formDataVerifyPassword = (str) => {
   }
 
   return response;
+};
+
+export const filtered = (array, check, value) => {
+  let datas = []
+  switch (check) {
+    case "email":
+      console.log("email");
+      let filteredemail = array.filter((user) =>
+        user.email.toUpperCase().includes(value.toUpperCase())
+      );
+      datas=filteredemail;
+      break;
+    case "role":
+      console.log("role");
+      let filteredrole = array.filter((user) =>
+        user.role.name.toUpperCase().includes(value.toUpperCase())
+      );
+      datas=filteredrole;
+      break;
+    case "username":
+      console.log("username");
+      let filteredusername = array.filter((user) =>
+        user.username.toUpperCase().includes(value.toUpperCase())
+      );
+      datas=filteredusername;
+      break;
+    default:
+      console.log("lastname");
+      let filtered = array.filter((user) =>
+        user.lastName.toUpperCase().includes(value.toUpperCase())
+      );
+      datas=filtered;
+      break;
+  }
+  if (value === "") {
+    datas=array;
+  }
+  return datas;
 };

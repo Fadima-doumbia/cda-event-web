@@ -13,10 +13,11 @@ const AdminCardEvent = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [token, setToken] = useState("");
   let userToken = "";
+  const [datas, setDatas] = useState([]);
 
   useEffect(() => {
     getToken();
-    getAllEvent();
+    // getAllEvent();
   }, [modalShow]);
 
   const getToken = () => {
@@ -25,19 +26,6 @@ const AdminCardEvent = (props) => {
     setToken(user.accessToken);
   };
 
-  const getAllEvent = () => {
-    getToken();
-    axios
-      .get("http://localhost:8080/api/events/all", {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
-      .then((res) => {
-        setEventData(res.data);
-        console.log(res.data);
-      });
-  };
   const style = {
     width: "60%",
   };
@@ -55,11 +43,30 @@ const AdminCardEvent = (props) => {
     props.setDatas(filter);
     console.log(filter);
   };
-
   const afterEdit = () => {
-getAllEvent();
-props.setDatas(eventData)
-console.log("first");
+    props.getAllEvent();
+    console.log("first");
+  };
+
+  const updateEvent = (formdata) => {
+    getToken();
+    console.log(formdata);
+    axios
+      .put(`http://localhost:8080/api/admin/events/${formdata.id}`, formdata, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((res) => {
+        // let filtered = props.datas.filter((event) => event.id !== res.data.id);
+        // filtered.push(res.data)
+        // filtered.sort();
+        // console.log(filtered);
+        // props.setDatas(filtered);
+        props.getAllEvent();
+      });
+    setModalShow(false);
+    // window.location.reload(false)
   };
 
   return (
@@ -139,7 +146,8 @@ console.log("first");
               formData={formData}
               show={modalShow}
               onHide={() => setModalShow(false)}
-
+              setFormData={setFormData}
+              updateEvent={updateEvent}
             />
           </div>
         </Card.Body>

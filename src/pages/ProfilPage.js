@@ -43,32 +43,15 @@ const ProfilPage = () => {
     getToken();
     const userCurrent = AuthService.getCurrentUser();
     userToken = userCurrent.accessToken;
-    axios
-      .get(`http://localhost:8080/api/events/${userCurrent.id}/users`, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
-      .then((res) => {
-        setDatas(res.data);
-        console.log(res.data);
-      });
-    // console.log(userCurrent);
+ 
+    UserService.getUserById(userCurrent.id).then((res) => {
+      setDatas(res.data);
+    });
 
-    axios
-      .get(
-        `http://localhost:8080/api/events/users/email/${userCurrent.email}`,
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        setCurrentUser(res.data);
-        setUser(res.data);
-        // console.log(res.data);
-      });
+    UserService.getUserByEmail(userCurrent.email).then((res) => {
+      setCurrentUser(res.data);
+      setUser(res.data);
+    });
   }, []);
   const convertDateToString = (date) => {
     let today = new Date(date);
@@ -92,11 +75,11 @@ const ProfilPage = () => {
       month[today.getMonth()] +
       " " +
       today.getFullYear();
-    console.log(str);
+    // console.log(str);
     return str;
   };
   const handleChange = (event) => {
-    console.log(currentUser);
+    // console.log(currentUser);
     setCurrentUser((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -124,7 +107,6 @@ const ProfilPage = () => {
 
   const editSubmit = async () => {
     getToken();
-    console.log(currentUser);
     let editUser = {
       id: currentUser.id,
       lastName: currentUser.lastName,
@@ -134,16 +116,16 @@ const ProfilPage = () => {
       birthday: currentUser.birthday,
       phone: currentUser.phone,
     };
-    await axios
-      .put(`http://localhost:8080/api/events/users`, editUser, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setUser(res.data);
-      });
+
+    // await axios
+    //   .put(`http://localhost:8080/api/events/users`, editUser, {
+    //     headers: {
+    //       Authorization: `Bearer ${userToken}`,
+    //     },
+    //   })
+    UserService.editUserProfil(editUser).then((res) => {
+      setUser(res.data);
+    });
     // await axios
     //   .get("http://localhost:8080/api/events/users/email/user@emaill", {
     //     headers: {
@@ -162,21 +144,21 @@ const ProfilPage = () => {
       ...value,
       [event.target.name]: event.target.value,
     }));
-      formDataVerifyPassword(event.target.value);
-      if (event.target.name === "newPassword") {
-        setIsActiv(true);
-        console.log("first")
-        if (formDataVerifyPassword(event.target.value)) {
-          setStr("Mot de passe fort");
-          setColor("#9cd06b");
-          setDisabledValue(false);
-          // setIsOk(true);
-        } else {
-          setStr("Mot de passe faible");
-          setColor("#f76217");
-          setDisabledValue(true);
-        }
+    formDataVerifyPassword(event.target.value);
+    if (event.target.name === "newPassword") {
+      setIsActiv(true);
+      console.log("first");
+      if (formDataVerifyPassword(event.target.value)) {
+        setStr("Mot de passe fort");
+        setColor("#9cd06b");
+        setDisabledValue(false);
+        // setIsOk(true);
+      } else {
+        setStr("Mot de passe faible");
+        setColor("#f76217");
+        setDisabledValue(true);
       }
+    }
     // console.log(updatePassword);
   };
 
@@ -197,10 +179,11 @@ const ProfilPage = () => {
           setIsOk(true);
         });
       } else {
-        setStrResponse("Les nouveau mot de passe et le mot de passe de confirmation ne correspondent pas");
+        setStrResponse(
+          "Les nouveau mot de passe et le mot de passe de confirmation ne correspondent pas"
+        );
         setIsOk(true);
       }
-      
     }
   };
 
@@ -322,18 +305,18 @@ const ProfilPage = () => {
           </Form>
         ) : (
           <div style={{ padding: "1rem 1rem 1rem 0" }}>
-            <h3>Donnée Personnelles</h3>
+            <h3>Données personnelles</h3>
             <h5>Nom : {user.lastName} </h5>
             <h5>Pseudo : {user.username} </h5>
             <h5>Email : {user.email} </h5>
             <h5>
-              Date De Naissance :{" "}
+              Date de naissance :{" "}
               {currentUser.birthday === null
                 ? "Non renseigné"
                 : convertDateToString(user.birthday)}{" "}
             </h5>
             <h5>
-              Telephone : {user.phone === null ? "Non renseigné" : user.phone}{" "}
+              Telephone : {user.phone === 0 ? "Non renseigné" : user.phone}{" "}
             </h5>
             <br />
             <Button onClick={activEdit}>Modifier</Button>
@@ -379,6 +362,8 @@ const ProfilPage = () => {
               </Col>
               {isActiv && <p style={{ color: color }}>{str}</p>}
             </Row>
+            <br />
+
             {disabledValue ? (
               <Button onClick={handleSubmitPassword} disabled>
                 Modifier
@@ -387,14 +372,16 @@ const ProfilPage = () => {
               <Button onClick={handleSubmitPassword}>Modifier</Button>
             )}
           </Form>
-          {isOk && <p style={{ color: "blue" }}>
-          <AlertInfo
-              text={strResponse}
-              typeVariant={"info"}
-              show={isOk}
-              setisShow={setIsOk}
-            />
-          </p>}
+          {isOk && (
+            <p style={{ color: "blue" }}>
+              <AlertInfo
+                text={strResponse}
+                typeVariant={"info"}
+                show={isOk}
+                setisShow={setIsOk}
+              />
+            </p>
+          )}
         </div>
       </div>
       {/* <div style={{ width: "90%", margin: "auto", color: "#3C6DA6" }}>

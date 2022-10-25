@@ -11,16 +11,26 @@ const AdminEventPage = () => {
 
   useEffect(() => {
     getAllEvent();
+    console.log("loading");
   }, []);
-  useEffect(() => {
-    getAllEvent();
-  }, [!loading]);
+
+  // useEffect(() => {
+  //   getAllEvent();
+  //   setLoading(false)
+  //   console.log("loading")
+  // }, [!loading]);
+
   const getToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;
     setToken(user.accessToken);
   };
-  const getAllEvent =async () => {
+  const afterEdit = () => {
+    getAllEvent();
+    console.log("after");
+  };
+  if (!datas) return <div>Loading...</div>;
+  const getAllEvent = async () => {
     getToken();
     await axios
       .get("http://localhost:8080/api/events/all", {
@@ -31,16 +41,20 @@ const AdminEventPage = () => {
       .then((res) => {
         setDatas(res.data);
         console.log(res.data);
+        console.log("test getAll")
       });
   };
+
   return (
-    <div className="admin-container">
+    <div className="admin-container">      
       {datas.length > 0 ? (
         datas.map((data, i) => (
           <div key={i}>
             <AdminCardEvent
               data={data}
               setDatas={setDatas}
+              datas={datas}
+              getAllEvent={getAllEvent}
             />
           </div>
         ))

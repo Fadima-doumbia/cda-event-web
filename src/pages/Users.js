@@ -9,6 +9,7 @@ import SearchIcon from "@rsuite/icons/Search";
 import { Clouds, PencilFill, TrashFill } from "react-bootstrap-icons";
 import InfoModal from "../components/InfoModal";
 import { AddCircle, Close } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const Users = () => {
   const initialState = {
@@ -19,7 +20,7 @@ const Users = () => {
     birthday: new Date(),
     phone: "",
     reservations: [],
-  }
+  };
   const [datas, setDatas] = useState([]);
   const [arrayUsers, setArrayUsers] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
@@ -29,7 +30,7 @@ const Users = () => {
   const [prevSearch, setPrevSearch] = useState("");
   const [token, setToken] = useState("");
   const [check, setCheck] = useState("");
-  const [user, setUser] = useState({
+  const userState = {
     lastName: "",
     username: "",
     role: "",
@@ -37,7 +38,8 @@ const Users = () => {
     birthday: new Date(),
     phone: "",
     reservations: [],
-  });
+  };
+  const [user, setUser] = useState(userState);
   const [userEdit, setUserEdit] = useState({
     id: 0,
     lastName: "",
@@ -49,18 +51,17 @@ const Users = () => {
     reservations: [],
   });
   let userToken = "";
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
 
   useEffect(() => {
     getAllUseer();
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;
     setToken(user.accessToken);
-    // console.log(user);
 
     if (user.roles[0] === "ROLE_USER") {
       setLoading(true);
-      // navigate("/login");
+      navigate("/home");
     }
   }, []);
 
@@ -80,8 +81,11 @@ const Users = () => {
       })
       .then((res) => {
         console.log(res.data);
-        setDatas(res.data);
-        setArrayUsers(res.data);
+        let sorting = res.data.sort((a, b) =>
+          a.username.toLowerCase() > b.username.toLowerCase() ? 1 : -1
+        );
+        setDatas(sorting);
+        setArrayUsers(sorting);
       });
   };
 
@@ -165,10 +169,11 @@ const Users = () => {
           setUser(initialState);
         });
     }
+
+    setUser(userState);
   };
 
   const handleEdit = (event) => {
-    
     setUserEdit((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -214,28 +219,28 @@ const Users = () => {
         case "email":
           console.log("email");
           let filteredemail = arrayUsers.filter((user) =>
-            user.email.includes(event.target.value)
+            user.email.toUpperCase().includes(event.target.value.toUpperCase())
           );
           setDatas(filteredemail);
           break;
         case "role":
           console.log("role");
           let filteredrole = arrayUsers.filter((user) =>
-            user.role.includes(event.target.value)
+            user.role.name.toUpperCase().includes(event.target.value.toUpperCase())
           );
           setDatas(filteredrole);
           break;
         case "username":
           console.log("username");
           let filteredusername = arrayUsers.filter((user) =>
-            user.username.includes(event.target.value)
+            user.username.toUpperCase().includes(event.target.value.toUpperCase())
           );
           setDatas(filteredusername);
           break;
         default:
           console.log("lastname");
           let filtered = arrayUsers.filter((user) =>
-            user.lastName.includes(event.target.value)
+            user.lastName.toUpperCase().includes(event.target.value.toUpperCase())
           );
           setDatas(filtered);
           break;
@@ -252,7 +257,6 @@ const Users = () => {
     setCheck(event.target.value);
     console.log(event.target.value);
   };
-
 
   return (
     <Container fluid>
@@ -300,7 +304,7 @@ const Users = () => {
                 isValid
                 onChange={handleCheck}
                 type="radio"
-                label="Prenom"
+                label="Pseudo"
                 name="formHorizontalRadios"
                 id="formHorizontalRadios2"
               />
@@ -353,7 +357,7 @@ const Users = () => {
           <thead>
             <tr>
               <th>Nom</th>
-              <th>Prenom</th>
+              <th>Pseudo</th>
               <th>Role</th>
               <th>Email</th>
               <th>Date de naissance</th>
@@ -365,7 +369,7 @@ const Users = () => {
             {datas.length > 0
               ? datas.map((user, i) =>
                   isEdit ? (
-                    indexCol===i?(
+                    indexCol === i ? (
                       <tr key={i}>
                         <td>
                           <Form.Group
@@ -403,7 +407,7 @@ const Users = () => {
                             <Form.Control
                               type="text"
                               placeholder="role"
-                              value={userEdit.role.id === 1? "U" : "A"}
+                              value={userEdit.role.id === 1 ? "U" : "A"}
                               name="role"
                               onChange={handleEdit}
                               plaintext
@@ -458,8 +462,8 @@ const Users = () => {
                             onClick={() => setIsEdit(false)}
                           >
                             {/* annuler */}
-                            <Close />                          
-                            </Button>
+                            <Close />
+                          </Button>
                           <Button
                             variant="outline-secondary"
                             onClick={handleEditSubmit}
@@ -469,11 +473,15 @@ const Users = () => {
                           </Button>
                         </td>
                       </tr>
-                    ):null
+                    ) : null
                   ) : (
                     <tr key={i}>
-                      <td>{user.lastName === null ? "Non renseigné" : user.lastName}</td>
-                      <td>{user.username}</td>
+                      <td>
+                        {user.lastName === null
+                          ? "Non renseigné"
+                          : user.lastName.toUpperCase()}
+                      </td>
+                      <td>{user.username.toUpperCase()}</td>
                       <td>
                         {user.role.id === 1 ? "U" : null}{" "}
                         {user.role.id === 2 ? "A" : null}
@@ -513,9 +521,9 @@ const Users = () => {
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control
                       type="text"
-                      placeholder="Nom"
-                      value={user.lastName}
-                      name="lastName"
+                      placeholder="prenom"
+                      value={user.username}
+                      name="username"
                       onChange={handleChange}
                     />
                   </Form.Group>
@@ -524,9 +532,9 @@ const Users = () => {
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control
                       type="text"
-                      placeholder="prenom"
-                      value={user.username}
-                      name="username"
+                      placeholder="Nom"
+                      value={user.lastName}
+                      name="lastName"
                       onChange={handleChange}
                     />
                   </Form.Group>
@@ -553,10 +561,8 @@ const Users = () => {
                     />
                   </Form.Group>
                 </td>
-                <td>
-                </td>
-                <td>
-                </td>
+                <td></td>
+                <td></td>
                 <td>
                   <Button
                     variant="outline-danger"
