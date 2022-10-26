@@ -5,8 +5,6 @@ import AdminCardEvent from "../components/AdminCardEvent";
 
 const AdminEventPage = () => {
   const [datas, setDatas] = useState([]);
-  const [token, setToken] = useState("");
-  const [loading, setLoading] = useState(false);
   let userToken = "";
 
   useEffect(() => {
@@ -23,12 +21,6 @@ const AdminEventPage = () => {
   const getToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;
-    setToken(user.accessToken);
-  };
-  
-  const afterEdit = () => {
-    getAllEvent();
-    console.log("after");
   };
   
   const getAllEvent = async () => {

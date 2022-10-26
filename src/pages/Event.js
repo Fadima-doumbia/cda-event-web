@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import AlertInfo from "../components/AlertInfo";
-import CardEvent from "../components/CardEvent";
+// import CardEvent from "../components/CardEvent";
 import InfoModal from "../components/InfoModal";
 // import CardEvent from "../components/modal - card/CardEvent";
 // import "../styles/styles.scss";
@@ -25,16 +25,16 @@ const Event = () => {
   };
   const [formData, setFormData] = useState(initialState);
   const [datas, setDatas] = useState([]);
-  const [dataSource, setDataSource] = useState([]);
-  const [token, setToken] = useState("");
+  // const [dataSource, setDataSource] = useState([]);
+  // const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [isShow, setisShow] = useState(false);
   let userToken = "";
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    userToken = user.accessToken;
-    setToken(user.accessToken);
+    // userToken = user.accessToken;
+    // setToken(user.accessToken);
     if (user.roles[0] === "ROLE_USER") {
       setLoading(true);
     }
@@ -56,7 +56,7 @@ const Event = () => {
   const getToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;
-    setToken(user.accessToken);
+    // setToken(user.accessToken);
   };
   const handleChange = (event) => {
     const prix = parseFloat(event.target.value);
@@ -104,7 +104,7 @@ const Event = () => {
       });
   };
 
-  // console.log(formData);
+
   // console.log(datas);
   return (
     <>

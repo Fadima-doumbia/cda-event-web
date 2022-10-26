@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+// import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -10,37 +11,35 @@ import "../styles/styles.scss";
 import ListGroup from "react-bootstrap/ListGroup";
 
 const EditEvent = (props) => {
-  const initialState = {
-    address: "",
-    name: "",
-    date: "",
-    description: "",
-    child: false,
-    places: 0,
-    prix: 0,
-    heureDebut: "",
-    heureFin: "",
-  };
+  // const initialState = {
+  //   address: "",
+  //   name: "",
+  //   date: "",
+  //   description: "",
+  //   child: false,
+  //   places: 0,
+  //   prix: 0,
+  //   heureDebut: "",
+  //   heureFin: "",
+  // };
   const [formData, setFormData] = useState(props.formData);
-  const [token, setToken] = useState("");
   let userToken = "";
 
 
-  useEffect(() => {
-    getToken();
-    // axios.get("http://localhost:8080/api/events/all", {
-    //     headers: {
-    //       Authorization: `Bearer ${userToken}`,
-    //     }}).then((res) => {
-    //   setDatas(res.data);
-    //   console.log(res.data)
-    // });
-  }, []);
+  // useEffect(() => {
+  //   getToken();
+  //   // axios.get("http://localhost:8080/api/events/all", {
+  //   //     headers: {
+  //   //       Authorization: `Bearer ${userToken}`,
+  //   //     }}).then((res) => {
+  //   //   setDatas(res.data);
+  //   //   console.log(res.data)
+  //   // });
+  // }, []);
 
   const getToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;
-    setToken(user.accessToken);
   };
   const handleChange = (event) => {
     const prix = parseInt(event.target.value);
