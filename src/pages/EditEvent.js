@@ -45,7 +45,6 @@ const EditEvent = (props) => {
   const handleChange = (event) => {
     const prix = parseInt(event.target.value);
     const places = parseInt(event.target.value);
-    // console.log("first");
     setFormData((value) => ({
       ...value,
       [event.target.name]: event.target.value,
@@ -140,7 +139,7 @@ const EditEvent = (props) => {
               as="textarea"
               placeholder="Description"
               type="text"
-              value={formData.description}
+              value={formData.desription}
               name="description"
               onChange={handleChange}
             />
@@ -232,7 +231,7 @@ const EditEvent = (props) => {
             <ListGroup>
               {formData.reservations.length > 0 ? (
                 formData.reservations.map((reservation, i) => (
-                  <ListGroup.Item key={i}>
+                  <ListGroup.Item key={i} style={{display: "flex", justifyContent: "space-between"}}>
                     {reservation.user.username} - {reservation.user.lastName}
                     <Button onClick={() => annuler(reservation.id)}>
                       {" "}
@@ -246,7 +245,7 @@ const EditEvent = (props) => {
             </ListGroup>
           </Row>
           <br />
-          <Button type="button" className="buttonClick" onClick={()=>props.updateEvent(formData)}>
+          <Button type="button" className="buttonClick" onClick={()=>props.updateevent(formData)}>
             Modifier
           </Button>
         </Form>

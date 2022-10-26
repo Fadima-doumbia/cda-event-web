@@ -108,6 +108,9 @@ const Event = () => {
   // console.log(datas);
   return (
     <>
+      <Button variant="secondary" href="/admin">
+      Liste d'événement
+      </Button>
       {loading ? (
         <InfoModal
           showValue={loading}
@@ -288,10 +291,6 @@ const Event = () => {
           setisShow={setisShow}
         />
       ) : null}
-      
-      <Button variant="secondary" href="/admin">
-        Liste d'evenement
-      </Button>
     </>
   );
 };

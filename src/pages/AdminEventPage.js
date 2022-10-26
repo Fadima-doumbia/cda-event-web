@@ -11,7 +11,7 @@ const AdminEventPage = () => {
 
   useEffect(() => {
     getAllEvent();
-    console.log("loading");
+    // console.log("loading");
   }, []);
 
   // useEffect(() => {
@@ -25,11 +25,12 @@ const AdminEventPage = () => {
     userToken = user.accessToken;
     setToken(user.accessToken);
   };
+  
   const afterEdit = () => {
     getAllEvent();
     console.log("after");
   };
-  if (!datas) return <div>Loading...</div>;
+  
   const getAllEvent = async () => {
     getToken();
     await axios
@@ -40,8 +41,8 @@ const AdminEventPage = () => {
       })
       .then((res) => {
         setDatas(res.data);
-        console.log(res.data);
-        console.log("test getAll")
+        // console.log(res.data);
+        // console.log("test getAll")
       });
   };
 
@@ -52,9 +53,9 @@ const AdminEventPage = () => {
           <div key={i}>
             <AdminCardEvent
               data={data}
-              setDatas={setDatas}
+              setdatas={setDatas}
               datas={datas}
-              getAllEvent={getAllEvent}
+              getallEvent={getAllEvent}
             />
           </div>
         ))
