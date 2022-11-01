@@ -79,7 +79,7 @@ jobs:
    stage: build
    script:
      - npm run build
-     artifacts : 
+     artifacts:
       expire_in: 20 mins
        paths:
      - build
@@ -87,12 +87,12 @@ jobs:
     runs-on: self-hosted
     stage: deploy
     script:
-	- which rsync || ( apt update -y && apt install rsync -y )
-	- ls -la
-	- /sbin/ip route|awk '/default/ { print $3 }'
-	- ls ./build/
-	- /usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
-	- echo "Deployed to production server"
-     only:
-	- main
+     - which rsync || ( apt update -y && apt install rsync -y )
+     - ls -la
+     - /sbin/ip route|awk '/default/ { print $3 }'
+     - ls ./build/
+     -/usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
+     - echo "Deployed to production server"
+    only:
+     - main
     when: manual
