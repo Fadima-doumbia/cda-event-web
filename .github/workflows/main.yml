@@ -45,8 +45,7 @@ jobs:
     steps:
       uses: farima@51.178.31.43
       name: Deploy to ovh
-      with:
-      	password: ${{PASSWORD_FARIMA}}
+
     
     script: 
       - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
