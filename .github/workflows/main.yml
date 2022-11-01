@@ -19,7 +19,6 @@ jobs:
      - name: Install dependencies
        run: npm install
    test2:
-
     runs-on: self-hosted
     script: 
       - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
@@ -39,21 +38,51 @@ jobs:
     artifacts:
       expire_in: 20 mins
       paths:
-			
-		deploy: 
-			needs: test2
-			runs-on: self-hosted
+      
+   deploy:
+    runs-on: self-hosted
+    needs: test2
+    steps:
+      uses: farima@vps-6949c584
+      name: Deploy to ovh
+      with:
+      	password: ${{PASSWORD_FARIMA}}
+	heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+	heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+	heroku_email: ${{ secrets.HEROKU_EMAIL }}
+    
+    script: 
+      - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
+      - mkdir -p ~/.ssh
+      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+      - chmod 700 ~/.ssh/id_rsa
+      - eval "$(ssh-agent -s)"
+      - ssh-add ~/.ssh/id_rsa
+      - ssh-keyscan -t rsa 64.227.1.160 > ~/.ssh/known_hosts
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      - chmod 644 ~/.ssh/known_hosts
+    
+    cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+    artifacts:
+      expire_in: 20 mins
+      paths:		
+deploy: 
+	needs: test2
+	runs-on: self-hosted
 
-			steps:
-			- uses: actions/checkout@v2
+	steps:
+	- uses: actions/checkout@v2
 
-			- name: Deploy to ovh 
-				uses: farima@vps-6949c584
-				with:
-					password: ${{PASSWORD_FARIMA}}
-					heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-					heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-					heroku_email: ${{ secrets.HEROKU_EMAIL }}
+	- name: Deploy to ovh 
+		uses: farima@vps-6949c584
+		with:
+			password: ${{PASSWORD_FARIMA}}
+			heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+			heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+			heroku_email: ${{ secrets.HEROKU_EMAIL }}
 
 	build:
 		runs-on: self-hosted
