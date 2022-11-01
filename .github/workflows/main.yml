@@ -43,7 +43,7 @@ jobs:
     runs-on: self-hosted
     needs: test2
     steps:
-      uses: farima@vps-6949c584
+      uses: farima@51.178.31.43
       name: Deploy to ovh
       with:
       	password: ${{PASSWORD_FARIMA}}
