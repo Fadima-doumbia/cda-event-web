@@ -47,9 +47,6 @@ jobs:
       name: Deploy to ovh
       with:
       	password: ${{PASSWORD_FARIMA}}
-	heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-	heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-	heroku_email: ${{ secrets.HEROKU_EMAIL }}
     
     script: 
       - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
@@ -68,42 +65,34 @@ jobs:
       - node_modules/
     artifacts:
       expire_in: 20 mins
-      paths:		
-deploy: 
-	needs: test2
-	runs-on: self-hosted
+      paths:
+      
+   deploys: 
+    needs: test2
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to ovh 
 
-	steps:
-	- uses: actions/checkout@v2
-
-	- name: Deploy to ovh 
-		uses: farima@vps-6949c584
-		with:
-			password: ${{PASSWORD_FARIMA}}
-			heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-			heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-			heroku_email: ${{ secrets.HEROKU_EMAIL }}
-
-	build:
-		runs-on: self-hosted
-		stage: build
-		script:
-			- npm run build
-		artifacts:
-			expire_in: 20 mins
-			paths:
-				- build
-
-	Deploy To OVH:
-		runs-on: self-hosted
-		stage: deploy
-		script:
-			- which rsync || ( apt update -y && apt install rsync -y )
-			- ls -la
-			- /sbin/ip route|awk '/default/ { print $3 }'
-			- ls ./build/
-			- /usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
-			- echo "Deployed to production server"
-		only:
-			- main
-		when: manual
+   build:
+   runs-on: self-hosted
+   stage: build
+   script:
+     - npm run build
+     artifacts : 
+      expire_in: 20 mins
+       paths:
+     - build
+   Deploy To OVH:
+    runs-on: self-hosted
+    stage: deploy
+    script:
+	- which rsync || ( apt update -y && apt install rsync -y )
+	- ls -la
+	- /sbin/ip route|awk '/default/ { print $3 }'
+	- ls ./build/
+	- /usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
+	- echo "Deployed to production server"
+     only:
+	- main
+    when: manual
