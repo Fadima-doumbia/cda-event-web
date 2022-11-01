@@ -41,12 +41,12 @@ jobs:
       run: npm install
 
     - name: Build app
-      run: npm run watch
+      run: npm build
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: vps-${{ github.run_id }}-${{ github.run_number }}
+        name: /usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
         path: './dist/vps'
 
   deploy:
@@ -57,22 +57,5 @@ jobs:
     - name: Dowload artifact
       uses: actions/download-artifact@v2
       with:
-        name: vps-${{ github.run_id }}-${{ github.run_number }}
+        name: /usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
         path: './build'
-
-    - name: Copy repository content via scp
-      uses: appleboy/scp-action@master
-  script:
-   runs-on: self-hosted
-    - which rsync || ( apt update -y && apt install rsync -y )
-    - ls -la
-    - /sbin/ip route|awk '/default/ { print $3 }'
-    - ls ./build/
-    - /usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
-    - echo "Deployed to production server"
-  only: 
-   runs-on: self-hosted
-    - main
-  when: 
-   runs-on: self-hosted
-    - manual
