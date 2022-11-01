@@ -22,12 +22,14 @@ stages:
   - deploy
 
 Install Dependencies:
+  runs-on: self-hosted
   stage: install
   script:
     - npm install
     - node -v
 
 Build:
+  runs-on: self-hosted
   stage: build
   script:
     - npm run build
@@ -37,6 +39,7 @@ Build:
       - build
 
 Deploy To OVH:
+  runs-on: self-hosted
   stage: deploy
   script:
     - which rsync || ( apt update -y && apt install rsync -y )
@@ -46,5 +49,5 @@ Deploy To OVH:
     - /usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
     - echo "Deployed to production server"
   only:
-    - master
+    - main
   when: manual
