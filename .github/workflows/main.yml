@@ -76,7 +76,7 @@ jobs:
    build:
    runs-on: self-hosted
    stage: build
-   script:
+    script:
      - npm run build
      artifacts:
       expire_in: 20 mins
