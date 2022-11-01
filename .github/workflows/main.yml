@@ -1,5 +1,10 @@
 image: node:14
-
+name: main
+on: 
+  push:
+    branches: [ release ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 before_script:
   - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
   - mkdir -p ~/.ssh
