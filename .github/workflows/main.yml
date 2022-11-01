@@ -62,13 +62,17 @@ jobs:
 
     - name: Copy repository content via scp
       uses: appleboy/scp-action@master
-script:
+  script:
+   runs-on: self-hosted
     - which rsync || ( apt update -y && apt install rsync -y )
     - ls -la
     - /sbin/ip route|awk '/default/ { print $3 }'
     - ls ./build/
     - /usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
     - echo "Deployed to production server"
-only: 
+  only: 
+   runs-on: self-hosted
     - main
-when: manual
+  when: 
+   runs-on: self-hosted
+    - manual
