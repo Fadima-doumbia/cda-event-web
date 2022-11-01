@@ -2,33 +2,26 @@ name: main
 on: 
   push:
     branches: [ release ]
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a job called "build"
-  # test:
+   test:
   #   # The type of runner that the job will run on
-  #   runs-on: self-hosted
+     runs-on: self-hosted
     
   #   # Steps represent a sequence of tasks that will be executed as part of the job
-  #   steps:
-  #   - name: Use Node.js
-  #     uses: actions/setup-node@v2
-  #     with: 
-  #       node-version: '16.x'
+     steps:
+     - name: Use Node.js
+       uses: actions/setup-node@v2
+       with: 
+         node-version: '16.x'
 
-  #   - uses: actions/checkout@v2
+     - uses: actions/checkout@v2
 
-  #   - name: Install dependencies
-  #     run: npm install
+     - name: Install dependencies
+       run: npm install
     
-  #   - name: lint
-  #     run: npm run lint
-    
-  #   - name: Unit tests
-  #     run: npm run test:ci
     
   # build: 
   #   runs-on: self-hosted
@@ -66,16 +59,9 @@ Build:
 
     steps:
     - uses: actions/checkout@v2
-
-    # - name: Dowload artifact
-    #   uses: actions/download-artifact@v2
-    #   with: 
-    #     name: devops-test-${{ github.run_id }}-${{ github.run_number }} 
-    #     path: './build'
-    # - run: git config user.email "jeremy.bojko@protonmail.com" && git config user.name "Jeremy-Bojko" && git add -A && git commit -m "Updated code"
-
-    - name: Deploy to Heroku
-      uses: akhileshns/heroku-deploy@v3.12.12
+    
+    - name: Deploy to ovh
+      uses: farima@vps-6949c584
       with:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
         heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
