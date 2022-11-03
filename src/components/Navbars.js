@@ -5,14 +5,14 @@ import AdminIcon from "@rsuite/icons/Admin";
 import OffRoundIcon from "@rsuite/icons/OffRound";
 import Button from "react-bootstrap/Button";
 import AuthService from "../services/auth.service";
-import eventBus from "../common/EventBus";
+// import eventBus from "../common/EventBus";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbars() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
-  let refresh = false;
+  // let refresh = false;
   const [isAuth, setIsAuth] = useState(false);
   // const [currentUser, setCurrentUser] = useState(undefined);
   let navigate = useNavigate();
@@ -29,12 +29,12 @@ export default function Navbars() {
       setIsAuth(true);
     }
 
-    eventBus.on("logout", () => {
-      logOut();
-    });
-    return () => {
-      eventBus.remove("logout");
-    };
+    // eventBus.on("logout", () => {
+    //   logOut();
+    // });
+    // return () => {
+    //   eventBus.remove("logout");
+    // };
   }, []);
 
   const logOut = () => {
