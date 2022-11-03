@@ -29,7 +29,6 @@ test('verify if variable number > 0', () => {
 test('verify if variable number equal 4', () => {
   let num = 4;
   let response = verifyIfStringIsEmpty(num);
-  
   expect(response).toBeTruthy();
 });
 
@@ -85,7 +84,6 @@ test('filtered by param', () => {
     email: "farima@mail.com",
     phone: "786669090",
   }];
-
   let response = filtered(array, "lastName", "doumb");
   expect(response).toEqual(arrayFiltered);
 });

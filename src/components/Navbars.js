@@ -152,11 +152,11 @@ export default function Navbars() {
             </li>
           )}
 
-          {isAuth ? null : (
+          {/* {isAuth ? null : (
             <li>
               <a href="/about">A propos</a>
             </li>
-          )}
+          )} */}
           {/* </ul> */}
           {/* </div> */}
         </ul>
