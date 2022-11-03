@@ -15,10 +15,10 @@ const Register = () => {
     password: "",
   };
   const [formData, setFormData] = useState(initialState);
-  const [successful, setSuccessful] = useState(false);
-  const [isOk, setIsOk] = useState(false);
+  // const [successful, setSuccessful] = useState(false);
+  // const [isOk, setIsOk] = useState(false);
   const [isActiv, setIsActiv] = useState(false);
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
   const [messages, setMessages] = useState("");
   const [disabledValue, setDisabledValue] = useState(true);
   const [color, setColor] = useState("");
@@ -36,7 +36,7 @@ const Register = () => {
         setMessages("Mot de passe fort");
         setColor("#9cd06b");
         setDisabledValue(false);
-        setIsOk(true);
+        // setIsOk(true);
       } else {
         setMessages("Mot de passe faible");
         setColor("#f76217");
@@ -98,23 +98,24 @@ const Register = () => {
   const handleSubmit = () => {
     AuthService.register(formData).then(
       (response) => {
-        setMessage(response.data.message);
+        // setMessage(response.data.message);
         console.log(response);
-        setSuccessful(true);
+        // setSuccessful(true);
         navigate("/login");
         window.location.reload();
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-        setMessage(resMessage);
-        setSuccessful(false);
       }
+      // ,
+      // (error) => {
+//         const resMessage =
+//           (error.response &&
+//             error.response.data &&
+//             error.response.data.message) ||
+//           error.message ||
+//           error.toString();
+// console.log("resMessage")
+        // setMessage(resMessage);
+        // setSuccessful(false);
+      // }
     );
   };
 

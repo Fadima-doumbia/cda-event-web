@@ -50,9 +50,9 @@ const EditEvent = (props) => {
     //   },
     // });
     ReservationService.annulerReservation(id);
-    let filter = props.formData.reservations.filter(function (e) {
-      return e.user.id != id;
-    });
+    // let filter = props.formData.reservations.filter(function (e) {
+    //   return e.user.id !== id;
+    // });
   };
 
   

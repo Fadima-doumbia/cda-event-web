@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { Trash, TrashFill } from "react-bootstrap-icons";
+import { TrashFill } from "react-bootstrap-icons";
 
 const ConfirmModal = (props) => {
   const [show, setShow] = useState(false);
