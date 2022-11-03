@@ -76,7 +76,12 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v3
       with:
-        path: './build/'
+        path: './build'
+        
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: './build'
+
 
     - name: copy file via ssh password
       uses: appleboy/scp-action@master
