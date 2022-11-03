@@ -12,16 +12,16 @@ export default function Navbars() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  let refresh =false;
   const [isAuth, setIsAuth] = useState(false);
-  const [currentUser, setCurrentUser] = useState(undefined);
+  // const [currentUser, setCurrentUser] = useState(undefined);
   let navigate = useNavigate();
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
 
     if (user) {
-      setCurrentUser(user);
+      // setCurrentUser(user);
       setShowModeratorBoard(user.roles.includes("ROLE_USER"));
       setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
@@ -42,7 +42,7 @@ export default function Navbars() {
     AuthService.logout();
     setShowModeratorBoard(false);
     setShowAdminBoard(false);
-    setCurrentUser(undefined);
+    // setCurrentUser(undefined);
     setIsAuth(false);
     navigate("/login");
   };

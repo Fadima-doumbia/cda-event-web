@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Col from "react-bootstrap/Col";
@@ -10,7 +10,7 @@ import ReservationService from "../services/reservation.service";
 // import UserService from "../services/user.service";
 // import AuthService from "../services/auth.service";
 import AlertInfo from "./AlertInfo";
-import UserService from "../services/user.service";
+// import UserService from "../services/user.service";
 import AuthService from "../services/auth.service";
 // import { Alert } from "bootstrap";
 

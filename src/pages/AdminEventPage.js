@@ -6,7 +6,7 @@ import EventService from "../services/event.service";
 
 const AdminEventPage = () => {
   const [datas, setDatas] = useState([]);
-  let userToken = "";
+  // let userToken = "";
 
   useEffect(() => {
     getAllEvent();

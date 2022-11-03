@@ -10,10 +10,10 @@ import ConfirmModal from "./ConfirmModal";
 import ReservationService from "../services/reservation.service";
 
 const ReservationTable = (props) => {
-  const [show, setShow] = useState(false);
-  const [target, setTarget] = useState(null);
-  const ref = useRef(null);
-  let userToken = "";
+  // const [show, setShow] = useState(false);
+  // const [target, setTarget] = useState(null);
+  // const ref = useRef(null);
+  // let userToken = "";
 
   // useEffect(() => {
   //   getToken();

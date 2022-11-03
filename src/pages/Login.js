@@ -29,16 +29,17 @@ const Login = () => {
       (response) => {
         navigate("/profil");
         window.location.reload(false);
-      },
+      }
+      ,
       (error) => {
         setMsg("Pseudo ou mots de passe ");
-        setIsError(true);
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+        // setIsError(true);
+        // const resMessage =
+        //   (error.response &&
+        //     error.response.data &&
+        //     error.response.data.message) ||
+        //   error.message ||
+        //   error.toString();
       }
     );
   };

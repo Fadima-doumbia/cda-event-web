@@ -30,7 +30,7 @@ const Event = () => {
   // const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [isShow, setisShow] = useState(false);
-  let userToken = "";
+  // let userToken = "";
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -54,11 +54,11 @@ const Event = () => {
   //   });
   // };
 
-  const getToken = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    userToken = user.accessToken;
-    // setToken(user.accessToken);
-  };
+  // const getToken = () => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   userToken = user.accessToken;
+  //   // setToken(user.accessToken);
+  // };
   const handleChange = (event) => {
     const prix = parseFloat(event.target.value);
     const places = parseInt(event.target.value);
@@ -83,7 +83,7 @@ const Event = () => {
     }
   };
   const handleSubmit = () => {
-    getToken();
+    // getToken();
     if (formData.child === "true") {
       formData.child = true;
     } else {

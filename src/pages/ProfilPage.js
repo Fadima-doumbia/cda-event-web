@@ -10,7 +10,7 @@ import UserService from "../services/user.service";
 import { formDataVerifyPassword } from "../utils/UserFonction";
 
 const ProfilPage = () => {
-  const [datas, setDatas] = useState([]);
+  // const [datas, setDatas] = useState([]);
   const [user, setUser] = useState("");
   const [str, setStr] = useState("");
   const [strResponse, setStrResponse] = useState("");
@@ -37,16 +37,16 @@ const ProfilPage = () => {
     repeatPassword: "",
   };
   const [updatePassword, setUpdatePassword] = useState(initialPassword);
-  let userToken = "";
+  // let userToken = "";
 
   useEffect(() => {
-    getToken();
+    // getToken();
     const userCurrent = AuthService.getCurrentUser();
-    userToken = userCurrent.accessToken;
+    // userToken = userCurrent.accessToken;
  
-    UserService.getUserById(userCurrent.id).then((res) => {
-      setDatas(res.data);
-    });
+    // UserService.getUserById(userCurrent.id).then((res) => {
+      // setDatas(res.data);
+    // });
 
     UserService.getUserByEmail(userCurrent.email).then((res) => {
       setCurrentUser(res.data);
@@ -85,11 +85,11 @@ const ProfilPage = () => {
       [event.target.name]: event.target.value,
     }));
   };
-  const getToken = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    userToken = user.accessToken;
-    setUser(user);
-  };
+  // const getToken = () => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   userToken = user.accessToken;
+  //   setUser(user);
+  // };
   const activEdit = () => {
     let currentUser = {
       id: user.id,
@@ -106,7 +106,7 @@ const ProfilPage = () => {
   };
 
   const editSubmit = async () => {
-    getToken();
+    // getToken();
     let editUser = {
       id: currentUser.id,
       lastName: currentUser.lastName,
@@ -163,7 +163,7 @@ const ProfilPage = () => {
   };
 
   const handleSubmitPassword = () => {
-    getToken();
+    // getToken();
     if (updatePassword.lastPassword === "") {
       setStrResponse("Veuillez entrer votre mot de passe actuel");
       setIsOk(true);
