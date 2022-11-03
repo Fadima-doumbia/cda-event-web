@@ -54,11 +54,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Dowload artifact
-      uses: actions/download-artifact@v2
+    - name: Download artifact
+      uses: actions/download-artifact@v3
       with:
-        name: cda-event-web-${{ github.run_id }}-${{ github.run_number }}
-        path: './build'
+        path: ./dist/cda-event-web
 
     - name: Copy repository content via scp
       uses: appleboy/scp-action@master
