@@ -1,97 +1,71 @@
 name: main
 on: 
   push:
-    branches: [ users ]
+    branches: [ user ]
   workflow_dispatch:
-  
+
 jobs:
-   test:
-     runs-on: self-hosted
+  test:
+    runs-on: ubuntu-latest
     
-     steps:
-     - name: Use Node.js
-       uses: actions/setup-node@v2
-       with: 
-         node-version: '16.x'
-
-     - uses: actions/checkout@v2
-
-     - name: Install dependencies
-       run: npm install
-   test2:
-    runs-on: self-hosted
-    script: 
-      - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
-      - mkdir -p ~/.ssh
-      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-      - chmod 700 ~/.ssh/id_rsa
-      - eval "$(ssh-agent -s)"
-      - ssh-add ~/.ssh/id_rsa
-      - ssh-keyscan -t rsa 64.227.1.160 > ~/.ssh/known_hosts
-      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-      - chmod 644 ~/.ssh/known_hosts
-    
-    cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-    artifacts:
-      expire_in: 20 mins
-      paths:
-      
-   deploy:
-    runs-on: self-hosted
-    needs: test2
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      uses: farima@51.178.31.43
-      name: Deploy to ovh
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with: 
+        node-version: '16.x'
 
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
     
-    script: 
-      - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )"
-      - mkdir -p ~/.ssh
-      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-      - chmod 700 ~/.ssh/id_rsa
-      - eval "$(ssh-agent -s)"
-      - ssh-add ~/.ssh/id_rsa
-      - ssh-keyscan -t rsa 64.227.1.160 > ~/.ssh/known_hosts
-      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-      - chmod 644 ~/.ssh/known_hosts
+    # - name: lint
+    #   run: npm run lint
     
-    cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-    artifacts:
-      expire_in: 20 mins
-      paths:
-      
-   deploys: 
-    needs: test2
-    runs-on: self-hosted
+    - name: Unit tests
+      run: npm run test
+    
+  build: 
+    needs: test
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to ovh 
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with: 
+        node-version: '16.x'
 
-   build:
-   runs-on: self-hosted
-   stage: build
-    script:
-     - npm run build
-     artifacts:
-      expire_in: 20 mins
-       paths:
-     - build
-   Deploy To OVH:
-    runs-on: self-hosted
-    stage: deploy
-    script:
-     - which rsync || ( apt update -y && apt install rsync -y )
-     - ls -la
-     - /sbin/ip route|awk '/default/ { print $3 }'
-     - ls ./build/
-     -/usr/bin/rsync -r ./build/ ${SERVER_UBUNTU}:${SERVER_PATH_UBUNTU}. --exclude-from="exclude.build"
-     - echo "Deployed to production server"
-    only:
-     - main
-    when: manual
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Build app
+      run: npm run build
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with: 
+        name: cda-event-web-${{ github.run_id }}-${{ github.run_number }}
+        path: ./dist/cda-event-web
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Dowload artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: cda-event-web-${{ github.run_id }}-${{ github.run_number }}
+        path: './build'
+
+    - name: Copy repository content via scp
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        source: './build/'
+        target: '/home/${{ secrets.USERNAME }}'
