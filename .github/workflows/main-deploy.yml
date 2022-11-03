@@ -59,13 +59,15 @@ jobs:
       with:
         path: ./dist/cda-event-web
 
-    - name: Copy repository content via scp
-      uses: appleboy/scp-action@master
+    - name: scp pipelines
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
       with:
         host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        source: './dist/cda-event-web'
-        target: '/home/${{ secrets.USERNAME }}'
+        user: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        first_ssh: |
+          echo scp deployement pipelines
+        scp: |
+          .dist/cda-event-web => ~/frontend
  
