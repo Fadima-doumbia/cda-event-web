@@ -55,16 +55,14 @@ const Users = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    let userToken = "";
     getAllUseer();
     const user = JSON.parse(localStorage.getItem("user"));
-    userToken = user.accessToken;
     setToken(user.accessToken);
 
-    if (user.roles[0] === "ROLE_USER") {
-      setLoading(true);
-      navigate("/home");
-    }
+    // if (user.roles[0] === "ROLE_USER") {
+    //   setLoading(true);
+    //   navigate("/home");
+    // }
   }, []);
 
   // const getToken = () => {
