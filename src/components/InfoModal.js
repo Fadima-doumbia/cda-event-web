@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 
 const InfoModal = (props) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(props.showValue);
+  // const [show, setShow] = useState(false);
   let navigate = useNavigate();
 
-  useEffect(() => {
-    setShow(props.showValue);
-  }, []);
+  // useEffect(() => {
+  //   setShow(props.showValue);
+  // }, []);
 
   const handleClose = () => {
     setShow(false);
