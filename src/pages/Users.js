@@ -56,13 +56,13 @@ const Users = () => {
 
   useEffect(() => {
     getAllUseer();
-    // const user = JSON.parse(localStorage.getItem("user"));
+    const usercurrent = JSON.parse(localStorage.getItem("user"));
     // setToken(user.accessToken);
 
-    // if (user.roles[0] === "ROLE_USER") {
-    //   setLoading(true);
-    //   navigate("/home");
-    // }
+    if (usercurrent.roles[0] === "ROLE_USER") {
+      setLoading(true);
+      // navigate("/home");
+    }
   }, []);
 
   // const getToken = () => {
