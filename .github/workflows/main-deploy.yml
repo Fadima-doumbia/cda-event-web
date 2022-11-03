@@ -16,7 +16,25 @@ jobs:
         node-version: '16.x'
 
     - uses: actions/checkout@v2
+    
+    - name: Delete Old Artifacts
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const res = await github.rest.actions.listArtifactsForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          })
 
+          res.data.artifacts
+            .forEach(({ id }) => {
+              github.rest.actions.deleteArtifact({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                artifact_id: id,
+              })
+            })
+            
     - name: Install dependencies
       run: npm install
     
@@ -70,4 +88,5 @@ jobs:
           echo scp deployement pipelines
         scp: |
           .dist/cda-event-web => ~/frontend
- 
+        last_ssh: |
+          ls -al
