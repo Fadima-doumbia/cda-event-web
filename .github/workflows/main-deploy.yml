@@ -50,8 +50,8 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with: 
-        name: devops-test-${{ github.run_id }}-${{ github.run_number }}
-        path: ./dist/devops-test
+        name: cda-event-web-${{ github.run_id }}-${{ github.run_number }}
+        path: ./dist/cda-event-web
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -60,7 +60,7 @@ jobs:
     - name: Dowload artifact
       uses: actions/download-artifact@v2
       with:
-        name: vps-${{ github.run_id }}-${{ github.run_number }}
+        name: cda-event-web-${{ github.run_id }}-${{ github.run_number }}
         path: './build'
 
     - name: Copy repository content via scp
