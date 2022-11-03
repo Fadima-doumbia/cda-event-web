@@ -6,10 +6,10 @@ import ReservationService from "../services/reservation.service";
 
 const ReservationPage = () => {
   const [datas, setDatas] = useState([]);
-  let userToken = "";
+  // let userToken = "";
 
   useEffect(() => {
-    getToken();
+    // getToken();
     // axios
     //   .get("http://localhost:8080/api/events/allReservations", {
     //     headers: {
@@ -23,10 +23,10 @@ const ReservationPage = () => {
       });
   }, []);
   
-  const getToken = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    userToken = user.accessToken;
-  };
+  // const getToken = () => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   userToken = user.accessToken;
+  // };
 
 
   return (
