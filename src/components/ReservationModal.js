@@ -4,20 +4,13 @@ import Modal from "react-bootstrap/Modal";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-// import axios from "axios";
-// import CardDetailsEvent from "./CardDetailsEvent";
 import ReservationService from "../services/reservation.service";
-// import UserService from "../services/user.service";
-// import AuthService from "../services/auth.service";
 import AlertInfo from "./AlertInfo";
-// import UserService from "../services/user.service";
 import AuthService from "../services/auth.service";
-// import { Alert } from "bootstrap";
 
 const ReservationModal = (props) => {
   const [show, setShow] = useState(false);
   const [isError, setIsError] = useState(false);
-  // const [isShow, setisShow] = useState(false);
 
   const [formReserved, setFormReserved] = useState({ email: "", id: 0 });
   let reservation = {

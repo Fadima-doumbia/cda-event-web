@@ -5,7 +5,6 @@ import AdminIcon from "@rsuite/icons/Admin";
 import OffRoundIcon from "@rsuite/icons/OffRound";
 import Button from "react-bootstrap/Button";
 import AuthService from "../services/auth.service";
-// import eventBus from "../common/EventBus";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbars() {
@@ -14,7 +13,6 @@ export default function Navbars() {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   // let refresh = false;
   const [isAuth, setIsAuth] = useState(false);
-  // const [currentUser, setCurrentUser] = useState(undefined);
   let navigate = useNavigate();
 
   useEffect(() => {
