@@ -50,6 +50,7 @@ jobs:
       with: 
         name: cda-event-web-${{ github.run_id }}-${{ github.run_number }}
         path: ./dist/cda-event-web
+  
   deploy:
     needs: build
     runs-on: ubuntu-latest
