@@ -86,4 +86,9 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         source: './build/'
         target: '/home/${{ secrets.USERNAME }}'
+        scp: |
+          .dist/cda-event-web => ~/frontend
+        last_ssh: |
+          ls -al
+
 
