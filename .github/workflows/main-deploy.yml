@@ -84,9 +84,4 @@ jobs:
         port: ${{ secrets.PORT }}
         user: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        first_ssh: |
-          echo scp deployement pipelines
-        scp: |
-          .dist/cda-event-web => ~/frontend
-        last_ssh: |
-          ls -al
+
