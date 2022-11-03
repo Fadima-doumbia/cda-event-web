@@ -12,7 +12,7 @@ export default function Navbars() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
-  let refresh =false;
+  let refresh = false;
   const [isAuth, setIsAuth] = useState(false);
   // const [currentUser, setCurrentUser] = useState(undefined);
   let navigate = useNavigate();
@@ -21,7 +21,6 @@ export default function Navbars() {
     const user = AuthService.getCurrentUser();
 
     if (user) {
-      // setCurrentUser(user);
       setShowModeratorBoard(user.roles.includes("ROLE_USER"));
       setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
@@ -36,7 +35,7 @@ export default function Navbars() {
     return () => {
       eventBus.remove("logout");
     };
-  }, [refresh]);
+  }, []);
 
   const logOut = () => {
     AuthService.logout();
@@ -141,8 +140,9 @@ export default function Navbars() {
                 <OffRoundIcon /> logout
               </Button>
             </li>
-          ) : (
-            <li>
+          ) : null}
+          {/* ( */}
+            {/* <li>
               <Button variant="secondary" onClick={logOut}>
                 <a href="/login">
                   <OffRoundIcon />
@@ -150,7 +150,7 @@ export default function Navbars() {
                 </a>
               </Button>
             </li>
-          )}
+          ) */}
 
           {/* {isAuth ? null : (
             <li>
