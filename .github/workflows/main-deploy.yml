@@ -66,7 +66,8 @@ jobs:
       uses: actions/upload-artifact@v2
       with: 
         name: cda-event-web-${{ github.run_id }}-${{ github.run_number }}
-        path: ./dist/cda-event-web
+        path: ./build/*
+        
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -75,20 +76,15 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v3
       with:
-        path: ./dist/cda-event-web
+        path: './build/'
 
-    - name: scp pipelines
-      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.HOST }}
-        port: ${{ secrets.PORT }}
-        user: ${{ secrets.USERNAME }}
+        username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        source: './build/'
-        target: '/home/${{ secrets.USERNAME }}'
-        scp: |
-          .dist/cda-event-web => ~/frontend
-        last_ssh: |
-          ls -al
-
-
+        port: ${{ secrets.PORT }}
+        source: './build/*'
+        strip_components: 1
+        target: '/home/${{ secrets.USERNAME }}'  
