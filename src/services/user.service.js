@@ -1,22 +1,32 @@
 import axios from "axios";
+let baseURL= 'http://localhost:8080/api';
 
 
 const createUser = (userParam) => {
   let userToken = "";
   const user = JSON.parse(localStorage.getItem("user"));
   userToken = user.accessToken;
-  return axios.post(`http://localhost:8080/api/admin/new`, userParam, {
+  return axios.post(`${baseURL}/admin/new`, userParam, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
   });
 };
-
+const createAdmin = (userParam) => {
+  let userToken = "";
+  const user = JSON.parse(localStorage.getItem("user"));
+  userToken = user.accessToken;
+  return axios.post(`${baseURL}/admin/users/new`, userParam, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+};
 const editUser = (userParam) => {
   let userToken = "";
   const user = JSON.parse(localStorage.getItem("user"));
   userToken = user.accessToken;
-  return axios.put(`http://localhost:8080/api/admin/users`, userParam, {
+  return axios.put(`${baseURL}/admin/users`, userParam, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -26,7 +36,7 @@ const editUserProfil = async (userParam) => {
   let userToken = "";
   const user = JSON.parse(localStorage.getItem("user"));
   userToken = user.accessToken;
-  return await axios.put(`http://localhost:8080/api/events/users`, userParam, {
+  return await axios.put(`${baseURL}/events/users`, userParam, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -37,8 +47,9 @@ const editpassword = (userParam) => {
   let userToken = "";
   const user = JSON.parse(localStorage.getItem("user"));
   userToken = user.accessToken;
+  console.log(user, userParam)
   return axios.put(
-    `http://localhost:8080/api/events/users/password`,
+    `${baseURL}/events/users/password`,
     userParam,
     {
       headers: {
@@ -52,18 +63,18 @@ const deleteUser = (id) => {
   let userToken = "";
   const user = JSON.parse(localStorage.getItem("user"));
   userToken = user.accessToken;
-  return axios.delete(`http://localhost:8080/api/admin/users/${id}`, {
+  return axios.delete(`${baseURL}/admin/users/${id}`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
   });
 };
 
-const getAllEvent = () => {
+const getAllUsers = () => {
   let userToken = "";
   const user = JSON.parse(localStorage.getItem("user"));
   userToken = user.accessToken;
-  return axios.get("http://localhost:8080/api/admin/users/all", {
+  return axios.get(`${baseURL}/admin/users/all`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -76,7 +87,7 @@ const getUserByEmail = (email, token) => {
   userToken = user.accessToken;
   return axios
   .get(
-    `http://localhost:8080/api/events/users/email/${email}`, {
+    `${baseURL}/events/users/email/${email}`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -88,14 +99,14 @@ const getUserById = (id) => {
   const user = JSON.parse(localStorage.getItem("user"));
   userToken = user.accessToken;
   return axios
-  .get(`http://localhost:8080/api/events/${id}/users`, {
+  .get(`${baseURL}/events/${id}/users`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
   });
 };
 const UserService = {
-  getAllEvent,
+  getAllUsers,
   getUserById,
   getUserByEmail,
   createUser,
@@ -103,6 +114,7 @@ const UserService = {
   editUserProfil,
   editpassword,
   deleteUser,
+  createAdmin,
 };
 
 export default UserService;

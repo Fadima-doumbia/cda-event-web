@@ -1,12 +1,13 @@
 // import { Trash, TrashFill } from "react-bootstrap-icons";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 // import PlusIcon from "@rsuite/icons/Plus";
-import React, { useState, useRef, useEffect } from "react";
-import Overlay from "react-bootstrap/Overlay";
-import Popover from "react-bootstrap/Popover";
-import axios from "axios";
+import React, { useState, useRef } from "react";
+// import Overlay from "react-bootstrap/Overlay";
+// import Popover from "react-bootstrap/Popover";
+// import axios from "axios";
 import ConfirmModal from "./ConfirmModal";
+import ReservationService from "../services/reservation.service";
 
 const ReservationTable = (props) => {
   const [show, setShow] = useState(false);
@@ -14,30 +15,31 @@ const ReservationTable = (props) => {
   const ref = useRef(null);
   let userToken = "";
 
-  useEffect(() => {
-    getToken();
+  // useEffect(() => {
+  //   getToken();
     
-  }, []);
-  const getToken = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    userToken = user.accessToken;
-  };
-  const handleClick = (event) => {
-    setShow(!show);
-    setTarget(event.target);
-  };
+  // }, []);
+  // const getToken = () => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   userToken = user.accessToken;
+  // };
+  // const handleClick = (event) => {
+  //   setShow(!show);
+  //   setTarget(event.target);
+  // };
 
   const annuler = (id) => {
-    getToken();
-    axios.delete(`http://localhost:8080/api/events/annuler/${id}`, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    });
+    // getToken();
+    // axios.delete(`http://localhost:8080/api/events/annuler/${id}`, {
+    //   headers: {
+    //     Authorization: `Bearer ${userToken}`,
+    //   },
+    // });
+    ReservationService.annulerReservation(id);
     let filter = props.datas.filter(function (e) {
       return e.id !== id;
     });
-    console.log(id);
+    // console.log(id);
     props.setDatas(filter);
   };
 

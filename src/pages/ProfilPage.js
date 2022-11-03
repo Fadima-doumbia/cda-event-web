@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -147,7 +147,7 @@ const ProfilPage = () => {
     formDataVerifyPassword(event.target.value);
     if (event.target.name === "newPassword") {
       setIsActiv(true);
-      console.log("first");
+      // console.log("first");
       if (formDataVerifyPassword(event.target.value)) {
         setStr("Mot de passe fort");
         setColor("#9cd06b");
@@ -174,7 +174,10 @@ const ProfilPage = () => {
           lastPassword: updatePassword.lastPassword,
           newPassword: updatePassword.newPassword,
         };
-        UserService.editpassword(finalObjet).then((res) => {
+        
+        console.log(finalObjet)
+        UserService.editpassword(finalObjet)
+        .then((res) => {
           setStrResponse(res.data);
           setIsOk(true);
         });
@@ -373,14 +376,14 @@ const ProfilPage = () => {
             )}
           </Form>
           {isOk && (
-            <p style={{ color: "blue" }}>
+            <div style={{ color: "blue" }}>
               <AlertInfo
                 text={strResponse}
                 typeVariant={"info"}
                 show={isOk}
                 setisShow={setIsOk}
               />
-            </p>
+            </div>
           )}
         </div>
       </div>

@@ -1,7 +1,8 @@
-import axios from "axios";
+// import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import ReservationTable from "../components/ReservationTable";
+import ReservationService from "../services/reservation.service";
 
 const ReservationPage = () => {
   const [datas, setDatas] = useState([]);
@@ -9,15 +10,16 @@ const ReservationPage = () => {
 
   useEffect(() => {
     getToken();
-    axios
-      .get("http://localhost:8080/api/events/allReservations", {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
+    // axios
+    //   .get("http://localhost:8080/api/events/allReservations", {
+    //     headers: {
+    //       Authorization: `Bearer ${userToken}`,
+    //     },
+    //   })
+    ReservationService.getAllReservation()
       .then((res) => {
         setDatas(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       });
   }, []);
   

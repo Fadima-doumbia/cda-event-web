@@ -1,10 +1,14 @@
 import axios from "axios";
 
+let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+userToken = user.accessToken;
 
-// const InstanceConfig = axios.create({
-//     baseURL: 'http://localhost:8080/api',
-//     timeout: 1000,
-//     headers: {'Bearer': 'foobar'}
-//   });
+const InstanceConfig = axios.create({
+    baseURL: 'http://localhost:8080/api',
+    timeout: 1000,
+    headers: {Authorization: `Bearer ${userToken}`}
+    // headers: {'Bearer': userToken}
+  });
 
-// export default InstanceConfig;
+export default InstanceConfig;

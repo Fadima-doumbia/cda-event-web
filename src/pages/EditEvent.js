@@ -6,41 +6,19 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Modal from "react-bootstrap/Modal";
-import axios from "axios";
+// import axios from "axios";
 import "../styles/styles.scss";
 import ListGroup from "react-bootstrap/ListGroup";
+import ReservationService from "../services/reservation.service";
 
 const EditEvent = (props) => {
-  // const initialState = {
-  //   address: "",
-  //   name: "",
-  //   date: "",
-  //   description: "",
-  //   child: false,
-  //   places: 0,
-  //   prix: 0,
-  //   heureDebut: "",
-  //   heureFin: "",
-  // };
   const [formData, setFormData] = useState(props.formData);
-  let userToken = "";
+  // let userToken = "";
 
-
-  // useEffect(() => {
-  //   getToken();
-  //   // axios.get("http://localhost:8080/api/events/all", {
-  //   //     headers: {
-  //   //       Authorization: `Bearer ${userToken}`,
-  //   //     }}).then((res) => {
-  //   //   setDatas(res.data);
-  //   //   console.log(res.data)
-  //   // });
-  // }, []);
-
-  const getToken = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    userToken = user.accessToken;
-  };
+  // const getToken = () => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   userToken = user.accessToken;
+  // };
   const handleChange = (event) => {
     const prix = parseInt(event.target.value);
     const places = parseInt(event.target.value);
@@ -62,42 +40,19 @@ const EditEvent = (props) => {
         [event.target.name]: prix,
       }));
     }
-  };
-  // const updateEventt = () => {
-  //   getToken();
-  //   console.log(formData);
-  //   axios
-  //     .put(`http://localhost:8080/api/admin/events/${formData.id}`, formData, {
-  //       headers: {
-  //         Authorization: `Bearer ${userToken}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       datas.push(res.data);
-  //       props.setLoading(!props.loading)
-  //     });
-  //   props.onHide();
-  //   // axios.get("http://localhost:8080/api/events/all/reservations/event").then((res) => {
-  //   //   props.setDatas(res.data);
-  //   //   console.log(res.data)
-  //   // });
-  // };
-  
+  };  
   
   const annuler = (id) => {
-    getToken();
-    axios.delete(`http://localhost:8080/api/events/annuler/${id}`, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    });
+    // getToken();
+    // axios.delete(`http://localhost:8080/api/events/annuler/${id}`, {
+    //   headers: {
+    //     Authorization: `Bearer ${userToken}`,
+    //   },
+    // });
+    ReservationService.annulerReservation(id);
     let filter = props.formData.reservations.filter(function (e) {
       return e.user.id != id;
     });
-
-    console.log(id);
-    // props.setDatas(filter);
   };
 
   

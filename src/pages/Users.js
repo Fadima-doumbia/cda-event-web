@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
@@ -6,10 +6,12 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import SearchIcon from "@rsuite/icons/Search";
-import { Clouds, PencilFill, TrashFill } from "react-bootstrap-icons";
+import { PencilFill, TrashFill } from "react-bootstrap-icons";
 import InfoModal from "../components/InfoModal";
 import { AddCircle, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import UserService from "../services/user.service";
+import AuthService from "../services/auth.service";
 
 const Users = () => {
   const initialState = {
@@ -50,10 +52,10 @@ const Users = () => {
     phone: "",
     reservations: [],
   });
-  let userToken = "";
   let navigate = useNavigate();
 
   useEffect(() => {
+    let userToken = "";
     getAllUseer();
     const user = JSON.parse(localStorage.getItem("user"));
     userToken = user.accessToken;
@@ -65,22 +67,22 @@ const Users = () => {
     }
   }, []);
 
-  const getToken = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    userToken = user.accessToken;
-    setToken(user.accessToken);
-  };
+  // const getToken = () => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   userToken = user.accessToken;
+  //   setToken(user.accessToken);
+  // };
 
   const getAllUseer = async () => {
-    getToken();
-    await axios
-      .get("http://localhost:8080/api/admin/users/all", {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
+    // getToken();
+    // await axios
+    //   .get("http://localhost:8080/api/admin/users/all", {
+    //     headers: {
+    //       Authorization: `Bearer ${userToken}`,
+    //     },
+    //   })
+    UserService.getAllUsers()
       .then((res) => {
-        console.log(res.data);
         let sorting = res.data.sort((a, b) =>
           a.username.toLowerCase() > b.username.toLowerCase() ? 1 : -1
         );
@@ -93,7 +95,6 @@ const Users = () => {
     setIsEdit(true);
     setIndexCol(indexCol);
     setUserEdit(user);
-    console.log(user, indexCol);
   };
 
   const convertDateToString = (date) => {
@@ -134,7 +135,7 @@ const Users = () => {
   };
 
   const handleCreate = () => {
-    getToken();
+    // getToken();
     let usert = {
       lastName: user.lastName,
       username: user.username,
@@ -143,25 +144,27 @@ const Users = () => {
     };
     if (user.role === "admin") {
       // console.log("first")
-      axios
-        .post(`http://localhost:8080/api/admin/users/new`, usert, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        })
+      // axios
+      //   .post(`http://localhost:8080/api/admin/users/new`, usert, {
+      //     headers: {
+      //       Authorization: `Bearer ${userToken}`,
+      //     },
+      //   })
+      UserService.createAdmin(usert)
         .then((res) => {
           console.log(res.data);
           setIsCreate(false);
           getAllUseer();
         });
     } else {
-      console.log(" two ");
-      axios
-        .post(`http://localhost:8080/api/auth/register`, usert, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        })
+      // console.log(" two ");
+      // axios
+      //   .post(`http://localhost:8080/api/auth/register`, usert, {
+      //     headers: {
+      //       Authorization: `Bearer ${userToken}`,
+      //     },
+      //   })
+      AuthService.register(usert)
         .then((res) => {
           console.log(res.data);
           setIsCreate(false);
@@ -182,14 +185,15 @@ const Users = () => {
   };
 
   const handleEditSubmit = () => {
-    getToken();
-    console.log(userEdit);
-    axios
-      .put(`http://localhost:8080/api/admin/users`, userEdit, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
+    // getToken();
+    // console.log(userEdit);
+    // axios
+    //   .put(`http://localhost:8080/api/admin/users`, userEdit, {
+    //     headers: {
+    //       Authorization: `Bearer ${userToken}`,
+    //     },
+    //   })
+    UserService.editUser(userEdit)
       .then((res) => {
         console.log(res.data);
         setIsEdit(false);
@@ -199,13 +203,14 @@ const Users = () => {
   };
 
   const deleteUser = async (id) => {
-    getToken();
-    await axios
-      .delete(`http://localhost:8080/api/admin/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
+    // getToken();
+    // await axios
+    //   .delete(`http://localhost:8080/api/admin/users/${id}`, {
+    //     headers: {
+    //       Authorization: `Bearer ${userToken}`,
+    //     },
+    //   })
+    UserService.deleteUser(id)
       .then((res) => {
         if (res.status === 200) {
           getAllUseer();

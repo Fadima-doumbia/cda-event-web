@@ -4,21 +4,22 @@ import Modal from "react-bootstrap/Modal";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import axios from "axios";
-import CardDetailsEvent from "./CardDetailsEvent";
+// import axios from "axios";
+// import CardDetailsEvent from "./CardDetailsEvent";
 import ReservationService from "../services/reservation.service";
+// import UserService from "../services/user.service";
+// import AuthService from "../services/auth.service";
+import AlertInfo from "./AlertInfo";
 import UserService from "../services/user.service";
 import AuthService from "../services/auth.service";
-import AlertInfo from "./AlertInfo";
-import { Alert } from "bootstrap";
+// import { Alert } from "bootstrap";
 
 const ReservationModal = (props) => {
   const [show, setShow] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isShow, setisShow] = useState(false);
+  // const [isShow, setisShow] = useState(false);
 
   const [formReserved, setFormReserved] = useState({ email: "", id: 0 });
-  const [user, setUser] = useState("");
   let reservation = {
     annulation: false,
     user: { id: 0 },
@@ -26,36 +27,37 @@ const ReservationModal = (props) => {
   };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  let userToken = "";
+  // let userToken = "";
   const [msg, setMsg] = useState("");
 
-  const getToken = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    userToken = user.accessToken;
-    setUser(user);
-  };
+  // const getToken = () => {
+  //   const user = JSON.parse(localStorage.getItem("user"));
+  //   userToken = user.accessToken;
+  //   setUser(user);
+  // };
 
-  useEffect(() => {
-    getToken();
-  }, []);
+  // useEffect(() => {
+  //   getToken();
+  // }, []);
 
   const handleChange = (event) => {
     setFormReserved((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
-    console.log(formReserved);
+    // console.log(formReserved);
   };
 
   const reserver = async () => {
-    getToken();
+    // getToken();
+        const user = AuthService.getCurrentUser();
     if (user.email === formReserved.email) {
       reservation.event.id = props.id;
       reservation.user.id = user.id;
-      console.log(userToken);
 
       ReservationService.postReservation(reservation).then((res) => {
-        console.log("reservation", res.data);
+        // setFormReserved({ email: "", id: 0 })
+        // console.log("reservation", res.data);
       });
 
       handleClose();
