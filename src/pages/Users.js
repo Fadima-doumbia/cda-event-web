@@ -9,7 +9,7 @@ import SearchIcon from "@rsuite/icons/Search";
 import { PencilFill, TrashFill } from "react-bootstrap-icons";
 import InfoModal from "../components/InfoModal";
 import { AddCircle, Close } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import UserService from "../services/user.service";
 import AuthService from "../services/auth.service";
 
@@ -52,7 +52,7 @@ const Users = () => {
     phone: "",
     reservations: [],
   });
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
   useEffect(() => {
     getAllUseer();
