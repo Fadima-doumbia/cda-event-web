@@ -85,11 +85,7 @@ const ProfilPage = () => {
       [event.target.name]: event.target.value,
     }));
   };
-  // const getToken = () => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   userToken = user.accessToken;
-  //   setUser(user);
-  // };
+
   const activEdit = () => {
     let currentUser = {
       id: user.id,

@@ -1,11 +1,4 @@
-// import { Trash, TrashFill } from "react-bootstrap-icons";
 import Table from "react-bootstrap/Table";
-// import Button from "react-bootstrap/Button";
-// import PlusIcon from "@rsuite/icons/Plus";
-// import React, { useState, useRef } from "react";
-// import Overlay from "react-bootstrap/Overlay";
-// import Popover from "react-bootstrap/Popover";
-// import axios from "axios";
 import ConfirmModal from "./ConfirmModal";
 import ReservationService from "../services/reservation.service";
 
