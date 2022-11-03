@@ -1,11 +1,12 @@
 import axios from "axios";
 
 let baseURL= 'http://localhost:8080/api';
-let userToken = "";
-const user = JSON.parse(localStorage.getItem("user"));
-userToken = user.accessToken;
+
 
 const getAllEvent = () => {
+  let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+userToken = user.accessToken;
   return axios.get(`${baseURL}/events/all`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -14,6 +15,9 @@ const getAllEvent = () => {
 };
 
 const createEvent = (formData) => {
+  let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+userToken = user.accessToken;
   return axios.post(`${baseURL}/admin/events`, formData, {
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -22,6 +26,9 @@ const createEvent = (formData) => {
 };
 
 const editEvent = (id, formData) => {
+  let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+userToken = user.accessToken;
   return axios.put(`${baseURL}/admin/events/${id}`, formData, {
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -29,6 +36,9 @@ const editEvent = (id, formData) => {
 };
 
 const deleteEvent = (id) => {
+  let userToken = "";
+const user = JSON.parse(localStorage.getItem("user"));
+userToken = user.accessToken;
     return axios.delete(`${baseURL}/admin/events/${id}`,{
         headers: {
           Authorization: `Bearer ${userToken}`,

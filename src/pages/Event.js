@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import AlertInfo from "../components/AlertInfo";
 // import CardEvent from "../components/CardEvent";
 import InfoModal from "../components/InfoModal";
+import EventService from "../services/event.service";
 // import CardEvent from "../components/modal - card/CardEvent";
 // import "../styles/styles.scss";
 
@@ -24,7 +25,7 @@ const Event = () => {
     heureFin: "",
   };
   const [formData, setFormData] = useState(initialState);
-  const [datas, setDatas] = useState([]);
+  // const [datas, setDatas] = useState([]);
   // const [dataSource, setDataSource] = useState([]);
   // const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
@@ -88,17 +89,15 @@ const Event = () => {
     } else {
       formData.child = false;
     }
-    console.log(formData);
-
-    axios
-      .post(`http://localhost:8080/api/admin/events`, formData, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
+    // axios
+    //   .post(`http://localhost:8080/api/admin/events`, formData, {
+    //     headers: {
+    //       Authorization: `Bearer ${userToken}`,
+    //     },
+    //   })
+    EventService.createEvent(formData)
       .then((res) => {
-        console.log(res.data);
-        setDatas((datas) => [...datas, res.data]);
+        // setDatas((datas) => [...datas, res.data]);
         setFormData(initialState);
         setisShow(true);
       });

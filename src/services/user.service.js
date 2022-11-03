@@ -12,7 +12,16 @@ const createUser = (userParam) => {
     },
   });
 };
-
+const createAdmin = (userParam) => {
+  let userToken = "";
+  const user = JSON.parse(localStorage.getItem("user"));
+  userToken = user.accessToken;
+  return axios.post(`${baseURL}/admin/users/new`, userParam, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+};
 const editUser = (userParam) => {
   let userToken = "";
   const user = JSON.parse(localStorage.getItem("user"));
@@ -38,6 +47,7 @@ const editpassword = (userParam) => {
   let userToken = "";
   const user = JSON.parse(localStorage.getItem("user"));
   userToken = user.accessToken;
+  console.log(user, userParam)
   return axios.put(
     `${baseURL}/events/users/password`,
     userParam,
@@ -60,11 +70,11 @@ const deleteUser = (id) => {
   });
 };
 
-const getAllEvent = () => {
+const getAllUsers = () => {
   let userToken = "";
   const user = JSON.parse(localStorage.getItem("user"));
   userToken = user.accessToken;
-  return axios.get("${baseURL}/admin/users/all", {
+  return axios.get(`${baseURL}/admin/users/all`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
@@ -96,7 +106,7 @@ const getUserById = (id) => {
   });
 };
 const UserService = {
-  getAllEvent,
+  getAllUsers,
   getUserById,
   getUserByEmail,
   createUser,
@@ -104,6 +114,7 @@ const UserService = {
   editUserProfil,
   editpassword,
   deleteUser,
+  createAdmin,
 };
 
 export default UserService;
