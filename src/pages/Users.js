@@ -30,7 +30,7 @@ const Users = () => {
   const [isCreate, setIsCreate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [prevSearch, setPrevSearch] = useState("");
-  const [token, setToken] = useState("");
+  // const [token, setToken] = useState("");
   const [check, setCheck] = useState("");
   const userState = {
     lastName: "",
@@ -56,8 +56,8 @@ const Users = () => {
 
   useEffect(() => {
     getAllUseer();
-    const user = JSON.parse(localStorage.getItem("user"));
-    setToken(user.accessToken);
+    // const user = JSON.parse(localStorage.getItem("user"));
+    // setToken(user.accessToken);
 
     // if (user.roles[0] === "ROLE_USER") {
     //   setLoading(true);
