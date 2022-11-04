@@ -11,7 +11,6 @@ export default function Navbars() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
-  // let refresh = false;
   const [isAuth, setIsAuth] = useState(false);
   let navigate = useNavigate();
 

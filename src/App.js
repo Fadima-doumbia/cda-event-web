@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
 import "rsuite/dist/rsuite.min.css";
+import { setAuthToken } from "./common/setAuthToken";
 import Layout from "./layout/Layout";
 import AboutPage from "./pages/AboutPage";
 import AdminEventPage from "./pages/AdminEventPage";
@@ -16,6 +17,10 @@ import Users from "./pages/Users";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    setAuthToken(token);
+}
   return (
     <div>
       <BrowserRouter>
