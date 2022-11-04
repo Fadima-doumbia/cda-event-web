@@ -1,34 +1,35 @@
-import { useState, useEffect } from "react";
+// import {  useEffect } from "react";
 import "../styles/NavBar.css";
-import { Magic } from "react-bootstrap-icons";
-import AdminIcon from "@rsuite/icons/Admin";
-import OffRoundIcon from "@rsuite/icons/OffRound";
-import Button from "react-bootstrap/Button";
-import AuthService from "../services/auth.service";
-import { NavLink, useNavigate } from "react-router-dom";
+// import { Magic } from "react-bootstrap-icons";
+// import AdminIcon from "@rsuite/icons/Admin";
+// import OffRoundIcon from "@rsuite/icons/OffRound";
+// import Button from "react-bootstrap/Button";
+// import AuthService from "../services/auth.service";
+import { NavLink } from "react-router-dom";
 
 export default function Navbars() {
-  const [isNavExpanded, setIsNavExpanded] = useState(false);
-  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
-  let navigate = useNavigate();
+  // const [isNavExpanded, setIsNavExpanded] = useState(false);
+  // const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+  // const [showAdminBoard, setShowAdminBoard] = useState(false);
+  // const [isAuth, setIsAuth] = useState(false);
+  // let navigate = useNavigate();
   let activeStyle = {
-    textDecoration: "underline",
+    textDecoration: "none",
+    color: "white",
   };
 
   let activeClassName = "underline";
-  useEffect(() => {
-    const user = AuthService.getCurrentUser();
+  // useEffect(() => {
+    // const user = AuthService.getCurrentUser();
 
-    if (user) {
-      setShowModeratorBoard(user.roles.includes("ROLE_USER"));
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-    }
+    // if (user) {
+    //   setShowModeratorBoard(user.roles.includes("ROLE_USER"));
+    //   setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+    // }
 
-    if (user !== null) {
-      setIsAuth(true);
-    }
+    // if (user !== null) {
+    //   setIsAuth(true);
+    // }
 
     // eventBus.on("logout", () => {
     //   logOut();
@@ -36,16 +37,16 @@ export default function Navbars() {
     // return () => {
     //   eventBus.remove("logout");
     // };
-  }, []);
+  // }, []);
 
-  const logOut = () => {
-    AuthService.logout();
-    setShowModeratorBoard(false);
-    setShowAdminBoard(false);
-    // setCurrentUser(undefined);
-    setIsAuth(false);
-    navigate("/login");
-  };
+  // const logOut = () => {
+  //   AuthService.logout();
+  //   setShowModeratorBoard(false);
+  //   setShowAdminBoard(false);
+  //   // setCurrentUser(undefined);
+  //   setIsAuth(false);
+  //   navigate("/login");
+  // };
 
   //   <nav className="navigation">
   //   <a href="/" className="brand-name">
@@ -137,9 +138,9 @@ export default function Navbars() {
   //   </div>
   // </nav>
   return (
-    <nav>
-      <ul>
-        <li>
+    <nav >
+      <ul style={{backgroundColor: "#3C6DA6", display: "flex", justifyContent: "space-around"}}>
+        <li >
           <NavLink
             to="/"
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
