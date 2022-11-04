@@ -65,7 +65,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with: 
-        name: cda-event-web-${{ github.run_id }}-${{ github.run_number }}
+        name: cda-event-web
         path: ./build/*
         
   deploy:
