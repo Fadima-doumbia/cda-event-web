@@ -2,7 +2,7 @@ name: main-deploy
 on: 
   push:
     branches: [ user ]
-  workflow_dispatch:
+#   workflow_dispatch:
 
 jobs:
   test:
