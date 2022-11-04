@@ -36,7 +36,6 @@ function App() {
             <Route path="users" element={<Users />} />
             <Route path="event" element={<Event />} />
             <Route path="*" element={<Navigate to="/home" />} />
-
           </Route>
         </Routes>
       </BrowserRouter>
