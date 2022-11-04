@@ -74,7 +74,7 @@ const Users = () => {
   const getAllUseer = async () => {
     // getToken();
     // await axios
-    //   .get("http://localhost:8080/api/admin/users/all", {
+    //   .get("http://eagle-event.fr:8080/api/admin/users/all", {
     //     headers: {
     //       Authorization: `Bearer ${userToken}`,
     //     },
@@ -143,7 +143,7 @@ const Users = () => {
     if (user.role === "admin") {
       // console.log("first")
       // axios
-      //   .post(`http://localhost:8080/api/admin/users/new`, usert, {
+      //   .post(`http://eagle-event.fr:8080/api/admin/users/new`, usert, {
       //     headers: {
       //       Authorization: `Bearer ${userToken}`,
       //     },
@@ -157,7 +157,7 @@ const Users = () => {
     } else {
       // console.log(" two ");
       // axios
-      //   .post(`http://localhost:8080/api/auth/register`, usert, {
+      //   .post(`http://eagle-event.fr:8080/api/auth/register`, usert, {
       //     headers: {
       //       Authorization: `Bearer ${userToken}`,
       //     },
@@ -186,7 +186,7 @@ const Users = () => {
     // getToken();
     // console.log(userEdit);
     // axios
-    //   .put(`http://localhost:8080/api/admin/users`, userEdit, {
+    //   .put(`http://eagle-event.fr:8080/api/admin/users`, userEdit, {
     //     headers: {
     //       Authorization: `Bearer ${userToken}`,
     //     },
@@ -203,7 +203,7 @@ const Users = () => {
   const deleteUser = async (id) => {
     // getToken();
     // await axios
-    //   .delete(`http://localhost:8080/api/admin/users/${id}`, {
+    //   .delete(`http://eagle-event.fr:8080/api/admin/users/${id}`, {
     //     headers: {
     //       Authorization: `Bearer ${userToken}`,
     //     },

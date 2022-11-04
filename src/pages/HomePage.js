@@ -41,7 +41,7 @@ const HomePage = () => {
   const getAllEvent = async () => {
     // getToken();
     // await axios
-    //   .get("http://localhost:8080/api/events/all", {
+    //   .get("http://eagle-event.fr:8080/api/events/all", {
     //     headers: {
     //       Authorization: `Bearer ${userToken}`,
     //     },

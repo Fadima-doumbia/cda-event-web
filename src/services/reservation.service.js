@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let baseURL= 'http://localhost:8080/api';
+let baseURL= 'http://eagle-event.fr:8080/api';
 
 const postReservation = (reservation) => {
   let userToken = "";

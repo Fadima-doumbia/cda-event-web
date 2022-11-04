@@ -114,7 +114,7 @@ const ProfilPage = () => {
     };
 
     // await axios
-    //   .put(`http://localhost:8080/api/events/users`, editUser, {
+    //   .put(`http://eagle-event.fr:8080/api/events/users`, editUser, {
     //     headers: {
     //       Authorization: `Bearer ${userToken}`,
     //     },
@@ -123,7 +123,7 @@ const ProfilPage = () => {
       setUser(res.data);
     });
     // await axios
-    //   .get("http://localhost:8080/api/events/users/email/user@emaill", {
+    //   .get("http://eagle-event.fr:8080/api/events/users/email/user@emaill", {
     //     headers: {
     //       Authorization: `Bearer ${userToken}`,
     //     },

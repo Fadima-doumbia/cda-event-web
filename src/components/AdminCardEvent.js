@@ -31,7 +31,7 @@ const AdminCardEvent = (props) => {
 
   const deleteEvent = (id) => {
     // getToken();
-    // axios.delete(`http://localhost:8080/api/admin/events/${id}`, {
+    // axios.delete(`http://eagle-event.fr:8080/api/admin/events/${id}`, {
     //   headers: {
     //     Authorization: `Bearer ${userToken}`,
     //   },
@@ -47,7 +47,7 @@ const AdminCardEvent = (props) => {
   const updateEvent = (formdata) => {
     // getToken();
     // axios
-    //   .put(`http://localhost:8080/api/admin/events/${formdata.id}`, formdata, {
+    //   .put(`http://eagle-event.fr:8080/api/admin/events/${formdata.id}`, formdata, {
     //     headers: {
     //       Authorization: `Bearer ${userToken}`,
     //     },

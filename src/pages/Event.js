@@ -44,7 +44,7 @@ const Event = () => {
 
   // const getAllEvent = async () => {
   //   getToken();
-  //   await axios.get("http://localhost:8080/api/events/all", {
+  //   await axios.get("http://eagle-event.fr:8080/api/events/all", {
   //     headers: {
   //       Authorization: `Bearer ${userToken}`,
   //     },
@@ -90,7 +90,7 @@ const Event = () => {
       formData.child = false;
     }
     // axios
-    //   .post(`http://localhost:8080/api/admin/events`, formData, {
+    //   .post(`http://eagle-event.fr:8080/api/admin/events`, formData, {
     //     headers: {
     //       Authorization: `Bearer ${userToken}`,
     //     },

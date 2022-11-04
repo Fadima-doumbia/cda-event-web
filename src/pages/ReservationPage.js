@@ -11,7 +11,7 @@ const ReservationPage = () => {
   useEffect(() => {
     // getToken();
     // axios
-    //   .get("http://localhost:8080/api/events/allReservations", {
+    //   .get("http://eagle-event.fr:8080/api/events/allReservations", {
     //     headers: {
     //       Authorization: `Bearer ${userToken}`,
     //     },

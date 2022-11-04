@@ -23,7 +23,7 @@ const ReservationTable = (props) => {
 
   const annuler = (id) => {
     // getToken();
-    // axios.delete(`http://localhost:8080/api/events/annuler/${id}`, {
+    // axios.delete(`http://eagle-event.fr:8080/api/events/annuler/${id}`, {
     //   headers: {
     //     Authorization: `Bearer ${userToken}`,
     //   },
