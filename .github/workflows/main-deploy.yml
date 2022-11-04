@@ -90,6 +90,15 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        source: './build/cda-event-web-${{ github.run_id }}-${{ github.run_number }}/*'
+        source: './build/cda-event-web/*'
         strip_components: 1
-        target: '~/frontend'  
+        target: '~/frontend'
+    
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: rm /var/www/html* && cd ~/frontend/cda-event-web/* /var/www/html
