@@ -2,21 +2,21 @@
 import "../styles/NavBar.css";
 // import { Magic } from "react-bootstrap-icons";
 // import AdminIcon from "@rsuite/icons/Admin";
-import OffRoundIcon from "@rsuite/icons/OffRound";
+// import OffRoundIcon from "@rsuite/icons/OffRound";
 // import Button from "react-bootstrap/Button";
 import AuthService from "../services/auth.service";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Magic } from "react-bootstrap-icons";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Button } from "bootstrap";
+// import { Button } from "bootstrap";
 
 export default function Navbars() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   let activeStyle = {
     textDecoration: "none",
     color: "white",
@@ -43,13 +43,13 @@ export default function Navbars() {
     // };
   }, []);
 
-  const logOut = () => {
-    AuthService.logout();
-    setShowModeratorBoard(false);
-    setShowAdminBoard(false);
-    setIsAuth(false);
-    navigate("/login");
-  };
+  // const logOut = () => {
+  //   AuthService.logout();
+  //   setShowModeratorBoard(false);
+  //   setShowAdminBoard(false);
+  //   setIsAuth(false);
+  //   navigate("/login");
+  // };
 
   return (
     <nav className="navigation">
@@ -165,14 +165,14 @@ export default function Navbars() {
             </NavLink>
           </li>
         )}
-        {isAuth && (
+        {/* {isAuth && (
           <li>
             <Button variant="secondary" onClick={logOut}>
               <OffRoundIcon />
                logout
             </Button>
           </li>
-        )}
+        )} */}
       </ul>
     </nav>
   );
