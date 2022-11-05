@@ -99,7 +99,6 @@
     }
     .navigation-menu li a {
       color: white;
-      /* // increases the surface area of the anchor tag to span the full width of the menu */
       width: 100%;
       padding: 1.5rem 0;
     }

@@ -1,6 +1,4 @@
-// import {  useEffect } from "react";
 import "../styles/NavBar.css";
-// import { Magic } from "react-bootstrap-icons";
 import OffRoundIcon from "@rsuite/icons/OffRound";
 import AuthService from "../services/auth.service";
 import { NavLink } from "react-router-dom";
