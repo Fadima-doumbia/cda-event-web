@@ -93,12 +93,3 @@ jobs:
         source: './build/eagle-event.fr/*'
         strip_components: 1
         target: '~/frontend/eagle-event.fr'
-    
-    - name: executing remote ssh commands using ssh key
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        script: sudo rm -r /var/www/html/* && sudo cp ~/frontend/cda-event-web/* /var/www/html
