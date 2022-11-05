@@ -92,4 +92,13 @@ jobs:
         port: ${{ secrets.PORT }}
         source: './build/eagle-event.fr/*'
         strip_components: 1
-        target: '~/frontend/eagle-event.fr'
+        target: '~/frontend'
+        
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: sh ~/deploy.sh
