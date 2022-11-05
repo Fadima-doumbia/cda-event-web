@@ -71,14 +71,14 @@
     .hamburger {
       display: block;
     }
-    .navigation-menu ul {
+    /* .navigation-menu ul {
         display: none;
         background-Color: #3C6DA6; 
         color: white;
+      } */
+      .navigation-menu ul {
+        position: absolute;
         z-index: 2;
-    }
-    .navigation-menu ul {
-      position: absolute;
       top: 60px;
       left: 0;
       flex-direction: column;
@@ -106,10 +106,11 @@
     .navigation-menu li:hover {
       background-color: #5882b3;
     }
-    .navigation-menu.expanded ul {
+
+      .navigation-menu.expanded ul {
         display: block;
       }
-      /* .navigation-menu.expanded li a:active {
-        color: red;
-      } */
+      .navigation-menu.expanded li a:active {
+        color: #f27e63;
+      }
   }
