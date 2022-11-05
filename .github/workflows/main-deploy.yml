@@ -1,7 +1,7 @@
 name: main-deploy
 on: 
   push:
-    branches: [ user ]
+    branches: [ "user" ]
   workflow_dispatch:
 # test
 jobs:
@@ -65,7 +65,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with: 
-        name: cda-event-web
+        name: eagle-event.fr
         path: ./build/*
         
   deploy:
@@ -90,9 +90,9 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        source: './build/cda-event-web/*'
+        source: './build/eagle-event.fr/*'
         strip_components: 1
-        target: '~/frontend'
+        target: '/var/www/html'
     
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
@@ -101,4 +101,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        script: rm /var/www/html* && cd ~/frontend/cda-event-web/* /var/www/html
+        script: sudo rm -r /var/www/html/* && sudo cp ~/frontend/cda-event-web/* /var/www/html
