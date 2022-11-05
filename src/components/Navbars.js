@@ -152,7 +152,7 @@ export default function Navbars() {
         )}
         {isAuth && (
           <li className="navigation-menu li">
-            <NavLink to="login">
+            <NavLink to="profil">
               {({ isActive }) => (
                 <span className={isActive ? activeClassName : undefined}>
                   Profil

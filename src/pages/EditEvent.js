@@ -12,13 +12,8 @@ import ListGroup from "react-bootstrap/ListGroup";
 import ReservationService from "../services/reservation.service";
 
 const EditEvent = (props) => {
-  const [formData, setFormData] = useState(props.formData);
-  // let userToken = "";
-
-  // const getToken = () => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   userToken = user.accessToken;
-  // };
+  let valueprops = props.datavalue;
+  const [formData, setFormData] = useState(valueprops);
   const handleChange = (event) => {
     const prix = parseInt(event.target.value);
     const places = parseInt(event.target.value);
@@ -43,16 +38,7 @@ const EditEvent = (props) => {
   };  
   
   const annuler = (id) => {
-    // getToken();
-    // axios.delete(`http://eagle-event.fr:8080/api/events/annuler/${id}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${userToken}`,
-    //   },
-    // });
     ReservationService.annulerReservation(id);
-    // let filter = props.formData.reservations.filter(function (e) {
-    //   return e.user.id !== id;
-    // });
   };
 
   
@@ -165,7 +151,7 @@ const EditEvent = (props) => {
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridState">
+            {/* <Form.Group as={Col} controlId="formGridState">
               <Form.Label>Autorisé aux enfants</Form.Label>
               <Form.Select
                 defaultValue="Choose..."
@@ -178,7 +164,7 @@ const EditEvent = (props) => {
                 <option value={true}>OUI</option>
                 <option value={false}>NON</option>
               </Form.Select>
-            </Form.Group>
+            </Form.Group> */}
           </Row>
 
           <Row>
@@ -199,10 +185,10 @@ const EditEvent = (props) => {
             </ListGroup>
           </Row>
           <br />
-          <Button type="button" className="buttonClick" onClick={()=>props.updateevent(formData)}>
+          <Button type="button" className="buttonClick" onClick={()=>props.update(formData.id)}>
             Modifier
           </Button>
-        </Form>
+        </Form> 
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide} className="buttonClick">

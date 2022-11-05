@@ -37,16 +37,9 @@ const ProfilPage = () => {
     repeatPassword: "",
   };
   const [updatePassword, setUpdatePassword] = useState(initialPassword);
-  // let userToken = "";
 
   useEffect(() => {
-    // getToken();
     const userCurrent = AuthService.getCurrentUser();
-    // userToken = userCurrent.accessToken;
- 
-    // UserService.getUserById(userCurrent.id).then((res) => {
-      // setDatas(res.data);
-    // });
 
     UserService.getUserByEmail(userCurrent.email).then((res) => {
       setCurrentUser(res.data);
@@ -79,7 +72,6 @@ const ProfilPage = () => {
     return str;
   };
   const handleChange = (event) => {
-    // console.log(currentUser);
     setCurrentUser((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -102,7 +94,6 @@ const ProfilPage = () => {
   };
 
   const editSubmit = async () => {
-    // getToken();
     let editUser = {
       id: currentUser.id,
       lastName: currentUser.lastName,
@@ -113,24 +104,11 @@ const ProfilPage = () => {
       phone: currentUser.phone,
     };
 
-    // await axios
-    //   .put(`http://eagle-event.fr:8080/api/events/users`, editUser, {
-    //     headers: {
-    //       Authorization: `Bearer ${userToken}`,
-    //     },
-    //   })
+
     UserService.editUserProfil(editUser).then((res) => {
       setUser(res.data);
     });
-    // await axios
-    //   .get("http://eagle-event.fr:8080/api/events/users/email/user@emaill", {
-    //     headers: {
-    //       Authorization: `Bearer ${userToken}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setUser(res.data);
-    //   });
+
 
     setEdit(false);
   };
@@ -143,12 +121,10 @@ const ProfilPage = () => {
     formDataVerifyPassword(event.target.value);
     if (event.target.name === "newPassword") {
       setIsActiv(true);
-      // console.log("first");
       if (formDataVerifyPassword(event.target.value)) {
         setStr("Mot de passe fort");
         setColor("#9cd06b");
         setDisabledValue(false);
-        // setIsOk(true);
       } else {
         setStr("Mot de passe faible");
         setColor("#f76217");
@@ -159,7 +135,6 @@ const ProfilPage = () => {
   };
 
   const handleSubmitPassword = () => {
-    // getToken();
     if (updatePassword.lastPassword === "") {
       setStrResponse("Veuillez entrer votre mot de passe actuel");
       setIsOk(true);
@@ -174,8 +149,10 @@ const ProfilPage = () => {
         console.log(finalObjet)
         UserService.editpassword(finalObjet)
         .then((res) => {
-          setStrResponse(res.data);
-          setIsOk(true);
+          setUpdatePassword(initialPassword);
+          setIsActiv(false);
+          // setStrResponse(res.data);
+          // setIsOk(true);
         });
       } else {
         setStrResponse(

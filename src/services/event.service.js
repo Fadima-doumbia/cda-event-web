@@ -28,7 +28,10 @@ userToken = user.accessToken;
 const editEvent = (id, formData) => {
   let userToken = "";
 const user = JSON.parse(localStorage.getItem("user"));
+console.log(`${baseURL}/admin/events/${id}`)
 userToken = user.accessToken;
+console.log(formData);
+
   return axios.put(`${baseURL}/admin/events/${id}`, formData, {
     headers: {
       Authorization: `Bearer ${userToken}`,
