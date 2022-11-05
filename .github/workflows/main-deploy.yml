@@ -92,7 +92,7 @@ jobs:
         port: ${{ secrets.PORT }}
         source: './build/eagle-event.fr/*'
         strip_components: 1
-        target: '/var/www/html'
+        target: '~/frontend/eagle-event.fr'
     
     - name: executing remote ssh commands using ssh key
       uses: appleboy/ssh-action@master
