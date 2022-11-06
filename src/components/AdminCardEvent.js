@@ -24,13 +24,15 @@ const AdminCardEvent = (props) => {
     props.setdatas(filter);
   };
 
-  const updateEvent = (id) => {
+  const updateEvent = (id, formData) => {
+
     EventService.editEvent(id, formData)
       .then((res) => {
         props.getallEvent();
       });
-    setModalShow(false);
-    // window.location.reload();
+
+      props.setdatas([]);
+      setModalShow(false);
   };
 
 

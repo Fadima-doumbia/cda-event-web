@@ -12,8 +12,8 @@ import ListGroup from "react-bootstrap/ListGroup";
 import ReservationService from "../services/reservation.service";
 
 const EditEvent = (props) => {
-  let valueprops = props.datavalue;
-  const [formData, setFormData] = useState(valueprops);
+  // let valueprops = props.datavalue;
+  const [formData, setFormData] = useState(props.datavalue);
   const handleChange = (event) => {
     const prix = parseInt(event.target.value);
     const places = parseInt(event.target.value);
@@ -35,6 +35,7 @@ const EditEvent = (props) => {
         [event.target.name]: prix,
       }));
     }
+    console.log(formData)
   };  
   
   const annuler = (id) => {
@@ -185,7 +186,7 @@ const EditEvent = (props) => {
             </ListGroup>
           </Row>
           <br />
-          <Button type="button" className="buttonClick" onClick={()=>props.update(formData.id)}>
+          <Button type="button" className="buttonClick" onClick={()=>props.update(formData.id, formData)}>
             Modifier
           </Button>
         </Form> 

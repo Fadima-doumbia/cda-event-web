@@ -44,6 +44,7 @@ const Register = () => {
       }
     }
     formDataVerifyPassword(event.target.value);
+    console.log(formDataVerifyLength(formData))
     if (formDataVerifyLength(formData) && formDataVerify(formData)) {
       if (formDataVerifyPassword(event.target.value)) {
         setDisabledValue(false);
@@ -88,10 +89,12 @@ const Register = () => {
       form.lastName.length > 3 &&
       form.password.length > 7 &&
       form.email.length > 4 &&
-      form.email.includes("@")
+      form.email.includes("@")&&
+      form.email.includes(".")
     ) {
       response = true;
     }
+
     return response;
   };
 
