@@ -52,7 +52,6 @@ const Users = () => {
     phone: "",
     reservations: [],
   });
-  // let navigate = useNavigate();
 
   useEffect(() => {
     getAllUseer();
@@ -65,20 +64,7 @@ const Users = () => {
     }
   }, []);
 
-  // const getToken = () => {
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   userToken = user.accessToken;
-  //   setToken(user.accessToken);
-  // };
-
   const getAllUseer = async () => {
-    // getToken();
-    // await axios
-    //   .get("http://eagle-event.fr:8080/api/admin/users/all", {
-    //     headers: {
-    //       Authorization: `Bearer ${userToken}`,
-    //     },
-    //   })
     UserService.getAllUsers()
       .then((res) => {
         let sorting = res.data.sort((a, b) =>
@@ -133,7 +119,6 @@ const Users = () => {
   };
 
   const handleCreate = () => {
-    // getToken();
     let usert = {
       lastName: user.lastName,
       username: user.username,
@@ -141,13 +126,6 @@ const Users = () => {
       password: `${user.username}${user.role}`,
     };
     if (user.role === "admin") {
-      // console.log("first")
-      // axios
-      //   .post(`http://eagle-event.fr:8080/api/admin/users/new`, usert, {
-      //     headers: {
-      //       Authorization: `Bearer ${userToken}`,
-      //     },
-      //   })
       UserService.createAdmin(usert)
         .then((res) => {
           console.log(res.data);
@@ -155,13 +133,6 @@ const Users = () => {
           getAllUseer();
         });
     } else {
-      // console.log(" two ");
-      // axios
-      //   .post(`http://eagle-event.fr:8080/api/auth/register`, usert, {
-      //     headers: {
-      //       Authorization: `Bearer ${userToken}`,
-      //     },
-      //   })
       AuthService.register(usert)
         .then((res) => {
           console.log(res.data);
@@ -179,18 +150,18 @@ const Users = () => {
       ...prev,
       [event.target.name]: event.target.value,
     }));
+
+    if(event.target.name === "phone"){
+      let convertNum = event.target.value.toString()
+      setUserEdit((prev) => ({
+        ...prev,
+        [event.target.name]: convertNum,
+      }));
+    }
     console.log(userEdit);
   };
 
   const handleEditSubmit = () => {
-    // getToken();
-    // console.log(userEdit);
-    // axios
-    //   .put(`http://eagle-event.fr:8080/api/admin/users`, userEdit, {
-    //     headers: {
-    //       Authorization: `Bearer ${userToken}`,
-    //     },
-    //   })
     UserService.editUser(userEdit)
       .then((res) => {
         console.log(res.data);
@@ -201,13 +172,6 @@ const Users = () => {
   };
 
   const deleteUser = async (id) => {
-    // getToken();
-    // await axios
-    //   .delete(`http://eagle-event.fr:8080/api/admin/users/${id}`, {
-    //     headers: {
-    //       Authorization: `Bearer ${userToken}`,
-    //     },
-    //   })
     UserService.deleteUser(id)
       .then((res) => {
         if (res.status === 200) {
@@ -330,23 +294,6 @@ const Users = () => {
                 id="formHorizontalRadios2"
               />
             </Col>
-            {/* <Col className="search-options">
-              <Form.Check
-                isValid
-                checked
-                type="radio"
-                label="Croissant"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios1"
-              />
-              <Form.Check
-                isValid
-                type="radio"
-                label="Decroissant"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios2"
-              />
-            </Col> */}
           </div>
           <hr style={{ height: "2px", color: "#3C6DA6" }} />
         </Form>
@@ -450,10 +397,17 @@ const Users = () => {
                             className="mb-3"
                             controlId="formBasicPassword"
                           >
-                            <Form.Control
+                            {/* <Form.Control
                               type="text"
                               placeholder="Phone"
                               value={userEdit.phone}
+                              name="phone"
+                              onChange={handleEdit}
+                            /> */}
+                            <Form.Control
+                              type="number"
+                              placeholder="Phone"
+                              value={parseInt(userEdit.phone)}
                               name="phone"
                               onChange={handleEdit}
                             />

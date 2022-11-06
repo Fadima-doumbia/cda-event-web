@@ -76,6 +76,13 @@ const ProfilPage = () => {
       ...prev,
       [event.target.name]: event.target.value,
     }));
+    if(event.target.name === "phone"){
+      let convertNum = event.target.value.toString()
+      setCurrentUser((prev) => ({
+        ...prev,
+        [event.target.name]: convertNum,
+      }));
+    }
   };
 
   const activEdit = () => {
@@ -240,7 +247,7 @@ const ProfilPage = () => {
                 />
               </Col>
             </Form.Group>
-            <Form.Group
+            {/* <Form.Group
               as={Row}
               className="mb-3"
               controlId="formHorizontalCity"
@@ -257,8 +264,25 @@ const ProfilPage = () => {
                   onChange={handleChange}
                 />
               </Col>
+            </Form.Group> */}
+<Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="formHorizontalCity"
+            >
+              <Form.Label column sm={3}>
+                Numéro
+              </Form.Label>
+              <Col sm={8}>
+                <Form.Control
+                  type="number"
+                  placeholder="Telephone"
+                  value={parseInt(currentUser.phone)}
+                  name="phone"
+                  onChange={handleChange}
+                />
+              </Col>
             </Form.Group>
-
             <Form.Group as={Row} className="mb-3">
               <Col sm={{ span: 10, offset: 2 }}>
                 <Button
